@@ -13,14 +13,14 @@ CMS para gestionar y publicar testimonios con soporte multimedia.
 #### Backend
 
 ```sh
-cd cms-api
+cd backend
 mvnw spring-boot:run
 ```
 
 #### Frontend
 
 ```sh
-cd cms-web
+cd frontend
 npm install
 npm run dev
 ```

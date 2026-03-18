@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: cms-api
+        working-directory: backend
     steps:
       - uses: actions/checkout@v4
 
@@ -31,14 +31,14 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: backend-jar
-          path: cms-api/target/*.jar
+          path: backend/target/*.jar
 
   lint:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: cms-api
+        working-directory: backend
     steps:
       - uses: actions/checkout@v4
 
