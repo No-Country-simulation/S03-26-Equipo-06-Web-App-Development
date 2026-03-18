@@ -1,10 +1,8 @@
-name: Frontend CI
+name: Frontend CI CD
 
 on:
   push:
-    branches: [main, develop]
   pull_request:
-    branches: [main, develop]
   workflow_dispatch:
 
 jobs:
@@ -36,6 +34,7 @@ jobs:
           path: cms-web/dist
 
   lint:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     defaults:
       run:
