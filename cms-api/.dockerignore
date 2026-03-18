@@ -1,0 +1,12 @@
+.git
+.gitignore
+*.md
+Dockerfile
+docker-compose*
+.env*
+.vscode
+.idea
+*.log
+npm-debug.log*
+target/
+HELP.md
