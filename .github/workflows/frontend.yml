@@ -18,9 +18,9 @@ on:
       - 'dev*'
       - 'bac*'
       - 'fro*'
-    paths:
-      - 'frontend/**'
-      - '.github/workflows/frontend.yml'
+    # paths:
+    #   - 'frontend/**'
+    #   - '.github/workflows/frontend.yml'
   workflow_dispatch:
 
 jobs:
