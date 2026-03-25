@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ITestimonioService {
 
-    public void createTestimonio(Testimonio testimonio);
-    public List<Testimonio> getTestimonios();
+     void createTestimonio(Testimonio testimonio);
+     List<Testimonio> getTestimonios();
 
 }
