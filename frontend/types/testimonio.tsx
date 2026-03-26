@@ -3,7 +3,7 @@
 //export type Categoria = "Bootcamp" | "Producto" | "Evento" | "Cliente";
 
 export type Testimonio = {
-  id: string
+  id: number
   titulo: string
   contenido: string
   categoria: string
