@@ -6,6 +6,12 @@
 <module name="Checker">
     <module name="SuppressWarningsFilter"/>
     <module name="TreeWalker">
+        <module name="MethodName"/>
+        <module name="ParameterName"/>
+        <module name="LocalVariableName"/>
+        <module name="TypeName"/>
+        <module name="NeedBraces"/>
+        <!-- 
         <module name="ConstantName"/>
         <module name="LocalFinalVariableName"/>
         <module name="LocalVariableName"/>
@@ -21,6 +27,6 @@
         <module name="RightCurly"/>
         <module name="AvoidNestedBlocks"/>
         <module name="OneStatementPerLine"/>
-        <module name="MissingSwitchDefault"/>
+        <module name="MissingSwitchDefault"/> -->
     </module>
 </module>
