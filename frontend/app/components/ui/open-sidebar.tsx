@@ -12,7 +12,7 @@ export default function ButtonSidebar({ open, setOpen }: typeProps) {
   return (
     <button
       onClick={() => setOpen(!open)}
-      className='relative h-6 w-6'
+      className='relative h-6 w-6 ml-1'
       
     >
       <AnimatePresence initial={false} mode='wait'>
