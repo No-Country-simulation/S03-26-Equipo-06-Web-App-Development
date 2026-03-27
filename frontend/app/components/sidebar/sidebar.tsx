@@ -18,17 +18,19 @@ export default function Sidebar() {
 
   return (
     <div
-      className={`fixed top-0 left-0 z-50 h-screen border-r rounded-tr-2xl border-gray-200 bg-white transition-all duration-300 ${open ? 'w-64' : 'w-16'} `}
+      className={`fixed top-0 left-0 z-50 h-screen border-r rounded-tr-2xl text-white border-white/20 bg-linear-to-b from-blue-600 via-blue-500/80 to-blue-700 backdrop-blur-md shadow-lg transition-all duration-300 
+                 ${open ? 'w-64' : 'w-16'}
+                `}
     >
       {/*Header*/}
       <div className='flex items-center justify-between p-4'>
-        {open && <h1 className='text-lg font-bold'>Testimonios</h1>}
+        {open && <h1 className='text-lg font-bold'>Testimonial CMS</h1>}
 
         <ButtonSidebar setOpen={setOpen} open={open} />
       </div>
 
       {/* Menu*/}
-      <nav className='flex flex-col gap-2 p-2'>
+      <nav className='flex flex-col gap-3 p-2 '>
         <ul>
           {nav.map(nave => (
             <li key={nave.id}>
