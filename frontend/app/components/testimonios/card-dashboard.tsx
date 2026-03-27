@@ -12,7 +12,7 @@ interface Props {
   handleView?: (id: number) => void
 }
 
-export default function TestimonialCardDashboard({ testimonios, loading, handleDelete, handleEdit, handleView }: Props) {
+export function TestimonialCardDashboard({ testimonios, loading, handleDelete, handleEdit, handleView }: Props) {
   const getEstadoColor = (estado: string) => {
     switch (estado.toLowerCase()) {
       case 'publicado':
