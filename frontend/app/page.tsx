@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic'
 import { Testimonio } from '@/types/testimonio'
 import { TestimonialSkeleton } from '@/app/components/ui/skeletor-cardTestimonio/skeletor'
 
+
 const TestimonialCardPublica = dynamic<TestimonialCardProps>(
   () => import('@/app/components/testimonios/card-publica').then(mod => mod.TestimonialCardPublica),{ ssr: false });
 
@@ -35,6 +36,7 @@ export default function Testimonios() {
   }, [])
 
   return (
+    
     <div className='min-h-screen bg-linear-to-tr from-[#f8fafc] via-[#eef2f6] to-[#f8fafc]  py-16 px-6'>
       <div className='max-w-6xl mx-auto'>
         <div className='text-center mb-12'>
