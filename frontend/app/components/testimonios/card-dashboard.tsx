@@ -26,9 +26,8 @@ export function TestimonialCardDashboard({ testimonios, loading, handleDelete, h
     }
   }
   return (
-    <div className='min-h-screen bg-linear-to-tr from-gray-100 via-gray-200 to-gray-100'>
-      <h1 className='pt-15 pb-10 text-center text-3xl font-bold text-gray-900 md:text-4xl'>Dashboard - Testimonios</h1>
-
+    <div>
+      
       {loading ? (
         <div className='flex h-64 items-center justify-center'>
           <div className='h-12 w-12 animate-spin rounded-full border-b-2 border-gray-900'></div>
