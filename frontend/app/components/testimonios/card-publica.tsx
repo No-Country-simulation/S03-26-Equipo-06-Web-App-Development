@@ -14,7 +14,7 @@ export function TestimonialCardPublica({ data }: Props) {
         return 'bg-green-100 text-green-600 border-green-300'
       case 'Evento':
         return 'bg-purple-100 text-purple-600 border-purple-300'
-      case 'Cliente':
+      case 'cliente':
         return 'bg-orange-100 text-orange-600 border-orange-300'
       default:
         return 'bg-gray-100 text-gray-600 border-gray-300'
