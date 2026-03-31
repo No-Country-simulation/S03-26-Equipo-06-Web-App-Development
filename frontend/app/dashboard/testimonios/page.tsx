@@ -1,12 +1,17 @@
 'use client'
-
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { Testimonio } from '@/types/testimonio'
 import { TestimonioSkeletonDashboard } from '@/app/components/ui/skeletor-cardTestimonio/skeletorCardDashboard'
+import { getYoutubeThumbnail, getYoutubeEmbed } from '@/utils/youtube'
+
 type Props = {
   testimonios: Testimonio[]
   loading?: boolean
+  videoActivo: string | null
+  setVideoActivo: (url: string | null) => void
+  getYoutubeThumbnail: (url: string) => string
+  getYoutubeEmbed: (url?: string | null) => string | null
 }
 
 const TestimonialCardDashboard = dynamic<Props>(
@@ -20,11 +25,14 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL
 export default function TestimoniosDashboard() {
   const [data, setData] = useState<Testimonio[]>([])
   const [loading, setLoading] = useState(true)
+  const [videoActivo, setVideoActivo] = useState<string | null>(null)
 
   useEffect(() => {
     const fetchTestimonios = async () => {
+      setLoading(true)
+
       try {
-        const res = await fetch(`${API_URL}/api/testimonios`)
+        const res = await fetch( `${API_URL}/api/testimonios`)
         const result = await res.json()
         setData(result)
       } catch (error) {
@@ -38,8 +46,18 @@ export default function TestimoniosDashboard() {
   }, [])
 
   return (
-    <div className='min-h-screen bg-linear-to-tr from-[#f8fafc] via-[#eef2f6] to-[#f8fafc]'>
-      {loading ? <TestimonioSkeletonDashboard /> : <TestimonialCardDashboard testimonios={data} />}
+    <div className='bg-linear-to-tr from-[#f8fafc] via-[#eef2f6] to-[#f8fafc]'>
+      {loading ? (
+        <TestimonioSkeletonDashboard />
+      ) : (
+        <TestimonialCardDashboard
+          testimonios={data}
+          videoActivo={videoActivo}
+          setVideoActivo={setVideoActivo}
+          getYoutubeThumbnail={getYoutubeThumbnail}
+          getYoutubeEmbed={getYoutubeEmbed}
+        />
+      )}
     </div>
   )
 }
