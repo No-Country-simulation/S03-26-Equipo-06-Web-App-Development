@@ -4,6 +4,7 @@
 
 export type Testimonio = {
   id: string
+  autor:string
   titulo: string
   contenido: string
   categoria: string
