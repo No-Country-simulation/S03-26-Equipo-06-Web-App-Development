@@ -96,7 +96,7 @@ jobs:
       - name: Build and push image
         run: |
           IMAGE_TAG="gcr.io/${{ secrets.GCP_PROJECT_ID }}/frontend:${{ github.sha }}"
-          docker build -t $IMAGE_TAG ./frontend
+          docker build --build-arg NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }} -t $IMAGE_TAG ./frontend
           docker push $IMAGE_TAG
 
       - name: Deploy to Cloud Run
