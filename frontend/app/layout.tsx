@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import LayoutClient from './LayoutClient'
+import { ToastContainer } from 'react-toastify'
 
 
 const geistSans = Geist({
@@ -27,7 +28,18 @@ export default function RootLayout({
   return (
     <html lang='en' className={`${geistSans.variable} ${geistMono.variable} `}>
       <body className='h-screen overflow-hidden bg-linear-to-tr from-[#f8fafc] via-[#eef2f6] to-[#f8fafc]'>
-          <LayoutClient>{children}</LayoutClient>
+        <LayoutClient>{children}</LayoutClient>
+        <ToastContainer
+          position='top-right'
+          autoClose={2200}
+          limit={1}
+          hideProgressBar
+          newestOnTop
+          closeOnClick
+          pauseOnHover
+          draggable
+          toastClassName='rounded-xl border border-white/10 bg-black/70 backdrop-blur-md shadow-lg text-sm text-white'
+        />
       </body>
     </html>
   )

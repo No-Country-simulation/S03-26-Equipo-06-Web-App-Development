@@ -36,17 +36,11 @@ export default function Testimonios() {
   }, [])
 
   return (
-    
-    <div className='min-h-screen bg-linear-to-tr from-[#f8fafc] via-[#eef2f6] to-[#f8fafc]  py-16 px-6'>
-      <div className='max-w-6xl mx-auto'>
-        <div className='text-center mb-12'>
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
-              Testimonios
-          </h1>
-          <p className="text-gray-600 mt-3 max-w-2xl mx-auto">
-            Lo que dicen nuestros clientes sobre nuestro trabajo
-          </p>
-        </div>
+    <div className='min-h-screen bg-linear-to-tr from-[#f8fafc] via-[#eef2f6] to-[#f8fafc] px-6 py-16'>
+      <div className='mx-auto max-w-6xl'>
+        <p className='mx-auto mb-26 max-w-120 rounded-lg border border-blue-200 bg-blue-50 p-2 text-center text-gray-900'>
+          Lo que dicen nuestros clientes sobre nuestro trabajo
+        </p>
         {loading ? <TestimonialSkeleton /> : <TestimonialCardPublica data={data} />}
       </div>
     </div>
