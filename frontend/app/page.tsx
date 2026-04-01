@@ -36,9 +36,9 @@ export default function Testimonios() {
   }, [])
 
   return (
-    <div className='min-h-screen bg-linear-to-tr from-[#f8fafc] via-[#eef2f6] to-[#f8fafc] px-6 py-16'>
+    <div className='min-h-screen bg-linear-to-tr from-[#f8fafc] via-[#eef2f6] to-[#f8fafc] px-6 py-10'>
       <div className='mx-auto max-w-6xl'>
-        <p className='mx-auto mb-26 max-w-120 rounded-lg border border-blue-200 bg-blue-50 p-2 text-center text-gray-900'>
+        <p className='mx-auto mb-10 max-w-120 rounded-lg border border-blue-200 bg-blue-50 p-2 text-center text-gray-900'>
           Lo que dicen nuestros clientes sobre nuestro trabajo
         </p>
         {loading ? <TestimonialSkeleton /> : <TestimonialCardPublica data={data} />}
