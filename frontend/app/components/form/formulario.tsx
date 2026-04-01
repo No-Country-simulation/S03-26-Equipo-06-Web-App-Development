@@ -16,7 +16,7 @@ type Props = {
   datos: Datos
   setDatos: Dispatch<SetStateAction<Datos>>
   AgregarTestimonio: (e: FormEvent) => void
-  loading:boolean
+  loading: boolean
 }
 
 export default function FormularioCreacionTestimonios({ datos, setDatos, AgregarTestimonio, loading }: Props) {
@@ -25,7 +25,7 @@ export default function FormularioCreacionTestimonios({ datos, setDatos, Agregar
   }
 
   return (
-    <form onSubmit={AgregarTestimonio} className='my-7 text-black lg:ml-35 lg:max-w-5xl'>
+    <form onSubmit={AgregarTestimonio} className='mb-21 mt-10 ml-18 mr-2  text-black lg:ml-35 lg:max-w-5xl'>
       {/* fila 1 */}
       <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
         <div>
@@ -135,7 +135,7 @@ export default function FormularioCreacionTestimonios({ datos, setDatos, Agregar
       <button
         type='submit'
         disabled={loading}
-        className={`cursor-pointer mt-5 w-full rounded-lg py-2 font-semibold text-white transition ${loading ? 'cursor-not-allowed bg-blue-400' : 'bg-blue-600 hover:bg-blue-700'}`}
+        className={`mt-5 w-full cursor-pointer rounded-lg py-2 font-semibold text-white transition ${loading ? 'cursor-not-allowed bg-blue-400' : 'bg-blue-600 hover:bg-blue-700'}`}
       >
         {loading ? 'Creando...' : 'Crear Testimonio'}
       </button>
