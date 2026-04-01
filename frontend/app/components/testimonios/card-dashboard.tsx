@@ -73,30 +73,30 @@ export function TestimonialCardDashboard({ testimonios, videoActivo, setVideoAct
                     <div className='flex flex-col'>
                       <span className='font-medium text-gray-900'>{testimonio.titulo}</span>
 
-                      <div className='mt-1 max-w-62.5'>
+                      <div className='mt-1 max-w-42.5'>
                         <ExpandableTextDashboard content={testimonio.contenido} />
                       </div>
                     </div>
                   </div>
                 </td>
                 {/*estado*/}
-                <td className='px-6 py-4'>
-                  <span className={`rounded-md border px-2 py-1 text-sm font-medium ${getEstadoColor(testimonio.estado)}`}>{testimonio.estado}</span>
+                <td className='px-1 py-4 text-center'>
+                  <span className={`rounded-md px-2 py-1 border text-sm font-medium ${getEstadoColor(testimonio.estado)}`}>{testimonio.estado}</span>
                 </td>
                 {/*categoria*/}
-                <td className='px-6 py-4 text-sm text-gray-700'>
+                <td className='py-4 text-sm text-gray-700 text-center'>
                   <div>
-                  {/*consultar  <span><p className='text-black'>{testimonio.autor}</p></span>*/}
+                    {/*consultar  <span><p className='text-black'>{testimonio.autor}</p></span>*/}
                     <span className='font-medium'>Categoría: </span>
                     {testimonio.categoria}
                   </div>
-                  {testimonio.tags.length > 0 && <div className='text-xs text-gray-500'>Tags: {testimonio.tags.join(', ')}</div>}
+                  {testimonio.tags.length > 0 && <div className='w-40 text-xs text-gray-500'>Tags: {testimonio.tags.join(', ')}</div>}
                 </td>
                 {/*fecha*/}
                 <td className='px-4 py-4 text-sm text-gray-500'>{testimonio.fecha_creacion}</td>
                 {/*acciones*/}
-                <td className='px-6 py-4 align-middle'>
-                    <BotoneraDashboard testimonio={testimonio} setVideoActivo={setVideoActivo} />
+                <td className='px-4 py-4 align-middle'>
+                  <BotoneraDashboard testimonio={testimonio}  />
                 </td>
               </tr>
             ))}
