@@ -16,7 +16,7 @@ export function ExpandableTextDashboard({ content }: { content: string }) {
   return (
     <div className='relative w-full'>
       <div className='overflow-hidden transition-all duration-500 ease-in-out' style={{ maxHeight: expanded ? maxHeight : 20 }}>
-        <p ref={textRef} className={`text-sm ${expanded ? 'text-gray-900' : 'text-gray-500'}`}>
+        <p ref={textRef} className={`text-[12px] ${expanded ? 'text-gray-900' : 'text-gray-500'}`}>
           {content}
         </p>
       </div>
