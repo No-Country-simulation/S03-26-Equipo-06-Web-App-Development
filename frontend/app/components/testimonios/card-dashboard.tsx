@@ -96,7 +96,7 @@ export function TestimonialCardDashboard({ testimonios, videoActivo, setVideoAct
                 <td className='px-4 py-4 text-sm text-gray-500'>{testimonio.fecha_creacion}</td>
                 {/*acciones*/}
                 <td className='px-4 py-4 align-middle'>
-                  <BotoneraDashboard testimonio={testimonio}  />
+                  <BotoneraDashboard testimonio={testimonio} setVideoActivo={setVideoActivo} />
                 </td>
               </tr>
             ))}
