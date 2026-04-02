@@ -24,6 +24,10 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Write sonar-project.properties from secret
+        run: |
+          echo "${{ secrets.SONAR_PROPERTIES_FILE }}" > sonar-project.properties
+
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v6
         with:
