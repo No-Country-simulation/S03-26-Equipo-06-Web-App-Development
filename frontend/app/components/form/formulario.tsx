@@ -1,31 +1,20 @@
 'use client'
 import { Dispatch, SetStateAction, FormEvent } from 'react'
-
-type Datos = {
-  autor: string
-  titulo: string
-  contenido: string
-  categoria: string
-  tags: string
-  estado: string
-  imagen_url: string
-  video_url: string
-}
+import { DatosForm } from '@/types/form'
 
 type Props = {
-  datos: Datos
-  setDatos: Dispatch<SetStateAction<Datos>>
+  datos: DatosForm
+  setDatos: Dispatch<SetStateAction<DatosForm>>
   AgregarTestimonio: (e: FormEvent) => void
   loading: boolean
 }
-
 export default function FormularioCreacionTestimonios({ datos, setDatos, AgregarTestimonio, loading }: Props) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setDatos({ ...datos, [e.target.name]: e.target.value })
   }
 
   return (
-    <form onSubmit={AgregarTestimonio} className='mb-21 mt-10 ml-18 mr-2  text-black lg:ml-35 lg:max-w-5xl'>
+    <form onSubmit={AgregarTestimonio} className='mt-10 mr-2 mb-21 ml-18 text-black lg:ml-35 lg:max-w-5xl'>
       {/* fila 1 */}
       <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
         <div>
@@ -100,7 +89,7 @@ export default function FormularioCreacionTestimonios({ datos, setDatos, Agregar
           >
             <option value=''>Seleccionar estado</option>
             <option value='PENDIENTE'>Pendiente</option>
-            <option value='APROBADO'>Aprobado</option>
+            <option value='APROBADO'>Publicado</option>
             <option value='RECHAZADO'>Rechazado</option>
           </select>
         </div>
@@ -137,7 +126,7 @@ export default function FormularioCreacionTestimonios({ datos, setDatos, Agregar
         disabled={loading}
         className={`mt-5 w-full cursor-pointer rounded-lg py-2 font-semibold text-white transition ${loading ? 'cursor-not-allowed bg-blue-400' : 'bg-blue-600 hover:bg-blue-700'}`}
       >
-        {loading ? 'Creando...' : 'Crear Testimonio'}
+        {loading ? 'Publicando...' : 'Publicar Testimonio'}
       </button>
     </form>
   )

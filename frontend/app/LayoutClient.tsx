@@ -11,7 +11,7 @@ export default function LayoutClient({ children }: { children: React.ReactNode }
     if (pathname === '/') return 'Testimonios'
     if (pathname === '/dashboard') return 'Dashboard'
     if (pathname === '/dashboard/testimonios') return 'Editar Testimonios'
-    if (pathname === '/dashboard/crear-testimonio') return 'Crear Testimonio'
+    if (pathname === '/dashboard/crear-testimonio') return 'Publicar Testimonio'
 
       return 'Dashboard'
   }

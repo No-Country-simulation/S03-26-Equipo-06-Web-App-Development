@@ -81,10 +81,10 @@ export function TestimonialCardDashboard({ testimonios, videoActivo, setVideoAct
                 </td>
                 {/*estado*/}
                 <td className='px-1 py-4 text-center'>
-                  <span className={`rounded-md px-2 py-1 border text-sm font-medium ${getEstadoColor(testimonio.estado)}`}>{testimonio.estado}</span>
+                  <span className={`rounded-md border px-2 py-1 text-sm font-medium ${getEstadoColor(testimonio.estado)}`}>{testimonio.estado}</span>
                 </td>
                 {/*categoria*/}
-                <td className='py-4 text-sm text-gray-700 text-center'>
+                <td className='py-4 text-center text-sm text-gray-700'>
                   <div>
                     {/*consultar  <span><p className='text-black'>{testimonio.autor}</p></span>*/}
                     <span className='font-medium'>Categoría: </span>
@@ -96,7 +96,7 @@ export function TestimonialCardDashboard({ testimonios, videoActivo, setVideoAct
                 <td className='px-4 py-4 text-sm text-gray-500'>{testimonio.fecha_creacion}</td>
                 {/*acciones*/}
                 <td className='px-4 py-4 align-middle'>
-                  <BotoneraDashboard testimonio={testimonio} setVideoActivo={setVideoActivo} />
+                  <BotoneraDashboard testimonio={testimonio} />
                 </td>
               </tr>
             ))}
