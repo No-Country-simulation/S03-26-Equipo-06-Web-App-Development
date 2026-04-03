@@ -1,4 +1,4 @@
-package com.nocountry.cms.model;
+package com.nocountry.cms.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,6 +22,7 @@ public class Testimonio {
     @Id
     @GeneratedValue (strategy = GenerationType.UUID)
     private UUID id;
+    private String autor;
     private String titulo;
     private String contenido;
     private String categoria;
