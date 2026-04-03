@@ -36,11 +36,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: 'pnpm'
-          cache-dependency-path: frontend/pnpm-lock.yaml
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Build
         run: npm run build
@@ -51,8 +49,24 @@ jobs:
           name: frontend-dist
           path: frontend/dist
 
+  scan:
+    name: Run Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
+
   lint:
-    if: github.event_name == 'pull_request'
+    if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' }}
     needs: build
     runs-on: ubuntu-latest
     defaults:
@@ -65,17 +79,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: 'pnpm'
-          cache-dependency-path: frontend/pnpm-lock.yaml
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Lint
         run: npm run lint
 
   build-and-deploy:
-    if: github.event_name == 'pull_request'
+    if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' }}
     needs: lint
     runs-on: ubuntu-latest
     permissions:
@@ -96,7 +108,7 @@ jobs:
       - name: Build and push image
         run: |
           IMAGE_TAG="gcr.io/${{ secrets.GCP_PROJECT_ID }}/frontend:${{ github.sha }}"
-          docker build -t $IMAGE_TAG ./frontend
+          docker build --build-arg NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }} -t $IMAGE_TAG ./frontend
           docker push $IMAGE_TAG
 
       - name: Deploy to Cloud Run

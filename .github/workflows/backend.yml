@@ -51,8 +51,24 @@ jobs:
           name: backend-jar
           path: backend/target/*.jar
 
+  scan:
+    name: Run Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
+
   lint:
-    if: github.event_name == 'pull_request'
+    if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' }}
     needs: build
     runs-on: ubuntu-latest
     defaults:
@@ -75,7 +91,7 @@ jobs:
         run: ./mvnw checkstyle:check
 
   build-and-deploy:
-    if: github.event_name == 'pull_request'
+    if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' }}
     needs: lint
     runs-on: ubuntu-latest
     permissions:
@@ -107,4 +123,4 @@ jobs:
           region: ${{ secrets.GCP_REGION }}
           flags: >
             --allow-unauthenticated
-            --set-env-vars SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }},SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }},SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+            --set-env-vars SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }},SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }},SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }},API_URL_CORS=${{ secrets.API_URL_CORS }}
