@@ -3,7 +3,6 @@ import { useState, FormEvent } from 'react'
 import { toast } from 'react-toastify'
 import FormularioCreacionTestimonios from '../../components/form/formulario'
 
-
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 export default function CreacionTestimonios() {
@@ -24,8 +23,8 @@ export default function CreacionTestimonios() {
 
     if (!datos.titulo || !datos.contenido || !datos.estado || !datos.autor) {
       toast.error('Todos los campos son obligatorios', {
-        toastId: 'form-error'
-       })
+        toastId: 'form-error',
+      })
       return
     }
 
@@ -52,6 +51,8 @@ export default function CreacionTestimonios() {
 
       const data = await res.json()
       console.log('Testimonio creado:', data)
+      toast.success('Testimonio creado con Exito!')
+      setDatos({ autor: '', titulo: '', contenido: '', categoria: '', tags: '', estado: '', imagen_url: '', video_url: '' })
     } catch (err: unknown) {
       if (err instanceof Error) {
         toast.error(err.message || 'Error al crear testimonio', {

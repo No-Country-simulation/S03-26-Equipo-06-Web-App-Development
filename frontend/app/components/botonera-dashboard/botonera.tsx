@@ -1,19 +1,22 @@
+"use client"
 import { Trash2, Edit, Eye } from 'lucide-react'
 import { Testimonio } from '@/types/testimonio'
+import { useRouter } from 'next/navigation'
 
 type Props = {
   testimonio: Testimonio
-  setVideoActivo: (url: string | null) => void
+  
   handleDelete?: (id: string) => void
   handleEdit?: (id: string) => void
   handleView?: (id: string) => void
 }
 
-export default function BotoneraDashboard({ setVideoActivo, testimonio }: Props) {
+export default function BotoneraDashboard({  testimonio }: Props) {
+  const router = useRouter()
   return (
     <div className='flex gap-2'>
       <button
-        onClick={() => testimonio.video_url && setVideoActivo(testimonio.video_url)}
+        onClick={() => router.push(`/testimonios/${testimonio.id}`)}
         className='flex cursor-pointer items-center gap-1 rounded-md border border-blue-400 bg-blue-100 px-3 py-1 text-sm text-blue-700 hover:bg-blue-200'
       >
         <Eye className='h-4 w-4' /> Ver

@@ -1,5 +1,3 @@
-
-
 interface Props {
   titulo: string;
   pathname:string;

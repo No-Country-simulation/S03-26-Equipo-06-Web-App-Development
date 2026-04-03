@@ -2,19 +2,16 @@
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { Testimonio } from '@/types/testimonio'
+import {toast} from "react-toastify"
 import { TestimonialSkeleton } from '@/app/components/ui/skeletor-cardTestimonio/skeletor'
-
-
 const TestimonialCardPublica = dynamic<TestimonialCardProps>(
   () => import('@/app/components/testimonios/card-publica').then(mod => mod.TestimonialCardPublica),{ ssr: false });
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 type TestimonialCardProps = {
   data: Testimonio[]
 }
-
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL
-
 export default function Testimonios() {
   const [data, setData] = useState<Testimonio[]>([])
   const [loading, setLoading] = useState(true)
@@ -23,12 +20,14 @@ export default function Testimonios() {
     const fetchTestimonios = async () => {
       try {
         const res = await fetch(`${API_URL}/api/testimonios`)
-        const result = await res.json()
-        setData(result)
-      } catch (error) {
-        console.error('Error al traer testimonios:', error)
-      } finally {
+        const result: Testimonio[] = await res.json()
+        //solo los publicados
+        const publicados = result.filter(item => item.estado.toLowerCase() === 'publicado')
+        setData(publicados)
         setLoading(false)
+      } catch (error) {
+        console.error('Error al traer testimonios:', error);
+        toast.error("Error en cargar los Testimonios, Intente mas tarde");
       }
     }
 
