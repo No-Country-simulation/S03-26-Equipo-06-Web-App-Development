@@ -1,8 +1,8 @@
-export function TestimonialSkeleton() {
+export function PublicacionCardPublicalSkeleton() {
   return (
     <>
       {/*móvil*/}
-      <div className='flex flex-col gap-5 px-4 py-4 sm:hidden'>
+      <div className='flex flex-col gap-5 px-2 py-4 sm:hidden'>
         {Array.from({ length: 2 }).map((_, i) => (
           <div key={i} className='animate-pulse overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm'>
             <div className='relative h-44 w-full bg-gray-200' />
@@ -48,13 +48,11 @@ export function TestimonialSkeleton() {
           </div>
 
           {/*botones skeleton*/}
-          <div className='absolute bottom-4 right-0 left-0 flex justify-between '>
+          <div className='absolute right-0 bottom-4 left-0 flex justify-between'>
             <div className='h-10 w-10 animate-pulse rounded-full bg-gray-300' />
             <div className='h-10 w-10 animate-pulse rounded-full bg-gray-300' />
           </div>
-          </div>
-
-        
+        </div>
       </div>
     </>
   )

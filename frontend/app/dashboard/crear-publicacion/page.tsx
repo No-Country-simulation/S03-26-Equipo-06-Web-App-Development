@@ -45,8 +45,7 @@ export default function CreacionTestimonios() {
       })
 
       if (!res.ok) {
-        const errorText = await res.text()
-        throw new Error(errorText)
+        throw new Error("Error al enviar los datos")
       }
 
       const data = await res.json()
@@ -55,14 +54,15 @@ export default function CreacionTestimonios() {
       setDatos({ autor: '', titulo: '', contenido: '', categoria: '', tags: '', estado: '', imagen_url: '', video_url: '' })
     } catch (err: unknown) {
       if (err instanceof Error) {
-        toast.error(err.message || 'Error al crear testimonio', {
+        toast.error(`Error al crear testimonio`, {
           toastId: 'backend-error',
         })
+        console.log(err.message);
       } else {
-        toast.error('Error inesperado')
+        toast.error('Error inesperado');
       }
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
 

@@ -1,7 +1,7 @@
 'use client'
 export function TestimonioSkeletonDashboard() {
   return (
-    <div className='mt-16 w-full'>
+    <div className='mt-16 w-full md:mb-30'>
       {/* Pantallas grandes*/}
       <table className='m-auto hidden table-auto border-collapse animate-pulse rounded-xl bg-white/30 shadow-md backdrop-blur-md md:table md:max-w-170 lg:m-auto lg:max-w-5xl'>
         <thead>
@@ -14,7 +14,7 @@ export function TestimonioSkeletonDashboard() {
           </tr>
         </thead>
         <tbody>
-          {Array.from({ length: 5 }).map((_, idx) => (
+          {Array.from({ length: 4 }).map((_, idx) => (
             <tr key={idx} className='border-b border-gray-200'>
               <td className='px-4 py-4 align-middle'>
                 <div className='flex items-start gap-3'>
@@ -47,14 +47,12 @@ export function TestimonioSkeletonDashboard() {
       </table>
 
       {/* Skeleton móvil */}
-      <div className='flex animate-pulse flex-col gap-6 px-4 py-6 md:hidden'>
+      <div className='flex animate-pulse flex-col gap-6 px-6 pt-6 pb-20 md:hidden'>
         {Array.from({ length: 3 }).map((_, i) => (
           <div
             key={i}
-            className='relative mr-2 ml-15 flex min-w-100 flex-col rounded-2xl border border-gray-200 bg-white/50 p-4 shadow-md backdrop-blur-md'
+            className='relative mx-auto w-full flex flex-col rounded-2xl border border-gray-200 bg-white/50 p-4 shadow-md backdrop-blur-md'
           >
-            {/* ESTADO/}
-            <div className='absolute top-4 right-4 h-4 w-16 rounded bg-gray-300' />
             {/* VIDEO */}
             <div className='h-16 w-28 rounded-md border border-gray-500/40 bg-gray-300' />
             {/* TITULO */}

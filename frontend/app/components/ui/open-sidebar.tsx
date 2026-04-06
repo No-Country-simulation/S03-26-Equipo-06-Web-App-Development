@@ -10,11 +10,7 @@ interface typeProps{
 
 export default function ButtonSidebar({ open, setOpen }: typeProps) {
   return (
-    <button
-      onClick={() => setOpen(!open)}
-      className='relative h-6 w-6 ml-1'
-      
-    >
+    <button onClick={() => setOpen(!open)} className={`relative ml-1 h-6 w-6 ${open ? 'text-white' : 'text-black md:text-white'}`}>
       <AnimatePresence initial={false} mode='wait'>
         {open ? (
           <motion.div
