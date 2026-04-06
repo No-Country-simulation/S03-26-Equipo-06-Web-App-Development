@@ -30,9 +30,9 @@ export default function InfoCardPublica({ data }: { data: Testimonio }) {
       {/* BOTÓN BACK */}
       <button
         onClick={() => router.back()}
-        className='absolute top-19 right-10 z-60 cursor-pointer rounded-md border border-gray-200 bg-white/70 px-2 py-1 text-sm text-black backdrop-blur transition hover:bg-white md:top-25 md:right-22'
+        className='absolute top-19 right-10 z-60 cursor-pointer rounded-md px-2 py-1 text-gray-500 backdrop-blur transition md:top-25 md:right-22'
       >
-        <Undo2 size={16} />
+        <Undo2/>
       </button>
 
       <div className='mt-10 mb-20 w-full px-4 sm:px-6 md:px-0'>

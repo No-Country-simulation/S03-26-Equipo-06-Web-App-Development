@@ -19,7 +19,7 @@ export default function InfoCardDashboard({ data }: { data: Testimonio }) {
       
       <button
         onClick={() => router.back()}
-        className='absolute top-19 sm:top-24 right-6 lg:right-10 cursor-pointer rounded-md border border-gray-300 py-1 px-2 text-sm text-gray-600 hover:bg-gray-100'
+        className='absolute top-18 sm:top-24 right-6 lg:right-10 cursor-pointer rounded-md py-3 px-2 text-sm text-gray-600'
       >
         <Undo2/>
       </button>

@@ -26,8 +26,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang='en' className={`${geistSans.variable} ${geistMono.variable} `}>
-      <body className='h-screen overflow-hidden bg-linear-to-tr from-[#f8fafc] via-[#eef2f6] to-[#f8fafc]'>
+    <html lang='en' className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className='bg-linear-to-tr from-[#f8fafc] via-[#eef2f6] to-[#f8fafc]'>
         <LayoutClient>{children}</LayoutClient>
         <ToastContainer
           position='top-right'
