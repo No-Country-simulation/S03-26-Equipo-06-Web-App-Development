@@ -2,10 +2,10 @@
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { Testimonio } from '@/types/testimonio'
-import { TestimonioSkeletonDashboard } from '@/app/components/ui/skeletor-cardTestimonio/skeletorCardDashboard'
+import { TestimonioSkeletonDashboard } from '@/app/components/ui/skeletors/skeletorCardDashboard'
 import { getYoutubeThumbnail, getYoutubeEmbed } from '@/utils/youtube'
 import SearchDasboard from '@/app/components/search-dashboard/search'
-import {toast} from "react-toastify"
+import { toast } from 'react-toastify'
 
 type Props = {
   testimonios: Testimonio[]
@@ -40,8 +40,8 @@ export default function TestimoniosDashboard() {
         setLoading(false)
       } catch (error) {
         console.error('Error al traer testimonios:', error)
-        toast.error('Error al obtener los Testimonios')      
-      } 
+        toast.error('Error al obtener los Testimonios')
+      }
     }
 
     fetchTestimonios()

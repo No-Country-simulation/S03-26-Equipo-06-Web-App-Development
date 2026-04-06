@@ -7,6 +7,7 @@ import { ExpandableTextDashboard } from '../ui/expanded-card-dashboard'
 import { getEstadoColor } from '@/utils/estilos'
 import { PlayCircle } from 'lucide-react'
 import BotoneraDashboard from '../botonera-dashboard/botonera'
+import { useRouter } from 'next/navigation'
 
 type Props = {
   testimonios: Testimonio[]
@@ -20,6 +21,7 @@ type Props = {
 }
 
 export function TestimonialCardDashboard({ testimonios, videoActivo, setVideoActivo, getYoutubeThumbnail, getYoutubeEmbed }: Props) {
+  const router = useRouter()
   return (
     <>
       <div className='mt-15 mb-35 max-h-125 overflow-x-auto overflow-y-auto'>
@@ -104,11 +106,11 @@ export function TestimonialCardDashboard({ testimonios, videoActivo, setVideoAct
         </table>
 
         {/*movil*/}
-        <div className='flex flex-col gap-6 px-4 py-6 md:hidden'>
+        <div className='flex flex-col gap-6 px-6 py-6 md:hidden'>
           {testimonios.map(testimonio => (
             <div
               key={testimonio.id}
-              className='relative mr-2 ml-15 flex min-w-100 flex-col rounded-2xl border border-gray-200 bg-white/50 p-4 shadow-md backdrop-blur-md transition hover:scale-[1.02] hover:shadow-xl'
+              className='relative mx-auto w-full flex flex-col rounded-2xl border border-gray-200 bg-white/50 p-4 shadow-md backdrop-blur-md transition hover:scale-[1.02] hover:shadow-xl'
             >
               {/*estado*/}
               <span className={`absolute top-4 right-4 rounded-md border px-2 py-1 text-xs font-medium ${getEstadoColor(testimonio.estado)}`}>
@@ -165,9 +167,9 @@ export function TestimonialCardDashboard({ testimonios, videoActivo, setVideoAct
               <span className='absolute right-4 bottom-4 text-xs text-gray-400'>{testimonio.fecha_creacion}</span>
 
               {/*botones*/}
-              <div className='mt-3 flex flex-wrap gap-2'>
+              <div className='mt-3 flex gap-2'>
                 <button
-                  onClick={() => testimonio.video_url && setVideoActivo(testimonio.video_url)}
+                  onClick={() => router.push(`/testimonios/${testimonio.id}`)}
                   className='flex items-center gap-1 rounded-md border border-blue-400 bg-blue-100 px-3 py-1 text-sm text-blue-700 transition hover:bg-blue-200'
                 >
                   <Eye className='h-4 w-4' /> Ver

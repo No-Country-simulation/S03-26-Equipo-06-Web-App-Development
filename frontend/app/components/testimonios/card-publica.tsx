@@ -1,6 +1,5 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { Testimonio } from '@/types/testimonio'
 import Image from 'next/image'
 import { ExpandableText } from '../ui/expanded-card'
@@ -8,12 +7,13 @@ import BotonCarrusel from '../ui/boton-carrusel'
 
 type Props = {
   data: Testimonio[]
+  onSelect: (item: Testimonio) => void
 }
 
-export function TestimonialCardPublica({ data }: Props) {
+export function PublicacionCardPublica({ data, onSelect }: Props) {
   const scrollRef = useRef<HTMLDivElement>(null)
   const [indexActivo, setIndexActivo] = useState(0)
-  const router = useRouter()
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -38,7 +38,7 @@ export function TestimonialCardPublica({ data }: Props) {
   return (
     <>
       {/*movil*/}
-      <div className='flex flex-col gap-5 px-4 py-4 sm:hidden'>
+      <div className='flex flex-col gap-5 px-2 py-4 sm:hidden'>
         {data.map(item => (
           <div key={item.id} className='overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition hover:shadow-md'>
             {/*imagen*/}
@@ -73,10 +73,10 @@ export function TestimonialCardPublica({ data }: Props) {
               <p className='mt-3 text-[11px] text-gray-400'>{new Date(item.fecha_creacion).toLocaleDateString()}</p>
               {/*boton*/}
               <button
-                onClick={() => router.push(`/testimonios/${item.id}`)}
+                onClick={() => onSelect(item)}
                 className='mt-4 w-full rounded-lg bg-blue-500 py-2 text-sm font-medium text-white transition hover:bg-blue-600'
               >
-                Ver testimonio completo
+                Ver publicacion
               </button>
             </div>
           </div>
@@ -100,10 +100,10 @@ export function TestimonialCardPublica({ data }: Props) {
               </div>
               {/*detalle*/}
               <button
-                onClick={() => router.push(`/testimonios/${activo.id}`)}
+                onClick={() => onSelect(activo)}
                 className='mt-4 cursor-pointer rounded-md bg-blue-500 px-4 py-2 text-sm text-white hover:bg-blue-600'
               >
-                Ver testimonio completo
+                Ver publicacion
               </button>
             </div>
           </div>
@@ -147,7 +147,7 @@ export function TestimonialCardPublica({ data }: Props) {
                     <button
                       onClick={e => {
                         e.stopPropagation()
-                        router.push(`/testimonios/${item.id}`)
+                        onSelect(item)
                       }}
                       className='mt-2 text-xs text-blue-500 hover:underline'
                     >
