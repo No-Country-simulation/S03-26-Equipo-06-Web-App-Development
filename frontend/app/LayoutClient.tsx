@@ -8,10 +8,10 @@ export default function LayoutClient({ children }: { children: React.ReactNode }
   const hideSidebar = pathname === '/'
 
   const titulo=()=>{
-    if (pathname === '/') return 'Testimonios'
+    if (pathname === '/') return 'Publicaciones'
     if (pathname === '/dashboard') return 'Dashboard'
-    if (pathname === '/dashboard/testimonios') return 'Editar Testimonios'
-    if (pathname === '/dashboard/crear-testimonio') return 'Publicar Testimonio'
+    if (pathname === '/dashboard/testimonios') return 'Editar'
+    if (pathname === '/dashboard/crear-testimonio') return 'Publicar'
 
       return 'Dashboard'
   }
