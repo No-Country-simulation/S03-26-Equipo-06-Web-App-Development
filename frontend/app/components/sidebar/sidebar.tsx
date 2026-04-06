@@ -8,9 +8,9 @@ import dynamic from 'next/dynamic'
 const ButtonSidebar = dynamic(() => import('../../components/ui/open-sidebar'), { ssr: false })
 
 const nav: PropsSidebar[] = [
-  { id: 1, icon: <Home />, text: 'Dashboard', url: '/dashboard', },
-  { id: 2, icon: <MessageSquare />, text: 'Testimonios', url: '/dashboard/testimonios' },
-  { id: 3, icon: <Plus />, text: 'Crear', url: '/dashboard/crear-testimonio' },
+  { id: 1, icon: <Home />, text: 'Dashboard', url: '/dashboard' },
+  { id: 2, icon: <MessageSquare />, text: 'Testimonios', url: '/dashboard/publicaciones' },
+  { id: 3, icon: <Plus />, text: 'Crear', url: '/dashboard/crear-publicacion' },
 ]
 
 export default function Sidebar() {
