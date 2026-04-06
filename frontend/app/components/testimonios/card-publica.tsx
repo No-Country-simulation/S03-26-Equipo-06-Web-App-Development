@@ -18,7 +18,7 @@ export function PublicacionCardPublica({ data, onSelect }: Props) {
   useEffect(() => {
     const interval = setInterval(() => {
       setIndexActivo(prev => (prev + 1) % data.length)
-    }, 3000)
+    }, 5000)
 
     return () => clearInterval(interval)
   }, [data.length])

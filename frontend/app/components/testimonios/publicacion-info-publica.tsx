@@ -9,7 +9,8 @@ import { useState } from 'react'
 
 export default function InfoCardPublica({ data }: { data: Testimonio }) {
     const router = useRouter()
-    const [authenticado,setAuthenticado]=useState(true);
+    //prueba
+    const [authenticado]=useState(true);
   const getEmbedUrl = (url: string) => {
     if (!url) return null
     const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/)
@@ -29,7 +30,7 @@ export default function InfoCardPublica({ data }: { data: Testimonio }) {
       {/* BOTÓN BACK */}
       <button
         onClick={() => router.back()}
-        className='z-60 absolute top-19 right-6 cursor-pointer rounded-md border border-gray-200 bg-white/70 px-2 py-1 text-sm text-gray-600 backdrop-blur transition hover:bg-white'
+        className='absolute top-19 right-10 z-60 cursor-pointer rounded-md border border-gray-200 bg-white/70 px-2 py-1 text-sm text-black backdrop-blur transition hover:bg-white md:top-25 md:right-22'
       >
         <Undo2 size={16} />
       </button>
