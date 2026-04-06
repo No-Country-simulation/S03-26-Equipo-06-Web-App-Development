@@ -6,6 +6,8 @@ import { TestimonioSkeletonDashboard } from '@/app/components/ui/skeletors/skele
 import { getYoutubeThumbnail, getYoutubeEmbed } from '@/utils/youtube'
 import SearchDasboard from '@/app/components/search-dashboard/search'
 import { toast } from 'react-toastify'
+import { useRouter } from 'next/navigation'
+import { Undo2 } from 'lucide-react'
 
 type Props = {
   testimonios: Testimonio[]
@@ -30,6 +32,7 @@ export default function TestimoniosDashboard() {
   const [search, setSearch] = useState('')
   const [categoria, setCategoria] = useState('')
   const [estado, setEstado] = useState('')
+  const router = useRouter()
 
   useEffect(() => {
     const fetchTestimonios = async () => {
@@ -40,7 +43,7 @@ export default function TestimoniosDashboard() {
         setLoading(false)
       } catch (error) {
         console.error('Error al traer testimonios:', error)
-        toast.error('Error al obtener los Testimonios')
+        toast.error('Error al obtener las publicaciones')
       }
     }
 
@@ -66,27 +69,36 @@ export default function TestimoniosDashboard() {
   })
 
   return (
-    <div className='bg-linear-to-tr from-[#f8fafc] via-[#eef2f6] to-[#f8fafc]'>
-      <SearchDasboard
-        data={data}
-        search={search}
-        setSearch={setSearch}
-        categoria={categoria}
-        setCategoria={setCategoria}
-        estado={estado}
-        setEstado={setEstado}
-      />
-      {loading ? (
-        <TestimonioSkeletonDashboard />
-      ) : (
-        <TestimonialCardDashboard
-          testimonios={testimoniosFiltrados}
-          videoActivo={videoActivo}
-          setVideoActivo={setVideoActivo}
-          getYoutubeThumbnail={getYoutubeThumbnail}
-          getYoutubeEmbed={getYoutubeEmbed}
+    <>
+      
+      <button
+        onClick={() => router.back()}
+        className='z-60 absolute top-16 right-6 cursor-pointer rounded-md px-3 py-2 text-sm text-gray-600 sm:top-24 lg:right-10'
+      >
+        <Undo2 />
+      </button>
+      <div className='bg-linear-to-tr from-[#f8fafc] via-[#eef2f6] to-[#f8fafc]'>
+        <SearchDasboard
+          data={data}
+          search={search}
+          setSearch={setSearch}
+          categoria={categoria}
+          setCategoria={setCategoria}
+          estado={estado}
+          setEstado={setEstado}
         />
-      )}
-    </div>
+        {loading ? (
+          <TestimonioSkeletonDashboard />
+        ) : (
+          <TestimonialCardDashboard
+            testimonios={testimoniosFiltrados}
+            videoActivo={videoActivo}
+            setVideoActivo={setVideoActivo}
+            getYoutubeThumbnail={getYoutubeThumbnail}
+            getYoutubeEmbed={getYoutubeEmbed}
+          />
+        )}
+      </div>
+    </>
   )
 }

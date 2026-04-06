@@ -12,7 +12,7 @@ export default function SearchDashboard({ search, setSearch, categoria, setCateg
   const categorias = Array.from(new Set(data.map(t => t.categoria))).sort()
 
   return (
-    <div className='w-full px-6 mx-auto md:mx-auto flex flex-col items-center justify-center gap-4 pt-10 md:w-[80%] md:flex-row md:items-center md:gap-4'>
+    <div className='w-full mt-3 px-6 mx-auto md:mx-auto flex flex-col items-center justify-center gap-4 pt-10 md:w-[80%] md:flex-row md:items-center md:gap-4'>
       {/*búsqueda*/}
       <div className='relative w-full md:flex-1'>
         <input

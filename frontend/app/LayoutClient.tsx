@@ -10,8 +10,8 @@ export default function LayoutClient({ children }: { children: React.ReactNode }
   const titulo=()=>{
     if (pathname === '/') return 'Publicaciones'
     if (pathname === '/dashboard') return 'Dashboard'
-    if (pathname === '/dashboard/testimonios') return 'Editar'
-    if (pathname === '/dashboard/crear-testimonio') return 'Publicar'
+    if (pathname === '/dashboard/publicaciones') return 'Publicaciones'
+    if (pathname === '/dashboard/crear-publicacion') return 'Crear Publicaciones'
 
       return 'Dashboard'
   }
@@ -20,7 +20,7 @@ export default function LayoutClient({ children }: { children: React.ReactNode }
     <>
       <Header titulo={titulo()} pathname={pathname} />
       <div className='flex h-full'>
-        {!hideSidebar && <Sidebar />}
+        {!hideSidebar && <Sidebar/>}
         <main className='flex-1 overflow-y-auto'>{children}</main>
       </div>
     </>

@@ -14,3 +14,17 @@ export type Testimonio = {
   video_url: string | null
   fecha_creacion: string
 }
+
+
+export type Publicacion = {
+  id: string
+  autor: string
+  titulo: string
+  contenido: string
+  categoria: string
+  tags: string[]
+  estado: string
+  imagen_url: string | null
+  video_url: string | null
+  fecha_creacion: string
+}

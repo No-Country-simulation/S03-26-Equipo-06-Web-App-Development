@@ -2,11 +2,14 @@
 import { useState, FormEvent } from 'react'
 import { toast } from 'react-toastify'
 import FormularioCreacionTestimonios from '../../components/form/formulario'
+import { useRouter } from 'next/navigation'
+import { Undo2 } from 'lucide-react'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 export default function CreacionTestimonios() {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
   const [datos, setDatos] = useState({
     autor: '',
     titulo: '',
@@ -68,6 +71,12 @@ export default function CreacionTestimonios() {
 
   return (
     <>
+      <button
+        onClick={() => router.back()}
+        className='absolute top-19 right-6 cursor-pointer rounded-md px-3 py-2 text-sm text-gray-600 sm:top-24 lg:right-10'
+      >
+        <Undo2 />
+      </button>
       <FormularioCreacionTestimonios datos={datos} setDatos={setDatos} AgregarTestimonio={AgregarTestimonio} loading={loading} />
     </>
   )

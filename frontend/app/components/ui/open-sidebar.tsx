@@ -1,4 +1,3 @@
-
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { Dispatch, SetStateAction } from 'react';
