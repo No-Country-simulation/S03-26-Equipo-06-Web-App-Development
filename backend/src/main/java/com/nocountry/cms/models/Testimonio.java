@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,7 +27,7 @@ public class Testimonio {
     private String estado;
     private String imagen_url;
     private String video_url;
-    private LocalDate fecha_creacion;
+    private LocalDateTime fecha_creacion;
     @ManyToOne
     @JoinColumn (name = "id_categoria")
     @JsonIgnore

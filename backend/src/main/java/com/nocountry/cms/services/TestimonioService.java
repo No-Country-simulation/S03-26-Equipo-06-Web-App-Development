@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.cloudinary.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,7 +25,7 @@ public class TestimonioService implements ITestimonioService {
 
         cloudinary.uploadImage(nuevoTestimonio.getImagen_url());
 
-        nuevoTestimonio.setFecha_creacion(LocalDate.now());
+        nuevoTestimonio.setFecha_creacion(LocalDateTime.now());
 
         testimonioRepo.save(nuevoTestimonio);
     }
