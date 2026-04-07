@@ -86,8 +86,41 @@ jobs:
       - name: Lint
         run: npm run lint
 
-  build-and-deploy:
-    if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' }}
+  build-and-deploy-dev:
+    if: ${{ (github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch') && github.ref != 'refs/heads/main' }}
+    needs: lint
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Configure Docker Auth
+        run: gcloud auth configure-docker --quiet
+
+      - name: Build and push image
+        run: |
+          IMAGE_TAG="gcr.io/${{ secrets.GCP_PROJECT_ID }}/frontend:${{ github.sha }}"
+          docker build --build-arg NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL_DEV }} -t $IMAGE_TAG ./frontend
+          docker push $IMAGE_TAG
+
+      - name: Deploy to Cloud Run
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: frontend-dev
+          image: gcr.io/${{ secrets.GCP_PROJECT_ID }}/frontend:${{ github.sha }}
+          region: ${{ secrets.GCP_REGION }}
+          flags: '--allow-unauthenticated --port=80'
+
+  build-and-deploy-prod:
+    if: ${{ (github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main' }}
     needs: lint
     runs-on: ubuntu-latest
     permissions:
