@@ -1,9 +1,7 @@
 package com.nocountry.cms.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,15 +19,20 @@ public class Testimonio {
 
     @Id
     @GeneratedValue (strategy = GenerationType.UUID)
-    private UUID id;
-    private String autor;
+    private UUID id_testimonio;
     private String titulo;
     private String contenido;
-    private String categoria;
     private List<String> tags;
     private String estado;
     private String imagen_url;
     private String video_url;
     private LocalDate fecha_creacion;
-
+    @ManyToOne
+    @JoinColumn (name = "id_categoria")
+    @JsonIgnore
+    Categoria id_categoria;
+    @ManyToOne
+    @JoinColumn (name = "id_usuario")
+    @JsonIgnore
+    Usuario id_usuario;
 }

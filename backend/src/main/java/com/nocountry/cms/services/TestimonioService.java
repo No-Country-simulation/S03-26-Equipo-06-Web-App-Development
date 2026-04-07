@@ -49,20 +49,20 @@ public class TestimonioService implements ITestimonioService {
 
     @Override
     public Testimonio updateTestimonio(Testimonio testimonio) {
-        Testimonio edit = testimonioRepo.findById(testimonio.getId()).orElse(null);
+        Testimonio edit = testimonioRepo.findById(testimonio.getId_testimonio()).orElse(null);
 
         if(edit != null) {
-            edit.setAutor(testimonio.getAutor());
+            edit.setId_usuario(testimonio.getId_usuario());
             edit.setTitulo(testimonio.getTitulo());
             edit.setContenido(testimonio.getContenido());
-            edit.setCategoria(testimonio.getCategoria());
+            edit.setId_categoria(testimonio.getId_categoria());
             edit.setTags(testimonio.getTags());
             edit.setEstado(testimonio.getEstado());
             edit.setImagen_url(testimonio.getImagen_url());
             edit.setVideo_url(testimonio.getVideo_url());
 
-            return testimonioRepo.save(edit);
-        }   else  return null;
+            return testimonioRepo.save(edit);   }   else  return null;
+
     }
 
 

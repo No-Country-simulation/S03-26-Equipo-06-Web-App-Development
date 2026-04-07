@@ -23,7 +23,7 @@ public class TestimonioController {
 
         testimonioService.createTestimonio(nuevoTestimonio);
 
-        UUID id = nuevoTestimonio.getId();
+        UUID id = nuevoTestimonio.getId_testimonio();
 
         return ResponseBuilder.created("Testimonio creado correctamente.", String.valueOf(id));
     }
@@ -51,7 +51,7 @@ public class TestimonioController {
     public ResponseEntity<ApiResponse<Testimonio>> editar(@RequestBody Testimonio nuevoTestimonio){
         testimonioService.updateTestimonio(nuevoTestimonio);
 
-        return ResponseBuilder.success("OK", testimonioService.getTestimonioById(nuevoTestimonio.getId()));
+        return ResponseBuilder.success("OK", testimonioService.getTestimonioById(nuevoTestimonio.getId_testimonio()));
     }
 
 }
