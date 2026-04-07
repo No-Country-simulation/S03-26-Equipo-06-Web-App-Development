@@ -68,7 +68,7 @@ jobs:
           GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
 
   lint:
-    if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' }}
+    if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
     needs: build
     runs-on: ubuntu-latest
     defaults:
@@ -92,7 +92,7 @@ jobs:
 
   build-and-deploy-dev:
     if: ${{ (github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch') && github.ref != 'refs/heads/main' }}
-    needs: lint
+    needs: [lint, scan]
     runs-on: ubuntu-latest
     permissions:
       contents: 'read'
