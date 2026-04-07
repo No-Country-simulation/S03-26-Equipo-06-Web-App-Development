@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
 import RenderHome from '../components/testimonios/card-home'
 import { HomeSkeleton } from '../components/ui/skeletors/skeletor-home'
-import { Publicacion } from '@/types/testimonio'
+import { Publicacion, Testimonio } from '@/types/testimonio'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
@@ -18,7 +18,8 @@ export default function Home() {
     const fetchData = async () => {
       try {
         const res = await fetch(`${API_URL}/api/testimonios`)
-        const result = await res.json()
+        const json = await res.json()
+        const result: Testimonio[] = json.data
         setData(result)
       } catch (error) {
         console.error(error)
