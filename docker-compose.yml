@@ -1,10 +1,12 @@
 services:
   web:
     build:
-      context: ./cms-web
+      context: ./frontend
       dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
     ports:
-      - "5173:80"
+      - "3000:80"
     depends_on:
       - api
     networks:
@@ -12,12 +14,10 @@ services:
 
   api:
     build:
-      context: ./cms-api
+      context: ./backend
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
     networks:
       - app-network
 
