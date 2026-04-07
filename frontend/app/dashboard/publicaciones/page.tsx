@@ -38,7 +38,8 @@ export default function TestimoniosDashboard() {
     const fetchTestimonios = async () => {
       try {
         const res = await fetch(`${API_URL}/api/testimonios`)
-        const result = await res.json()
+        const json = await res.json()
+        const result: Testimonio[] = json.data
         setData(result)
         setLoading(false)
       } catch (error) {

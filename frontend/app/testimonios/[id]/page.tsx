@@ -54,7 +54,8 @@ export default function TestimonioDetallePage() {
     const fetchTestimonio = async () => {
       try {
         const res = await fetch(`${API_URL}/api/testimonios/${id}`)
-        const result = await res.json()
+        const json = await res.json()
+        const result: Testimonio[] = json.data
         setData(result)
       } catch (error) {
         console.error('Error fetch:', error)

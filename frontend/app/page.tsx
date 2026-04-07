@@ -25,7 +25,8 @@ export default function Testimonios() {
     const fetchTestimonios = async () => {
       try {
         const res = await fetch(`${API_URL}/api/testimonios`)
-        const result: Testimonio[] = await res.json()
+        const json = await res.json()
+        const result: Testimonio[] = json.data
         //solo los publicados
         const publicados = result.filter(item => item.estado.toLowerCase() === 'publicado')
         setData(publicados)
