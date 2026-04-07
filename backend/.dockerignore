@@ -3,7 +3,7 @@
 *.md
 Dockerfile
 docker-compose*
-.env*
+.env
 .vscode
 .idea
 *.log
