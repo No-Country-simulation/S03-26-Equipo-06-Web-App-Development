@@ -22,6 +22,8 @@ public class Testimonio {
     private UUID id_testimonio;
     private String titulo;
     private String contenido;
+    
+    @ElementCollection
     private List<String> tags;
     private String estado;
     private String imagen_url;
