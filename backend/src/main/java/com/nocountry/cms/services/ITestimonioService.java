@@ -11,9 +11,9 @@ public interface ITestimonioService {
 
      List<Testimonio> getTestimonios();
 
-     Testimonio getTestimonioById(UUID id);
+     Testimonio getTestimonioById(Integer id);
 
-     String deleteTestimonioById(UUID id);
+     String deleteTestimonioById(Integer id);
 
      Testimonio updateTestimonio(Testimonio testimonio);
 

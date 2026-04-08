@@ -1,6 +1,5 @@
 package com.nocountry.cms.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,14 +19,13 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_usuario;
     private String nombre;
+    @Column(unique = true)
     private String correo;
     private String password;
     private String rol;
     private String estado;
     private LocalDate fecha_creacion;
-    @OneToMany
-    @JoinColumn (name = "id_testimonio")
-    @JsonIgnore
+    @OneToMany(mappedBy = "id_usuario")
     private List<Testimonio> lista_testimonios;
 
 }

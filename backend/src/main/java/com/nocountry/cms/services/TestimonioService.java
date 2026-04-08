@@ -36,13 +36,13 @@ public class TestimonioService implements ITestimonioService {
     }
 
     @Override
-    public Testimonio getTestimonioById(UUID id) {
+    public Testimonio getTestimonioById(Integer id) {
 
         return testimonioRepo.findById(id).orElse(null);
     }
 
     @Override
-    public String deleteTestimonioById(UUID id) {
+    public String deleteTestimonioById(Integer id) {
         testimonioRepo.deleteById(id);
         return "Testimonio eliminado correctamente";
     }
