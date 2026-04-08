@@ -126,10 +126,7 @@ jobs:
           region: ${{ secrets.GCP_REGION }}
           flags: >
             --allow-unauthenticated
-            --set-env-vars SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL_DEV }},SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME_DEV }},SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD_DEV }},
-            API_URL_CORS=${{ secrets.API_URL_CORS_DEV }},
-            CLOUDINARY_URL=${{ secrets.CLOUDINARY_URL }},
-            JWT_SECRET=${{ secrets.JWT_SECRET_DEV }},JWT_EXPIRATION=${{ secrets.JWT_EXPIRATION }}
+            --set-env-vars SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL_DEV }},SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME_DEV }},SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD_DEV }},API_URL_CORS=${{ secrets.API_URL_CORS_DEV }},CLOUDINARY_URL=${{ secrets.CLOUDINARY_URL }},JWT_SECRET=${{ secrets.JWT_SECRET_DEV }},JWT_EXPIRATION=${{ secrets.JWT_EXPIRATION }}
 
   build-and-deploy-prod:
     if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
@@ -164,7 +161,4 @@ jobs:
           region: ${{ secrets.GCP_REGION }}
           flags: >
             --allow-unauthenticated
-            --set-env-vars SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }},SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }},SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }},
-            API_URL_CORS=${{ secrets.API_URL_CORS }},
-            CLOUDINARY_URL=${{ secrets.CLOUDINARY_URL }},
-            JWT_SECRET=${{ secrets.JWT_SECRET }},JWT_EXPIRATION=${{ secrets.JWT_EXPIRATION }}
+            --set-env-vars SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }},SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }},SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }},API_URL_CORS=${{ secrets.API_URL_CORS }},CLOUDINARY_URL=${{ secrets.CLOUDINARY_URL }},JWT_SECRET=${{ secrets.JWT_SECRET }},JWT_EXPIRATION=${{ secrets.JWT_EXPIRATION }}
