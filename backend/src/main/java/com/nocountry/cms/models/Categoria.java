@@ -20,8 +20,7 @@ public class Categoria {
     private int id_categoria;
     private String nombre;
     private String descripcion;
-    @OneToMany(cascade=CascadeType.ALL)
-    @JoinColumn (name = "id_testimonio")
+    @OneToMany(mappedBy = "id_categoria", cascade=CascadeType.ALL)
     @JsonIgnore
     private List<Testimonio> lista_testimonios;
 

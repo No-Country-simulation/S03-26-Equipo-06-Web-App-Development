@@ -25,8 +25,7 @@ public class Usuario {
     private String rol;
     private String estado;
     private LocalDate fecha_creacion;
-    @OneToMany
-    @JoinColumn (name = "id_testimonio")
+    @OneToMany(mappedBy = "id_usuario")
     @JsonIgnore
     private List<Testimonio> lista_testimonios;
 

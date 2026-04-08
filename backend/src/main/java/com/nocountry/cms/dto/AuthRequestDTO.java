@@ -1,0 +1,13 @@
+package com.nocountry.cms.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class AuthRequestDTO {
+    private String correo;
+    private String password;
+}
