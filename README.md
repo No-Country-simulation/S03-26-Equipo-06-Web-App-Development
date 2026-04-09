@@ -108,6 +108,10 @@ docker-compose up --build
 ```bash
 docker-compose down
 ```
+> Abrir navegdor en:
+- Web: http://localhost:5173
+- API: http://localhost:8080
+
 ## 🤝 Contribución
 Este es un Proyecto desarrollado en equipo bajo metodología ágil (Scrum) en el entorno de No Country.
 Si deseas contribuir:
