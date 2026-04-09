@@ -73,6 +73,10 @@ docker-compose up --build
 ```bash
 docker-compose down
 ```
+### Verificación en ejecución
+```bash
+docker exec -it api-1 printenv
+```
 ### Abrir navegdor en:
 - Web → [http://localhost:5173](http://localhost:5173)
 - API → [http://localhost:8080](http://localhost:5173)
