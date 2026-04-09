@@ -58,8 +58,12 @@ npm install
 npm run dev
 ```
 
-### 🔹Opción 2: Docker (opción Recomendada)
-En la carpeta donde se almacenara la aplicación en tu equipo local, abrir el terminal y ejecutar.
+### 🐳 Opción 2: Docker (opción Recomendada)
+##  Docker
+Este proyecto incluye un archivo docker-compose.yml que permite levantar todo el entorno de forma rapida, consistente y sencilla.
+En la carpeta de tu equipo local, creada para almacener esta aplicacióndonde, abre el terminal y ejecutar.
+
+
 ```bash
 git clone https://github.com/No-Country-simulation/S03-26-Equipo-06-Web-App-Development.git
 cd S03-26-Equipo-06-Web-App-Development docker-compose up --build
@@ -72,6 +76,24 @@ Frontend → http://localhost:5173
 Backend → http://localhost:8080
 ```
 
+Comandos útiles:
+### Construir y levantar contenedores
+```bash
+docker-compose up --build
+```
+### Detener contenedores
+```bash
+docker-compose down
+```
+> Abrir navegdor en:
+- Web: http://localhost:5173
+- API: http://localhost:8080
+
+
+Permite levantar todo el entorno de desarrollo de forma rápida y consistente.
+
+---
+---
 ## 🔐 6.-  Variables de entorno
 ⚠️ Este proyecto requiere archivos .env para su correcto funcionamiento.
 ### 📁 Backend (backend/.env)
@@ -95,22 +117,6 @@ El sistema utiliza autenticación basada en JWT.
 ⚠️ IMPORTANTE:
 La clave JWT_SECRET debe tener un mínimo de 256 bits (32 caracteres).
 Claves más cortas generarán errores de seguridad en la aplicación.
-
-## 🐳 Docker
-Este proyecto incluye un archivo docker-compose.yml que permite levantar todos los servicios de forma sencilla.
-
-Comandos útiles:
-### Construir y levantar contenedores
-```bash
-docker-compose up --build
-```
-### Detener contenedores
-```bash
-docker-compose down
-```
-> Abrir navegdor en:
-- Web: http://localhost:5173
-- API: http://localhost:8080
 
 ## 🤝 Contribución
 Este es un Proyecto desarrollado en equipo bajo metodología ágil (Scrum) en el entorno de No Country.
