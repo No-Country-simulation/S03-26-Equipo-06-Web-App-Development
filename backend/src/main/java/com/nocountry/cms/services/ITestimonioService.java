@@ -3,7 +3,6 @@ package com.nocountry.cms.services;
 import com.nocountry.cms.models.Testimonio;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface ITestimonioService {
 
@@ -11,9 +10,9 @@ public interface ITestimonioService {
 
      List<Testimonio> getTestimonios();
 
-     Testimonio getTestimonioById(UUID id);
+     Testimonio getTestimonioById(Integer id);
 
-     String deleteTestimonioById(UUID id);
+     String deleteTestimonioById(Integer id);
 
      Testimonio updateTestimonio(Testimonio testimonio);
 

@@ -25,7 +25,7 @@ public class TestimonioController {
 
         testimonioService.createTestimonio(nuevoTestimonio);
 
-        UUID id = nuevoTestimonio.getId_testimonio();
+        Integer id = nuevoTestimonio.getId_testimonio();
 
         return ResponseBuilder.created("Testimonio creado correctamente.", String.valueOf(id));
     }
@@ -39,14 +39,14 @@ public class TestimonioController {
 
     // Público en SecurityConfig
     @GetMapping("/testimonios/{id}")
-    public ResponseEntity<ApiResponse<Testimonio>> getUnTestimonio(@PathVariable UUID id){
+    public ResponseEntity<ApiResponse<Testimonio>> getUnTestimonio(@PathVariable Integer id){
 
         return ResponseBuilder.success("OK", testimonioService.getTestimonioById(id));
     }
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @DeleteMapping("/testimonios/eliminar/{id}")
-    public ResponseEntity<ApiResponse<String>> eliminar(@PathVariable UUID id){
+    public ResponseEntity<ApiResponse<String>> eliminar(@PathVariable Integer id){
         testimonioService.deleteTestimonioById(id);
 
         return ResponseBuilder.success("OK", "Testimonio eliminado correctamente.");

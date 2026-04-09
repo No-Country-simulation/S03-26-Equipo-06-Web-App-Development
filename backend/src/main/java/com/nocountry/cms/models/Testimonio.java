@@ -9,7 +9,6 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Getter @Setter
 @AllArgsConstructor
@@ -18,13 +17,10 @@ import java.util.UUID;
 public class Testimonio {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.UUID)
-    private UUID id_testimonio;
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private Integer id_testimonio;
     private String titulo;
     private String contenido;
-    
-    @ElementCollection
-    private List<String> tags;
     private String estado;
     private String imagen_url;
     private String video_url;
@@ -32,9 +28,16 @@ public class Testimonio {
     @ManyToOne
     @JoinColumn (name = "id_categoria")
     @JsonIgnore
-    Categoria id_categoria;
+    private Categoria id_categoria;
     @ManyToOne
     @JoinColumn (name = "id_usuario")
     @JsonIgnore
-    Usuario id_usuario;
+    private Usuario id_usuario;
+    @ManyToMany
+    @JoinTable(
+            name = "testimonio_tag",
+            joinColumns = @JoinColumn(name = "id_testimonio"),
+            inverseJoinColumns = @JoinColumn(name = "id_tag")
+    )
+    private List<Tag> tags;
 }

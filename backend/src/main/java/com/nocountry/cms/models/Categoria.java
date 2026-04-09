@@ -1,6 +1,5 @@
 package com.nocountry.cms.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,8 +19,7 @@ public class Categoria {
     private int id_categoria;
     private String nombre;
     private String descripcion;
-    @OneToMany(mappedBy = "id_categoria", cascade=CascadeType.ALL)
-    @JsonIgnore
+    @OneToMany(mappedBy = "id_categoria")
     private List<Testimonio> lista_testimonios;
 
 }
