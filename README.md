@@ -40,8 +40,15 @@ El proyecto sigue una arquitectura desacoplada basada en microservicios:
  - Tailwind CSS 4
 
 🔹 DevOps
- - Docker  
- - Docker Compose  
+ - Docker
+ - Docker Compose
+ - GitHub Actions
+ - Google Cloud Platform (GCP)
+ - Google Cloud Run
+ - Google Container Registry (GCR)
+ - Gitleaks
+ - Checkstyle
+ - ESLint
 
 ## 🚀 5.- Ejecución del proyecto
 Antes de ejecutar el proyecto, asegúrate de tener instalado Node.js 22, - Java 21 para opción manual y Docker para seguir con la opción recomendada
