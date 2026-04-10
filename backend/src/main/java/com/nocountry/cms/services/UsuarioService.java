@@ -18,7 +18,7 @@ import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
-public class AuthService {
+public class UsuarioService implements IUsuarioService{
 
     private final IUsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;

@@ -19,7 +19,7 @@ public class TestimonioController {
     @Autowired
     private ITestimonioService testimonioService;
 
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_EDITOR', 'ROLE_USUARIOREGISTRADO')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_EDITOR')")
     @PostMapping("/testimonios")
     public ResponseEntity<ApiResponse<String>> createTestimonio(@RequestBody Testimonio nuevoTestimonio) {
 
