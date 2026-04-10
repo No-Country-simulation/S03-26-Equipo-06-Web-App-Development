@@ -21,7 +21,7 @@ Este proyecto es una aplicación web desarrollada en el contexto de una simulaci
 El proyecto sigue una arquitectura desacoplada basada en microservicios:  
 📦 root  
  ┣ 📂 backend      → API REST (Spring Boot)  
- ┣ 📂 frontend     → Aplicación web (Vite / Node.js)  
+ ┣ 📂 frontend     → Aplicación web (Next.js / Node.js)  
  ┣ 📄 docker-compose.yml  
  ┗ 📄 README.md  
   
@@ -33,13 +33,15 @@ El proyecto sigue una arquitectura desacoplada basada en microservicios:
  + JWT (JSON Web Tokens)  
 
 🔹 Frontend
- - Node.js 22+
- - Vite  
- - JavaScript / (posible React)  
+ - Node.js 22
+ - Next.js 16
+ - React 19
+ - TypeScript
+ - Tailwind CSS 4
 
 🔹 DevOps
-- Docker  
-- Docker Compose  
+ - Docker  
+ - Docker Compose  
 
 ## 🚀 5.- Ejecución del proyecto
 Antes de ejecutar el proyecto, asegúrate de tener instalado Node.js 22, - Java 21 para opción manual y Docker para seguir con la opción recomendada
@@ -54,8 +56,8 @@ cd backend
 > **Para la ejecución del Frontend**
 ```bash
 cd frontend
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 ### 🐳 Opción 2: Docker (opción Recomendada)
@@ -78,7 +80,7 @@ docker-compose down
 docker exec -it api-1 printenv
 ```
 ### Abrir navegdor en:
-- Web → [http://localhost:5173](http://localhost:5173)
+- Web → [http://localhost:3000](http://localhost:5173)
 - API → [http://localhost:8080](http://localhost:5173)
 
 ## 🔐 6.-  Variables de entorno
@@ -95,7 +97,7 @@ JWT_EXPIRATION=3600000
 ```
 ### 📁 Frontend (frontend/.env)
 ```bash
-VITE_API_URL=http://localhost:8080
+NEXT_PUBLIC_API_URL=http://localhost:8080
 ```
 
 ## 🔒 Seguridad (JWT)
@@ -118,18 +120,47 @@ Si deseas contribuir:
 
 ## 👨‍💻 Equipo de desarrollo y roles
 S03-26-Equipo 06 - No Country Simulation
-- A. Ricardo    [FrontEnd]
-- C. Elian      [Devops]
-- C. Luis       [Architech]
-- L. Cristhian  [BackEnd]
-- R. Ignacio    [BackEnd]
+- A. Cristhian   [FrontEnd]
+- C. Elian       [Devops]
+- C. Luis        [Architech]
+- L. Ricardo     [BackEnd]
+- R. Ignacio     [BackEnd]
   
 ## 📄 Licencia
 Este proyecto es de uso educativo dentro del programa No Country.
 
 ## 📸 Agregar screenshots del sistema
 * $#$$%%&&
-  
-## 📊 Diagrama de arquitectura
-* $#$$%%&& Endpoints documentados (Swagger/Postman)
+* 
+## 📊 Endpoints documentados
+
+### 🔐 Autenticación
+| Método | Endpoint | Acceso | Descripción |
+|--------|----------|--------|-------------|
+| POST | `/api/auth/registro` | 🌐 Público | Registra un nuevo usuario y devuelve JWT |
+| POST | `/api/auth/login` | 🌐 Público | Autentica usuario y devuelve JWT |
+
+### 📋 Testimonios
+| Método | Endpoint | Acceso | Descripción |
+|--------|----------|--------|-------------|
+| GET | `/api/testimonios` | 🌐 Público | Lista todos los testimonios |
+| GET | `/api/testimonios/{id}` | 🌐 Público | Obtiene un testimonio por ID |
+| POST | `/api/testimonios` | 🔒 ADMIN, EDITOR, USUARIOREGISTRADO | Crea un nuevo testimonio |
+| PUT | `/api/testimonios/editar` | 🔒 ADMIN, EDITOR | Edita un testimonio existente |
+| DELETE | `/api/testimonios/eliminar/{id}` | 🔒 ADMIN | Elimina un testimonio |
+
+### 🔑 Roles disponibles
+| Rol | Permisos |
+|-----|----------|
+| `admin` | CRUD completo |
+| `editor` | Crear y editar |
+| `usuarioregistrado` | Solo crear |
+| `usuariovisitante` | Solo lectura |
+
+### 📨 Ejemplo de uso
+**1. Login:**
+```json
+POST /api/auth/login
+{ "correo": "user@example.com", "password": "password123" }
+
 * $#$$%%&&
