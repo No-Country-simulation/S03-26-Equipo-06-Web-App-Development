@@ -45,22 +45,35 @@ El proyecto sigue una arquitectura desacoplada basada en microservicios:
 Antes de ejecutar el proyecto, asegúrate de tener instalado Node.js 22, - Java 21 para opción manual y Docker para seguir con la opción recomendada
 
 ### 🔹 Opción 1: Ejecución Manual - Desarrollo local
-En nuestra arquitectura de NoCountry (Next.js + Spring Boot + Docker), identificamos que el uso de npm puede generar inconsistencias entre entornos (desarrollo, contenedor y CI/CD) debido a un manejo menos estricto de las dependencias. Asimismo, observamos que tiende a duplicar paquetes, lo que impacta negativamente en el rendimiento al incrementar el tiempo y peso de los builds en Docker. Adicionalmente, puede ocultar errores de dependencias, representando un riesgo en entornos colaborativos donde la estabilidad es clave. Finalmente, su limitada eficiencia para manejar estructuras tipo monorepo dificulta la organización y escalabilidad del proyecto.
+Para la arquitectura de la aplicación (Next.js + Spring Boot + Docker), identificamos que el uso de npm generaba inconsistencias entre entornos y duplicación de paquetes, afectando el rendimiento y aumentando el peso de los builds en Docker. Además, puede ocultar errores de dependencias y presenta limitaciones para manejar estructuras tipo monorepo, dificultando la escalabilidad.
+Por otro lado, pnpm (Performant Node Package Manager) optimiza la gestión de dependencias mediante un almacenamiento compartido, reduciendo el uso de disco, acelerando instalaciones y mejorando la consistencia entre entornos.
+Por lo tanto, se eligió pnpm para garantizar mayor eficiencia y control en el desarrollo del proyecto. Finalmente, en la carpeta del proyecto, se debe abrir una terminal y ejecutar los comandos necesarios para instalar dependencias y levantar el frontend (./frontend) y posteriormente el backend (./backend) .
 
-Por lo tanto, se eligió pnpm como gestor de paquetes para garantizar mayor eficiencia, consistencia y control en el desarrollo del proyecto.
+> **Para ejecución desde el folder ./Frontend de la aplicación**
+Instalación de dependencias
+```bash
+cd frontend
+sudo apt install -y nodejs
+npm install -g pnpm
+```
+Verificar intalación de pnpm
+```bash
+ 	node -v
+	npm -v
+	pnpm -v
+```
+Ejecución de aplicación
+```bash 
+pnpm dev
+```
 
-En la carpeta donde ha elegido almacenar la aplicación, abrir el terminal y ejecutar.
-> **Para la ejecución del Backend**
+> **Para ejecución desde el folder ./Frontend de la aplicación**
 ```bash
 cd backend  
  ./mvnw spring-boot:run
 ```
-> **Para la ejecución del Frontend**
-```bash
-cd frontend
-npm install
-npm run dev
-```
+
+
 
 ### 🐳 Opción 2: Docker (opción Recomendada)
 ##  Docker
