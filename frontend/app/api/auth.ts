@@ -9,8 +9,10 @@ export type AuthRegistro = {
   password: string
 }
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL
+
 export async function Ingresar({ correo, password }: AuthLogin) {
-  const res = await fetch('http://localhost:8080/api/auth/login', {
+  const res = await fetch(`${API_URL}/api/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ correo, password }),
@@ -24,7 +26,7 @@ export async function Ingresar({ correo, password }: AuthLogin) {
 }
 
 export async function Registrar({ nombre, correo, password }: AuthRegistro) {
-  const res = await fetch('http://localhost:8080/api/auth/registro', {
+  const res = await fetch(`${API_URL}/api/auth/registro`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ nombre, correo, password }),
