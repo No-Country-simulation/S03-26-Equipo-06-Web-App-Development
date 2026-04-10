@@ -1,18 +1,12 @@
 'use client'
-import { useEffect, useState } from 'react'
+
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/app/context/AuthContext'
 import { LogIn, LogOut } from 'lucide-react'
 export default function IngresarRegistrarseBotones() {
   const router = useRouter()
   const { isLogged, logout } = useAuth()
-  const [mounted, setMounted] = useState(false)
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) return null
 
   return (
     <>
