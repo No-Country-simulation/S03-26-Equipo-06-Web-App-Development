@@ -49,52 +49,55 @@ Para la arquitectura de la aplicación (Next.js + Spring Boot + Docker), identif
 Por otro lado, pnpm (Performant Node Package Manager) optimiza la gestión de dependencias mediante un almacenamiento compartido, reduciendo el uso de disco, acelerando instalaciones y mejorando la consistencia entre entornos.
 Por lo tanto, se eligió pnpm para garantizar mayor eficiencia y control en el desarrollo del proyecto. Finalmente, en la carpeta del proyecto, se debe abrir una terminal y ejecutar los comandos necesarios para instalar dependencias y levantar el frontend (./frontend) y posteriormente el backend (./backend) .
 
-> **Para ejecución desde el folder ./Frontend de la aplicación**
-Instalación de dependencias
+
+#### Para ejecución desde el folder **./Frontend** de la aplicación
+##### Instalación de dependencias
 ```bash
 cd frontend
 sudo apt install -y nodejs
 npm install -g pnpm
 ```
-Verificar intalación de pnpm
+##### Verificar intalación de pnpm
 ```bash
  	node -v
 	npm -v
 	pnpm -v
 ```
-Ejecución de aplicación
+##### Ejecución de aplicación
 ```bash 
 pnpm dev
 ```
 
-> **Para ejecución desde el folder ./Frontend de la aplicación**
+#### **Para ejecución desde el folder ./Backend de la aplicación**
 ```bash
 cd backend  
  ./mvnw spring-boot:run
 ```
-
+### Abrir navegdor en:
+Web → http://localhost:3000
+API → http://localhost:8080
 
 
 ### 🐳 Opción 2: Docker (opción Recomendada)
-##  Docker
+
 Este proyecto incluye un archivo docker-compose.yml que permite levantar todo el entorno de forma rapida, consistente y sencilla.
 En la carpeta de tu equipo local, creada para almacener esta aplicacióndonde, abre el terminal y ejecutar.
 Comandos útiles:
-### clonar repositorio, ubicarse en carpeta y construcción de maquina virtual
+#### clonar repositorio, ubicarse en carpeta y construcción de maquina virtual
 ```bash
 git clone https://github.com/No-Country-simulation/S03-26-Equipo-06-Web-App-Development.git
 cd S03-26-Equipo-06-Web-App-Development
 docker-compose up --build
 ```
-### Detener contenedores
+#### Detener contenedores
 ```bash
 docker-compose down
 ```
-### Verificación en ejecución
+#### Verificación en ejecución
 ```bash
 docker exec -it api-1 printenv
 ```
-### Abrir navegdor en:
+#### Abrir navegdor en:
 - Web → [http://localhost:5173](http://localhost:5173)
 - API → [http://localhost:8080](http://localhost:5173)
 
