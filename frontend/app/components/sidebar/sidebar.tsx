@@ -1,21 +1,28 @@
 'use client'
 import { useState } from 'react'
-import { Home, MessageSquare, Plus } from 'lucide-react'
+import { Home, MessageSquare, Plus, UserPlus } from 'lucide-react'
 import { PropsSidebar } from '@/types/sidebar'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { usePathname } from 'next/navigation'
+import { useAuth } from '@/app/context/AuthContext'
 
 const ButtonSidebar = dynamic(() => import('../../components/ui/open-sidebar'), { ssr: false })
 
-const nav: PropsSidebar[] = [
+export default function Sidebar() {
+  const [open, setOpen] = useState(false);
+  const {rol}=useAuth()
+
+  const nav: PropsSidebar[] = [
   { id: 1, icon: <Home />, text: 'Dashboard', url: '/dashboard' },
   { id: 2, icon: <MessageSquare />, text: 'Publicaciones', url: '/dashboard/publicaciones' },
   { id: 3, icon: <Plus />, text: 'Crear Publicación', url: '/dashboard/crear-publicacion' },
 ]
 
-export default function Sidebar() {
-  const [open, setOpen] = useState(false)
+//falta decidir nueva pagian o ver si renderizo recordatorio para agregar un administrador editor
+if(rol === "ROLE_ADMIN"){
+  nav.push({id:4,icon:<UserPlus/>,text:"Agregar Editor",url:"#"});
+}
 
   return (
     <div
