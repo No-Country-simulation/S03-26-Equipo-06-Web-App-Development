@@ -4,6 +4,7 @@ import com.nocountry.cms.dto.response.ApiResponse;
 import com.nocountry.cms.dto.response.ResponseBuilder;
 import com.nocountry.cms.models.Testimonio;
 import com.nocountry.cms.services.ITestimonioService;
+import com.nocountry.cms.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,10 +19,14 @@ public class TestimonioController {
 
     @Autowired
     private ITestimonioService testimonioService;
+    @Autowired
+    private UsuarioService usuarioService;
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_EDITOR')")
     @PostMapping("/testimonios")
     public ResponseEntity<ApiResponse<String>> createTestimonio(@RequestBody Testimonio nuevoTestimonio) {
+
+
 
         testimonioService.createTestimonio(nuevoTestimonio);
 
