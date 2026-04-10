@@ -13,3 +13,4 @@ public class RegistroRequestDTO {
     private String password;
     private String rol;
 }
+

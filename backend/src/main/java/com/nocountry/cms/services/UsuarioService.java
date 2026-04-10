@@ -6,6 +6,7 @@ import com.nocountry.cms.dto.RegistroRequestDTO;
 import com.nocountry.cms.models.Usuario;
 import com.nocountry.cms.repositories.IUsuarioRepository;
 import com.nocountry.cms.security.JwtUtil;
+import com.nocountry.cms.security.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,7 +25,7 @@ public class UsuarioService implements IUsuarioService{
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
-    private final UserDetailsService userDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
 
     public AuthResponseDTO login(AuthRequestDTO request) {
         authenticationManager.authenticate(
