@@ -45,7 +45,11 @@ El proyecto sigue una arquitectura desacoplada basada en microservicios:
 Antes de ejecutar el proyecto, asegúrate de tener instalado Node.js 22, - Java 21 para opción manual y Docker para seguir con la opción recomendada
 
 ### 🔹 Opción 1: Ejecución Manual - Desarrollo local
-En la carpeta donde se almacenara la aplicación en tu equipo local, abrir el terminal y ejecutar.
+En nuestra arquitectura de NoCountry (Next.js + Spring Boot + Docker), identificamos que el uso de npm puede generar inconsistencias entre entornos (desarrollo, contenedor y CI/CD) debido a un manejo menos estricto de las dependencias. Asimismo, observamos que tiende a duplicar paquetes, lo que impacta negativamente en el rendimiento al incrementar el tiempo y peso de los builds en Docker. Adicionalmente, puede ocultar errores de dependencias, representando un riesgo en entornos colaborativos donde la estabilidad es clave. Finalmente, su limitada eficiencia para manejar estructuras tipo monorepo dificulta la organización y escalabilidad del proyecto.
+
+Por lo tanto, se eligió pnpm como gestor de paquetes para garantizar mayor eficiencia, consistencia y control en el desarrollo del proyecto.
+
+En la carpeta donde ha elegido almacenar la aplicación, abrir el terminal y ejecutar.
 > **Para la ejecución del Backend**
 ```bash
 cd backend  
