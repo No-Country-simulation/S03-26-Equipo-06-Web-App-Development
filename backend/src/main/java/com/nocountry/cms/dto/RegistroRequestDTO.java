@@ -25,5 +25,3 @@ public class RegistroRequestDTO {
     @NotBlank
     private String rol;
 }
-
-//eyJhbGciOiJIUzI1NiJ9.eyJyb2wiOiJST0xFX1VTVUFSSU9WSVNJVEFOVEUiLCJzdWIiOiJuYWNob0BtYWlsLmNvbSIsImlhdCI6MTc3NTg3MTk4NCwiZXhwIjoxNzc1OTU4Mzg0fQ.K0IvfiRXwDR0HLyUojUP95ovIL08kG6GLZsRR-zXKiQ
