@@ -97,6 +97,9 @@ jobs:
     if: ${{ (github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch') && github.ref != 'refs/heads/main' }}
     needs: [lint, scan]
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -112,10 +115,14 @@ jobs:
       - name: Configure Docker Auth
         run: gcloud auth configure-docker --quiet
 
+      - name: Create .env file
+        run: |
+          echo "${{ secrets.ENV_FILE_DEV }}" > .env
+
       - name: Build and push image
         run: |
           IMAGE_TAG="gcr.io/${{ secrets.GCP_PROJECT_ID }}/backend:${{ github.sha }}"
-          docker build -t $IMAGE_TAG ./backend
+          docker build -t $IMAGE_TAG . 
           docker push $IMAGE_TAG
 
       - name: Deploy to Cloud Run
@@ -126,12 +133,14 @@ jobs:
           region: ${{ secrets.GCP_REGION }}
           flags: >
             --allow-unauthenticated
-            --set-env-vars SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL_DEV }},SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME_DEV }},SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD_DEV }},API_URL_CORS=${{ secrets.API_URL_CORS_DEV }},CLOUDINARY_URL=${{ secrets.CLOUDINARY_URL }},JWT_SECRET=${{ secrets.JWT_SECRET_DEV }},JWT_EXPIRATION=${{ secrets.JWT_EXPIRATION }}
 
   build-and-deploy-prod:
     if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
-    needs: lint
+    needs: [lint, scan]
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -147,10 +156,14 @@ jobs:
       - name: Configure Docker Auth
         run: gcloud auth configure-docker --quiet
 
+      - name: Create .env file
+        run: |
+          echo "${{ secrets.ENV_FILE_PROD }}" > .env
+
       - name: Build and push image
         run: |
           IMAGE_TAG="gcr.io/${{ secrets.GCP_PROJECT_ID }}/backend:${{ github.sha }}"
-          docker build -t $IMAGE_TAG ./backend
+          docker build -t $IMAGE_TAG . 
           docker push $IMAGE_TAG
 
       - name: Deploy to Cloud Run
@@ -161,4 +174,3 @@ jobs:
           region: ${{ secrets.GCP_REGION }}
           flags: >
             --allow-unauthenticated
-            --set-env-vars SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }},SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }},SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }},API_URL_CORS=${{ secrets.API_URL_CORS }},CLOUDINARY_URL=${{ secrets.CLOUDINARY_URL }},JWT_SECRET=${{ secrets.JWT_SECRET }},JWT_EXPIRATION=${{ secrets.JWT_EXPIRATION }}
