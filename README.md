@@ -26,31 +26,27 @@ El proyecto sigue una arquitectura desacoplada basada en microservicios:
  ┗ 📄 README.md  
   
 ## 🛠️ 4.- Stack Tecnológico 
-🔹 Backend
- + Java 21  
- + Spring Boot  
- + Spring Security  
- + JWT (JSON Web Tokens)  
+🔹 Backend:  Java 21 + Spring Boot + Spring Security + JWT (JSON Web Tokens)  
+🔹 Frontend: Node.js 22+ v18.19.1 + Vite  + JavaScript
+🔹 Base de Datos: Supabase / PostgreSQL
+🔹 DevOps: Docker  
 
-🔹 Frontend
- - Node.js 22+
- - Vite  
- - JavaScript / (posible React)  
+## 🚀 5.- Creación del Ambiente de ejecución del  proyecto
+**Considerración especial:** 
+- Para el despliegue, se asume su ejecución sobre un SO. Windows, con instalación  *gitbash* y WSL (*Ubuntu 24.04.3 LTS*), la ejecución de comandos se realizara desde *WSL terminal* y los comandos de git desde *gitbash terminal*.
+- Para la arquitectura de la aplicación (Next.js + Spring Boot + Docker), al identificar que npm generaba inconsistencias entre entornos y duplicación de paquetes lo que afectaba el rendimiento y el tamaño de lamacenamiento del Docker, además de ocultar errores de dependencias y presentar limitaciones para manejar estructuras tipo monorepo, dificultando la escalabilidad; se eligió pnpm para garantizar mayor eficiencia y control en el desarrollo del proyecto. Finalmente, pnpm (Performant Node Package Manager) optimiza la gestión de dependencias mediante un almacenamiento compartido, reduciendo el uso de disco, acelerando instalaciones y mejorando la consistencia entre entornos.
 
-🔹 DevOps
-- Docker  
-- Docker Compose  
-
-## 🚀 5.- Ejecución del proyecto
-Antes de ejecutar el proyecto, asegúrate de tener instalado Node.js 22, - Java 21 para opción manual y Docker para seguir con la opción recomendada
+Desrcargar Repositorio desde el terminal gitbash
+```bash
+	git clone https://github.com/No-Country-simulation/S03-26-Equipo-06-Web-App-Development.git
+	cd S03-26-Equipo-06-Web-App-Development
+```
 
 ### 🔹 Opción 1: Ejecución Manual - Desarrollo local
-Para la arquitectura de la aplicación (Next.js + Spring Boot + Docker), identificamos que el uso de npm generaba inconsistencias entre entornos y duplicación de paquetes, afectando el rendimiento y aumentando el peso de los builds en Docker. Además, puede ocultar errores de dependencias y presenta limitaciones para manejar estructuras tipo monorepo, dificultando la escalabilidad.
-Por otro lado, pnpm (Performant Node Package Manager) optimiza la gestión de dependencias mediante un almacenamiento compartido, reduciendo el uso de disco, acelerando instalaciones y mejorando la consistencia entre entornos.
-Por lo tanto, se eligió pnpm para garantizar mayor eficiencia y control en el desarrollo del proyecto. Finalmente, en la carpeta del proyecto, se debe abrir una terminal y ejecutar los comandos necesarios para instalar dependencias y levantar el frontend (./frontend) y posteriormente el backend (./backend) .
-
+Estando en la ruta de la aplicación, se ejecutaran comando desde la carpeta frontend (*./frontend*) o backend (*./backend*).
 
 #### Para ejecución desde el folder **./Frontend** de la aplicación
+
 ##### Instalación de dependencias
 ```bash
 cd frontend
