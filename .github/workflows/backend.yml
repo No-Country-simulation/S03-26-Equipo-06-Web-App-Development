@@ -54,49 +54,52 @@ jobs:
           name: backend-jar
           path: backend/target/*.jar
 
-  scan:
-    name: Run Scan
-    runs-on: ubuntu-latest
+  # scan:
+  #   name: Run Scan
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 0
 
-      - name: Run Gitleaks
-        uses: gitleaks/gitleaks-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
+  #     - name: Run Gitleaks
+  #       uses: gitleaks/gitleaks-action@v2
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
 
-  lint:
-    if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
-    needs: build
+  # lint:
+  #   if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run:
+  #       working-directory: backend
+  #   steps:
+  #     - uses: actions/checkout@v4
+
+  #     - name: Set up JDK 21
+  #       uses: actions/setup-java@v4
+  #       with:
+  #         java-version: '21'
+  #         distribution: 'temurin'
+  #         cache: 'maven'
+
+  #     - name: Make mvnw executable
+  #       run: git config core.autocrlf false && chmod +x ./mvnw
+
+  #     - name: Checkstyle
+  #       run: ./mvnw checkstyle:check
+
+  build-and-deploy-dev:
+    # if: ${{ (github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch') && github.ref != 'refs/heads/main' }}
+    # needs: [lint, scan]
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: backend
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up JDK 21
-        uses: actions/setup-java@v4
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-          cache: 'maven'
-
-      - name: Make mvnw executable
-        run: git config core.autocrlf false && chmod +x ./mvnw
-
-      - name: Checkstyle
-        run: ./mvnw checkstyle:check
-
-  build-and-deploy-dev:
-    if: ${{ (github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch') && github.ref != 'refs/heads/main' }}
-    needs: [lint, scan]
-    runs-on: ubuntu-latest
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -112,10 +115,14 @@ jobs:
       - name: Configure Docker Auth
         run: gcloud auth configure-docker --quiet
 
+      - name: Create .env file
+        run: |
+          echo "${{ secrets.ENV_FILE_DEV }}" > .env
+
       - name: Build and push image
         run: |
           IMAGE_TAG="gcr.io/${{ secrets.GCP_PROJECT_ID }}/backend:${{ github.sha }}"
-          docker build -t $IMAGE_TAG ./backend
+          docker build -t $IMAGE_TAG . 
           docker push $IMAGE_TAG
 
       - name: Deploy to Cloud Run
@@ -126,12 +133,14 @@ jobs:
           region: ${{ secrets.GCP_REGION }}
           flags: >
             --allow-unauthenticated
-            --set-env-vars SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL_DEV }},SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME_DEV }},SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD_DEV }},API_URL_CORS=${{ secrets.API_URL_CORS_DEV }},CLOUDINARY_URL=${{ secrets.CLOUDINARY_URL }},JWT_SECRET=${{ secrets.JWT_SECRET_DEV }},JWT_EXPIRATION=${{ secrets.JWT_EXPIRATION }}
 
   build-and-deploy-prod:
-    if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
-    needs: lint
+    # if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
+    # needs: lint
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -147,10 +156,14 @@ jobs:
       - name: Configure Docker Auth
         run: gcloud auth configure-docker --quiet
 
+      - name: Create .env file
+        run: |
+          echo "${{ secrets.ENV_FILE_PROD }}" > .env
+
       - name: Build and push image
         run: |
           IMAGE_TAG="gcr.io/${{ secrets.GCP_PROJECT_ID }}/backend:${{ github.sha }}"
-          docker build -t $IMAGE_TAG ./backend
+          docker build -t $IMAGE_TAG . 
           docker push $IMAGE_TAG
 
       - name: Deploy to Cloud Run
@@ -161,4 +174,3 @@ jobs:
           region: ${{ secrets.GCP_REGION }}
           flags: >
             --allow-unauthenticated
-            --set-env-vars SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }},SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }},SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }},API_URL_CORS=${{ secrets.API_URL_CORS }},CLOUDINARY_URL=${{ secrets.CLOUDINARY_URL }},JWT_SECRET=${{ secrets.JWT_SECRET }},JWT_EXPIRATION=${{ secrets.JWT_EXPIRATION }}

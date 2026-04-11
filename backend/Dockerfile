@@ -19,7 +19,7 @@ WORKDIR /app
 
 COPY --from=builder /app/target/*.jar app.jar
 
-RUN chown appuser:appgroup app.jar
+COPY .env .env
 
 USER appuser
 
