@@ -33,18 +33,16 @@ El proyecto sigue una arquitectura desacoplada basada en microservicios:
 
 ## 🚀 5.- Creación del Ambiente de ejecución del  proyecto
 **Considerración especial:** 
-- Para el despliegue, se asume su ejecución sobre un SO. Windows, con instalación  *gitbash* y WSL (*Ubuntu 24.04.3 LTS*), la ejecución de comandos se realizara desde *WSL terminal* y los comandos de git desde *gitbash terminal*, se recomienda colocar la aplicación en la unidad de instalación del WSL para mejora un mejor desempeño como *home/.*
+- Para el despliegue, se asume su ejecución sobre un SO. Windows, con instalación WSL (*Ubuntu 24.04.3 LTS*), la ejecución de comandos se realizara desde *WSL terminal* y los comandos de git desde *gitbash terminal*, se recomienda colocar la aplicación en la unidad de instalación del WSL en una carpeta como *home/.* para un mejor desempeño.
 - Para la arquitectura de la aplicación (Next.js + Spring Boot + Docker), al identificar que npm generaba inconsistencias entre entornos y duplicación de paquetes lo que afectaba el rendimiento y el tamaño de lamacenamiento del Docker, además de ocultar errores de dependencias y presentar limitaciones para manejar estructuras tipo monorepo, dificultando la escalabilidad; se eligió pnpm para garantizar mayor eficiencia y control en el desarrollo del proyecto. Finalmente, pnpm (Performant Node Package Manager) optimiza la gestión de dependencias mediante un almacenamiento compartido, reduciendo el uso de disco, acelerando instalaciones y mejorando la consistencia entre entornos.
 
-Desrcargar Repositorio desde el terminal gitbash
+Descargar el repositorio desde github
 ```bash
 	git clone https://github.com/No-Country-simulation/S03-26-Equipo-06-Web-App-Development.git
 	cd S03-26-Equipo-06-Web-App-Development
 ```
 
 ### 🔹 Opción 1: Ejecución Manual - Desarrollo local
-Estando en la ruta de la aplicación, se ejecutaran comando desde la carpeta frontend (*./frontend*) o backend (*./backend*).
-
 #### Para ejecución desde el folder **./Frontend** de la aplicación
 
 ##### Instalación de dependencias
