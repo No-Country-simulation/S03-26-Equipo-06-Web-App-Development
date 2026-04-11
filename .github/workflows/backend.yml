@@ -54,48 +54,48 @@ jobs:
           name: backend-jar
           path: backend/target/*.jar
 
-  # scan:
-  #   name: Run Scan
-  #   runs-on: ubuntu-latest
+  scan:
+    name: Run Scan
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 0
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-  #     - name: Run Gitleaks
-  #       uses: gitleaks/gitleaks-action@v2
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #         GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
 
-  # lint:
-  #   if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   defaults:
-  #     run:
-  #       working-directory: backend
-  #   steps:
-  #     - uses: actions/checkout@v4
+  lint:
+    if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
+    needs: build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
 
-  #     - name: Set up JDK 21
-  #       uses: actions/setup-java@v4
-  #       with:
-  #         java-version: '21'
-  #         distribution: 'temurin'
-  #         cache: 'maven'
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
 
-  #     - name: Make mvnw executable
-  #       run: git config core.autocrlf false && chmod +x ./mvnw
+      - name: Make mvnw executable
+        run: git config core.autocrlf false && chmod +x ./mvnw
 
-  #     - name: Checkstyle
-  #       run: ./mvnw checkstyle:check
+      - name: Checkstyle
+        run: ./mvnw checkstyle:check
 
   build-and-deploy-dev:
-    # if: ${{ (github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch') && github.ref != 'refs/heads/main' }}
-    # needs: [lint, scan]
+    if: ${{ (github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch') && github.ref != 'refs/heads/main' }}
+    needs: [lint, scan]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -135,8 +135,8 @@ jobs:
             --allow-unauthenticated
 
   build-and-deploy-prod:
-    # if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
-    # needs: lint
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
+    needs: [lint, scan]
     runs-on: ubuntu-latest
     defaults:
       run:
