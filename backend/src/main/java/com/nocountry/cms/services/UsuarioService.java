@@ -7,11 +7,11 @@ import com.nocountry.cms.models.Usuario;
 import com.nocountry.cms.repositories.IUsuarioRepository;
 import com.nocountry.cms.security.JwtUtil;
 import com.nocountry.cms.security.UserDetailsServiceImpl;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -57,5 +57,19 @@ public class UsuarioService implements IUsuarioService{
         UserDetails userDetails = userDetailsService.loadUserByUsername(nuevoUsuario.getCorreo());
         String token = jwtUtil.generarToken(userDetails);
         return new AuthResponseDTO(token);
+    }
+
+    public Usuario loadUserByCorreo(HttpServletRequest request){
+
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String token = authHeader.substring(7);
+            String correo = jwtUtil.extraerUsername(token);
+
+            return usuarioRepository.findByCorreo(correo)
+                    .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        } else  {
+            throw new RuntimeException("No se encontro el usuario");
+        }
     }
 }
