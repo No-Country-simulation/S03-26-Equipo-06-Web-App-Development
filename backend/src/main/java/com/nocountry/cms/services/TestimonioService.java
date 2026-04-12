@@ -3,6 +3,7 @@ package com.nocountry.cms.services;
 import com.nocountry.cms.config.CloudinaryAPI;
 import com.nocountry.cms.models.Testimonio;
 import com.nocountry.cms.repositories.ITestimonioRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.cloudinary.*;
@@ -17,11 +18,17 @@ public class TestimonioService implements ITestimonioService {
     ITestimonioRepository testimonioRepo;
     @Autowired
     CloudinaryAPI cloudinary;
+    @Autowired
+    IUsuarioService usuarioService;
 
     @Override
-    public void createTestimonio(Testimonio nuevoTestimonio) {
+    public void createTestimonio(Testimonio nuevoTestimonio, HttpServletRequest request) {
 
-        cloudinary.uploadImage(nuevoTestimonio.getImagen_url());
+        nuevoTestimonio.setId_usuario(usuarioService.loadUserByCorreo(request));
+
+        if (nuevoTestimonio.getImagen_url() != null) {
+            nuevoTestimonio.setImagen_url(cloudinary.uploadImage(nuevoTestimonio.getImagen_url()));
+        }
 
         nuevoTestimonio.setFecha_creacion(LocalDateTime.now());
 
