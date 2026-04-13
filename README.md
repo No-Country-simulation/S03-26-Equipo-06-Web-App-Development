@@ -118,15 +118,11 @@ docker exec -it api-1 printenv
 - API → [http://localhost:8080](http://localhost:5173)
 
 ## 🔐 6.-  Variables de entorno
-⚠️ 📄 Este proyecto requiere archivos .env para su correcto funcionamiento.
-⚠️ 🔒 Dado que ha implemntado seguridad JWT, para que el backend funcione se debe definir una clave secreta (JWT_SECRET) de almenos 32 caracteres (256 bit), sin esta el backend no iniciará.
+⚠️ 📄 Este proyecto requiere archivos .env para su correcto funcionamiento.  
+⚠️ 🔒 Dado que ha implemntado seguridad JWT, para que el backend funcione se debe definir una clave secreta (JWT_SECRET) de almenos 32 caracteres (256 bit), sin esta el backend no iniciará.  
 
 ### 📁 Frontend (frontend/.env)
 ```bash
-
-
-
-
 VITE_API_URL=http://localhost:8080
 ```
 
