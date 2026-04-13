@@ -3,21 +3,7 @@ Plataforma CMS para gestionar y publicar testimonios con soporte multimedia, des
 
 ## 🌐 1.- Demo
 ### 🔗 Desde el URL: [Demo](https://frontend-129781163028.us-central1.run.app/ingresar)
-### 📸 Screenshots:
-- Registro
-![Registro](https://drive.google.com/uc?export=view&id=1Ngzsn1H3gWGGBXf_icCu2qWAY5BFoiKx)
-
-- Login
-![Login](https://drive.google.com/uc?export=view&id=19I3Yd1FUzTdt2575MKXt3fwY7CnqhVoC)
-
-- Dashboard
-![Login](https://drive.google.com/uc?export=view&id=119GBsP49j3L2QHCJ3bNbsxP_a4vPV9oF)
-
-- Creación de testimonio
-![Login](https://drive.google.com/uc?export=view&id=1uD2zIWWC9jojT3OhusD7A6tchsDTahnF)
-
-- Publicaciones
-![Login](https://drive.google.com/uc?export=view&id=1d4Qh_MTvAkWaOZEQ8-mb9C1FS3U2ZKPv)
+![Dashboard](https://drive.google.com/uc?export=view&id=119GBsP49j3L2QHCJ3bNbsxP_a4vPV9oF)
 
 ## 📌 2.- Sobre el Proyecto
 Este proyecto es una aplicación web desarrollada en el contexto de una simulación profesional de No Country, cuyo objetivo es construir un CMS (Content Management System) que permita:
@@ -149,9 +135,22 @@ S03-26-Equipo 06 - No Country Simulation
 ## 📄 Licencia
 Este proyecto es de uso educativo dentro del programa No Country.
 
-## 📸 Agregar screenshots del sistema
-* $#$$%%&&
-* 
+## 📸 Screenshots:
+- Registro
+![Registro](https://drive.google.com/uc?export=view&id=1Ngzsn1H3gWGGBXf_icCu2qWAY5BFoiKx)
+
+- Login
+![Login](https://drive.google.com/uc?export=view&id=19I3Yd1FUzTdt2575MKXt3fwY7CnqhVoC)
+
+- Dashboard
+![Dashboard](https://drive.google.com/uc?export=view&id=119GBsP49j3L2QHCJ3bNbsxP_a4vPV9oF)
+
+- Creación de testimonio
+![Crear_testimonio](https://drive.google.com/uc?export=view&id=1uD2zIWWC9jojT3OhusD7A6tchsDTahnF)
+
+- Publicaciones
+![Publicaciones](https://drive.google.com/uc?export=view&id=1d4Qh_MTvAkWaOZEQ8-mb9C1FS3U2ZKPv)
+
 ## 📊 Endpoints documentados
 
 ### 🔐 Autenticación
@@ -183,7 +182,6 @@ Este proyecto es de uso educativo dentro del programa No Country.
 POST /api/auth/login
 { "correo": "user@example.com", "password": "password123" }
 
-* $#$$%%&&
 ```
 
 ## Flujos de Trabajo DevOps para Frontend, Backend y Seguridad
