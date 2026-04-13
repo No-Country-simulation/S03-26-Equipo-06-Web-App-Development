@@ -36,16 +36,14 @@ El proyecto sigue una arquitectura desacoplada basada en microservicios:
 
 ✅ Para el despliegue, se asume su ejecución sobre un SO. Windows, con instalación WSL (*Ubuntu 24.04.3 LTS*), la ejecución de comandos se realizara desde *WSL terminal* y los comandos de git desde *gitbash terminal*, se recomienda colocar la aplicación en la unidad de instalación del WSL en una carpeta como *home/.* para un mejor desempeño.  
 ✅ Para la arquitectura de la aplicación (Next.js + Spring Boot + Docker), al identificar que npm generaba inconsistencias entre entornos y duplicación de paquetes lo que afectaba el rendimiento y el tamaño de lamacenamiento del Docker, además de ocultar errores de dependencias y presentar limitaciones para manejar estructuras tipo monorepo, dificultando la escalabilidad; se eligió pnpm para garantizar mayor eficiencia y control en el desarrollo del proyecto. Finalmente, pnpm (Performant Node Package Manager) optimiza la gestión de dependencias mediante un almacenamiento compartido, reduciendo el uso de disco, acelerando instalaciones y mejorando la consistencia entre entornos.  
-📁 Para que el front y el backend funcione correctamente, hay que definir las variables de ambiente en el .env de cada carpeta, antes de ejecutar revisar la estrutura de los archivos en el punto 6.  
-  
-Descargar el repositorio desde github
+📁 Para que el front y el backend funcione correctamente, hay que definir las variables de ambiente en el .env de cada carpeta, antes de ejecutar revisar la estrutura de los archivos en el punto 6.   
+📌 Descargar el repositorio desde github
 ```bash
 	git clone https://github.com/No-Country-simulation/S03-26-Equipo-06-Web-App-Development.git
 	cd S03-26-Equipo-06-Web-App-Development
-```
-
-### 🔹 Opción 1: Ejecución Manual - Desarrollo local
-#### En el folder **./Frontend**
+```  
+### 🔹 Opción 1: Ejecución Manual - Desarrollo local  
+#### En el folder **./Frontend**  
 ##### Instalación de dependencias
 ```bash
 cd frontend
@@ -95,14 +93,11 @@ API → http://localhost:8080
 
 
 ### 🐳 Opción 2: Docker (opción Recomendada)
-Para levantar el entorno de una amanera más rapida, consistente y sencilla, se puede usar docker
-
-En la carpeta de tu equipo local, creada para almacener esta aplicacióndonde, abre el terminal y ejecutar.
-Comandos útiles:
-#### clonar repositorio, ubicarse en carpeta y construcción de maquina virtual
+Para levantar el entorno de una amanera más rapida, consistente y sencilla, se puede usar docker  
+En la carpeta de tu equipo local, creada para almacener esta aplicacióndonde, abre el terminal y ejecutar.  
+ 
+#### 📌 clonar repositorio, ubicarse en carpeta y construcción de maquina virtual
 ```bash
-git clone https://github.com/No-Country-simulation/S03-26-Equipo-06-Web-App-Development.git
-cd S03-26-Equipo-06-Web-App-Development
 docker-compose up --build
 ```
 #### Detener contenedores
