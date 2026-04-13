@@ -48,7 +48,10 @@ Descargar el repositorio desde github
 ##### Instalación de dependencias
 ```bash
 cd frontend
-sudo apt install -y nodejs
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+source ~/.bashrc
+nvm install 22
+nvm use 22
 npm install -g pnpm
 ```
 ##### Verificar intalación de pnpm
@@ -61,11 +64,20 @@ npm install -g pnpm
 ```bash 
 pnpm dev
 ```
+sudo apt install -y nodejs
+npm install -g pnpm
+
 
 #### **Para ejecución desde el folder ./Backend de la aplicación**
 ```bash
-cd backend  
+cd backend
+./mvnw clean install
+sudo apt install maven
+chmod +x mvnw
+mvn -v
+
  ./mvnw spring-boot:run
+
 ```
 ### Abrir navegdor en:
 Web → http://localhost:3000
