@@ -2,11 +2,22 @@
 Plataforma CMS para gestionar y publicar testimonios con soporte multimedia, desarrollada en un entorno colaborativo ágil.
 
 ## 🌐 1.- Demo
-### 🔗 Desde el URL: [https://proxCMStestimonial.html](https://proxCMStestimonial.html)
+### 🔗 Desde el URL: [Demo](https://frontend-129781163028.us-central1.run.app/ingresar)
 ### 📸 Screenshots:
-Las imágenes del sistema cuando esté corriendo)
-- Imagen1
-- Imagen2
+- Registro
+![Registro](https://drive.google.com/uc?export=view&id=1Ngzsn1H3gWGGBXf_icCu2qWAY5BFoiKx)
+
+- Login
+![Login](https://drive.google.com/uc?export=view&id=19I3Yd1FUzTdt2575MKXt3fwY7CnqhVoC)
+
+- Dashboard
+![Login](https://drive.google.com/uc?export=view&id=119GBsP49j3L2QHCJ3bNbsxP_a4vPV9oF)
+
+- Creación de testimonio
+![Login](https://drive.google.com/uc?export=view&id=1uD2zIWWC9jojT3OhusD7A6tchsDTahnF)
+
+- Publicaciones
+![Login](https://drive.google.com/uc?export=view&id=1d4Qh_MTvAkWaOZEQ8-mb9C1FS3U2ZKPv)
 
 ## 📌 2.- Sobre el Proyecto
 Este proyecto es una aplicación web desarrollada en el contexto de una simulación profesional de No Country, cuyo objetivo es construir un CMS (Content Management System) que permita:
@@ -101,6 +112,8 @@ SPRING_DATASOURCE_PASSWORD=postgres
 
 JWT_SECRET=1234567890abcdef1234567890abcdef
 JWT_EXPIRATION=3600000
+
+CLOUDINARY_URL=cloudinary://fake_key:fake_secret@fake_cloud
 ```
 ### 📁 Frontend (frontend/.env)
 ```bash
@@ -171,3 +184,89 @@ POST /api/auth/login
 { "correo": "user@example.com", "password": "password123" }
 
 * $#$$%%&&
+```
+
+## Flujos de Trabajo DevOps para Frontend, Backend y Seguridad
+
+Los pipelines automatizan el ciclo de vida del software para mejorar la colaboración y la eficiencia. Los pasos clave incluyen:
+
+Push/PR: Se inicia el pipeline con un Push o PR.
+Compilación y Escaneo: El código se compila y se escanea en busca de vulnerabilidades.
+Linting: Se verifica la calidad del código mediante herramientas de linting.
+Despliegue en Dev: El código se despliega en desarrollo y se realizan pruebas rápidas.
+Despliegue en Producción: Si todo va bien en Dev, se despliega en producción y se validan las pruebas finales.
+Seguridad: Se integran análisis estático y escaneos de seguridad a lo largo del proceso.
+
+Este enfoque automatiza el desarrollo, las pruebas, el despliegue y la seguridad, lo que permite una entrega continua y mejora la colaboración entre equipos.
+
+### Frontend
+
+```mermaid
+flowchart LR
+    A[Push/PR Event] --> B[Build]
+    A[Push/PR Event] --> C[Scan]
+    B --> D[Run Lint]
+    C --> D[Run Lint]
+
+    D --> E[Deploy Dev]
+    E --> F[Smoke Test Dev]
+
+    D --> G[Deploy Prod]
+    G --> H[Smoke Test Prod]
+
+    subgraph CI [CICD]
+      B
+      C
+      D
+      E
+      F
+      G
+      H
+    end
+```
+
+### Backend
+
+```mermaid
+flowchart LR
+    A[Push/PR Event] --> B[Build]
+    A[Push/PR Event] --> C[Scan]
+    B --> D[Run Lint]
+    C --> D[Run Lint]
+
+    D --> E[Deploy Dev]
+    E --> F[Smoke Test Dev]
+
+    D --> G[Deploy Prod]
+    G --> H[Smoke Test Prod]
+
+    subgraph CI [CICD]
+      B
+      C
+      D
+      E
+      F
+      G
+      H
+    end
+```
+
+### Seguridad
+
+```mermaid
+flowchart LR
+    A[Push/PR Event] --> B[Validate Branch]
+    
+    B --> C[Run Scan]
+    B --> D[Run SAST]
+
+    C --> E[Scan Completed]
+    D --> E
+
+    subgraph CI [CICD]
+      B
+      C
+      D
+      E
+    end
+```
