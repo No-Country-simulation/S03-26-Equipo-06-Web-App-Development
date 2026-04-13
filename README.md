@@ -33,13 +33,10 @@ El proyecto sigue una arquitectura desacoplada basada en microservicios:
 
 ## 🚀 5.- Creación del Ambiente de ejecución del  proyecto
 **Consideración especial:** 
-- Para el despliegue, se asume su ejecución sobre un SO. Windows, con instalación WSL (*Ubuntu 24.04.3 LTS*), la ejecución de comandos se realizara desde *WSL terminal* y los comandos de git desde *gitbash terminal*, se recomienda colocar la aplicación en la unidad de instalación del WSL en una carpeta como *home/.* para un mejor desempeño.
-- Para la arquitectura de la aplicación (Next.js + Spring Boot + Docker), al identificar que npm generaba inconsistencias entre entornos y duplicación de paquetes lo que afectaba el rendimiento y el tamaño de lamacenamiento del Docker, además de ocultar errores de dependencias y presentar limitaciones para manejar estructuras tipo monorepo, dificultando la escalabilidad; se eligió pnpm para garantizar mayor eficiencia y control en el desarrollo del proyecto. Finalmente, pnpm (Performant Node Package Manager) optimiza la gestión de dependencias mediante un almacenamiento compartido, reduciendo el uso de disco, acelerando instalaciones y mejorando la consistencia entre entornos.
-- Para que el front y el backend funcione correctamente, hay que definir las variables de ambiente en el .env de cada carpeta, antes de ejecutar revisar la estrutura de los archivos en le punto 6.
+✅ Para el despliegue, se asume su ejecución sobre un SO. Windows, con instalación WSL (*Ubuntu 24.04.3 LTS*), la ejecución de comandos se realizara desde *WSL terminal* y los comandos de git desde *gitbash terminal*, se recomienda colocar la aplicación en la unidad de instalación del WSL en una carpeta como *home/.* para un mejor desempeño.
+✅ Para la arquitectura de la aplicación (Next.js + Spring Boot + Docker), al identificar que npm generaba inconsistencias entre entornos y duplicación de paquetes lo que afectaba el rendimiento y el tamaño de lamacenamiento del Docker, además de ocultar errores de dependencias y presentar limitaciones para manejar estructuras tipo monorepo, dificultando la escalabilidad; se eligió pnpm para garantizar mayor eficiencia y control en el desarrollo del proyecto. Finalmente, pnpm (Performant Node Package Manager) optimiza la gestión de dependencias mediante un almacenamiento compartido, reduciendo el uso de disco, acelerando instalaciones y mejorando la consistencia entre entornos.
+📁 Para que el front y el backend funcione correctamente, hay que definir las variables de ambiente en el .env de cada carpeta, antes de ejecutar revisar la estrutura de los archivos en le punto 6.
   
-✅ Requisito mínimo
-Debe tener al menos 32 caracteres (256 bits).
-
 Descargar el repositorio desde github
 ```bash
 	git clone https://github.com/No-Country-simulation/S03-26-Equipo-06-Web-App-Development.git
@@ -47,8 +44,7 @@ Descargar el repositorio desde github
 ```
 
 ### 🔹 Opción 1: Ejecución Manual - Desarrollo local
-#### Para ejecución desde el folder **./Frontend** de la aplicación
-
+#### En el folder **./Frontend**
 ##### Instalación de dependencias
 ```bash
 cd frontend
@@ -71,26 +67,35 @@ pnpm dev
 sudo apt install -y nodejs
 npm install -g pnpm
 
-
-#### **Para ejecución desde el folder ./Backend de la aplicación**
+#### En el folder **./basckend**
+##### Instalación de dependencias
 ```bash
 cd backend
 ./mvnw clean install
 sudo apt install maven
 chmod +x mvnw
-mvn -v
-
- ./mvnw spring-boot:run
-
 ```
+
+##### Verificar intalación de maven
+```bach
+mvn -v
+```
+
+##### Ejecución de aplicación
+```bach
+export $(grep -v '^#' .env | grep -v '^$' | xargs)
+./mvnw spring-boot:run
+```
+⚠️ O puede ejecutar directamente unarchivo directametne para mejorar la ejecución ./backend/runBackEnd.sh
+
 ### Abrir navegdor en:
 Web → http://localhost:3000
 API → http://localhost:8080
 
 
 ### 🐳 Opción 2: Docker (opción Recomendada)
+Para levantar el entorno de una amanera más rapida, consistente y sencilla, se puede usar docker
 
-Este proyecto incluye un archivo docker-compose.yml que permite levantar todo el entorno de forma rapida, consistente y sencilla.
 En la carpeta de tu equipo local, creada para almacener esta aplicacióndonde, abre el terminal y ejecutar.
 Comandos útiles:
 #### clonar repositorio, ubicarse en carpeta y construcción de maquina virtual
@@ -117,12 +122,29 @@ docker exec -it api-1 printenv
 
 ### 📁 Frontend (frontend/.env)
 ```bash
+
+
+
+
 VITE_API_URL=http://localhost:8080
 ```
 
 ### 📁 Backend (backend/.env)
 Ejemplo:
 ```bash
+#Database
+#DB_URL=jdbc:postgresql://db.kepvtlceadcuhulmmtcq.supabase.co:5432/postgres
+DB_URL=jdbc:postgresql://aws-1-sa-east-1.pooler.supabase.com:6543/postgres
+DB_USER=postgres.kepvtlceadcuhulmmtcq
+DB_PASS=S0326equipo06
+
+#Cloudinary
+CLOUDINARY_URL=cloudinary://923828372398843:_9NMgSGP9TGOQegBHH2-70L4WNs@dn7rqagrx
+
+# Authentication Configuration (JWT)
+JWT_SECRET=uSNUcpUy9KdMucqRuSNUcpUy9KdMucqR
+JWT_EXPIRATION=86400000
+
 SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/testdb
 SPRING_DATASOURCE_USERNAME=postgres
 SPRING_DATASOURCE_PASSWORD=postgres
