@@ -72,7 +72,7 @@ jobs:
 
   lint:
     if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
-    needs: build
+    needs: [build, scan]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -95,7 +95,7 @@ jobs:
 
   build-and-deploy-dev:
     if: ${{ (github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch') && github.ref != 'refs/heads/main' }}
-    needs: [lint, scan]
+    needs: [lint]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -103,7 +103,8 @@ jobs:
     permissions:
       contents: 'read'
       id-token: 'write'
-
+    outputs:
+      url: ${{ steps.deploy.outputs.url }}
     steps:
       - uses: actions/checkout@v4
 
@@ -126,6 +127,7 @@ jobs:
           docker push $IMAGE_TAG
 
       - name: Deploy to Cloud Run
+        id: deploy
         uses: google-github-actions/deploy-cloudrun@v2
         with:
           service: backend-dev
@@ -136,7 +138,7 @@ jobs:
 
   build-and-deploy-prod:
     if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
-    needs: [lint, scan]
+    needs: [lint]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -144,7 +146,8 @@ jobs:
     permissions:
       contents: 'read'
       id-token: 'write'
-
+    outputs:
+      url: ${{ steps.deploy.outputs.url }}
     steps:
       - uses: actions/checkout@v4
 
@@ -167,6 +170,7 @@ jobs:
           docker push $IMAGE_TAG
 
       - name: Deploy to Cloud Run
+        id: deploy
         uses: google-github-actions/deploy-cloudrun@v2
         with:
           service: backend
@@ -174,3 +178,25 @@ jobs:
           region: ${{ secrets.GCP_REGION }}
           flags: >
             --allow-unauthenticated
+
+  smoke-test-dev:
+    runs-on: ubuntu-latest
+    needs: build-and-deploy-dev
+
+    steps:
+      - name: Smoke test dev
+        run: |
+          URL="${{ needs.build-and-deploy-dev.outputs.url }}"
+          echo "Testing DEV: $URL/health"
+          curl -f --retry 5 --retry-delay 3 "$URL/health"
+
+  smoke-test-prod:
+    runs-on: ubuntu-latest
+    needs: build-and-deploy-prod
+
+    steps:
+      - name: Smoke test prod
+        run: |
+          URL="${{ needs.build-and-deploy-prod.outputs.url }}"
+          echo "Testing PROD: $URL/health"
+          curl -f --retry 5 --retry-delay 3 "$URL/health"
