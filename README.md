@@ -35,9 +35,8 @@ El proyecto sigue una arquitectura desacoplada basada en microservicios:
 **Consideración especial:** 
 - Para el despliegue, se asume su ejecución sobre un SO. Windows, con instalación WSL (*Ubuntu 24.04.3 LTS*), la ejecución de comandos se realizara desde *WSL terminal* y los comandos de git desde *gitbash terminal*, se recomienda colocar la aplicación en la unidad de instalación del WSL en una carpeta como *home/.* para un mejor desempeño.
 - Para la arquitectura de la aplicación (Next.js + Spring Boot + Docker), al identificar que npm generaba inconsistencias entre entornos y duplicación de paquetes lo que afectaba el rendimiento y el tamaño de lamacenamiento del Docker, además de ocultar errores de dependencias y presentar limitaciones para manejar estructuras tipo monorepo, dificultando la escalabilidad; se eligió pnpm para garantizar mayor eficiencia y control en el desarrollo del proyecto. Finalmente, pnpm (Performant Node Package Manager) optimiza la gestión de dependencias mediante un almacenamiento compartido, reduciendo el uso de disco, acelerando instalaciones y mejorando la consistencia entre entornos.
-- Para que el backend funcione correctamente, debes definir una clave secreta (JWT_SECRET) de almenos 32 caracteres (256 bit), sin esta el backend no iniciará, esta clave se crea en el .env como variable de entorno JWT_SECRET=	tuClaveSuperseguraDe32Caracteres:
-- 
-
+- Para que el front y el backend funcione correctamente, hay que definir las variables de ambiente en el .env de cada carpeta, antes de ejecutar revisar la estrutura de los archivos en le punto 6.
+  
 ✅ Requisito mínimo
 Debe tener al menos 32 caracteres (256 bits).
 
@@ -113,7 +112,14 @@ docker exec -it api-1 printenv
 - API → [http://localhost:8080](http://localhost:5173)
 
 ## 🔐 6.-  Variables de entorno
-⚠️ Este proyecto requiere archivos .env para su correcto funcionamiento.
+⚠️ 📄 Este proyecto requiere archivos .env para su correcto funcionamiento.
+⚠️ 🔒 Dado que ha implemntado seguridad JWT, para que el backend funcione se debe definir una clave secreta (JWT_SECRET) de almenos 32 caracteres (256 bit), sin esta el backend no iniciará.
+
+### 📁 Frontend (frontend/.env)
+```bash
+VITE_API_URL=http://localhost:8080
+```
+
 ### 📁 Backend (backend/.env)
 Ejemplo:
 ```bash
@@ -124,17 +130,6 @@ SPRING_DATASOURCE_PASSWORD=postgres
 JWT_SECRET=1234567890abcdef1234567890abcdef
 JWT_EXPIRATION=3600000
 ```
-### 📁 Frontend (frontend/.env)
-```bash
-VITE_API_URL=http://localhost:8080
-```
-
-## 🔒 Seguridad (JWT)
-El sistema utiliza autenticación basada en JWT.
-
-⚠️ IMPORTANTE:
-La clave JWT_SECRET debe tener un mínimo de 256 bits (32 caracteres).
-Claves más cortas generarán errores de seguridad en la aplicación.
 
 ## 🤝 Contribución
 Este es un Proyecto desarrollado en equipo bajo metodología ágil (Scrum) en el entorno de No Country.
