@@ -32,9 +32,14 @@ El proyecto sigue una arquitectura desacoplada basada en microservicios:
 🔹 DevOps: Docker  
 
 ## 🚀 5.- Creación del Ambiente de ejecución del  proyecto
-**Considerración especial:** 
+**Consideración especial:** 
 - Para el despliegue, se asume su ejecución sobre un SO. Windows, con instalación WSL (*Ubuntu 24.04.3 LTS*), la ejecución de comandos se realizara desde *WSL terminal* y los comandos de git desde *gitbash terminal*, se recomienda colocar la aplicación en la unidad de instalación del WSL en una carpeta como *home/.* para un mejor desempeño.
 - Para la arquitectura de la aplicación (Next.js + Spring Boot + Docker), al identificar que npm generaba inconsistencias entre entornos y duplicación de paquetes lo que afectaba el rendimiento y el tamaño de lamacenamiento del Docker, además de ocultar errores de dependencias y presentar limitaciones para manejar estructuras tipo monorepo, dificultando la escalabilidad; se eligió pnpm para garantizar mayor eficiencia y control en el desarrollo del proyecto. Finalmente, pnpm (Performant Node Package Manager) optimiza la gestión de dependencias mediante un almacenamiento compartido, reduciendo el uso de disco, acelerando instalaciones y mejorando la consistencia entre entornos.
+- Para que el backend funcione correctamente, debes definir una clave secreta (JWT_SECRET) de almenos 32 caracteres (256 bit), sin esta el backend no iniciará, esta clave se crea en el .env como variable de entorno JWT_SECRET=	tuClaveSuperseguraDe32Caracteres:
+- 
+
+✅ Requisito mínimo
+Debe tener al menos 32 caracteres (256 bits).
 
 Descargar el repositorio desde github
 ```bash
