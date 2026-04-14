@@ -283,16 +283,16 @@ classDiagram
     %% 🌐 CAPA DE CONTROLADORES
     %% ==========================================
     class UsuarioController {
-        +login(AuthRequestDTO)
-        +registrar(RegistroRequestDTO)
+        +login(request)
+        +registrar(request)
     }
 
     class TestimonioController {
-        +createTestimonio(Testimonio, HttpServletRequest)
+        +createTestimonio(testimonio, request)
         +getTestimonios()
-        +getUnTestimonio(Integer)
-        +editar(Testimonio)
-        +eliminar(Integer)
+        +getUnTestimonio(id)
+        +editar(testimonio)
+        +eliminar(id)
     }
 
     %% ==========================================
@@ -408,7 +408,7 @@ classDiagram
     TestimonioService --> CloudinaryAPI : Sube imagen
 ```
 
-## 🗄️ Diagrama Entidad-Relación (DER)
+##  Diagrama Entidad-Relación (DER)
 
 ```mermaid
 erDiagram
