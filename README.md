@@ -178,10 +178,14 @@ Este proyecto es de uso educativo dentro del programa No Country.
 
 ### 📨 Ejemplo de uso
 **1. Login:**
-```json
+```http
 POST /api/auth/login
-{ "correo": "user@example.com", "password": "password123" }
+Content-Type: application/json
 
+{
+  "correo": "user@example.com",
+  "password": "password123"
+}
 ```
 
 ## Flujos de Trabajo DevOps para Frontend, Backend y Seguridad
@@ -267,4 +271,197 @@ flowchart LR
       D
       E
     end
+```
+
+##  Diagrama de Clases (Backend)
+
+```mermaid
+classDiagram
+    direction TB
+
+    %% ==========================================
+    %% 🌐 CAPA DE CONTROLADORES
+    %% ==========================================
+    class UsuarioController {
+        +login(AuthRequestDTO)
+        +registrar(RegistroRequestDTO)
+    }
+
+    class TestimonioController {
+        +createTestimonio(Testimonio, HttpServletRequest)
+        +getTestimonios()
+        +getUnTestimonio(Integer)
+        +editar(Testimonio)
+        +eliminar(Integer)
+    }
+
+    %% ==========================================
+    %% ⚙️ CAPA DE SERVICIOS
+    %% ==========================================
+    class IUsuarioService {
+        <<interface>>
+        +login()
+        +registrar()
+        +loadUserByCorreo()
+    }
+    class UsuarioService { }
+
+    class ITestimonioService {
+        <<interface>>
+        +createTestimonio()
+        +getTestimonios()
+        +getTestimonioById()
+        +updateTestimonio()
+        +deleteTestimonioById()
+    }
+    class TestimonioService { }
+
+    IUsuarioService <|.. UsuarioService : Implements
+    ITestimonioService <|.. TestimonioService : Implements
+
+    UsuarioController --> IUsuarioService : Inyecta
+    TestimonioController --> ITestimonioService : Inyecta
+
+    %% ==========================================
+    %% 🗄️ CAPA DE REPOSITORIOS
+    %% ==========================================
+    class IUsuarioRepository {
+        <<interface>>
+        +findByCorreo(String) Optional~Usuario~
+    }
+    class ITestimonioRepository {
+        <<interface>>
+    }
+
+    UsuarioService --> IUsuarioRepository : Inyecta
+    TestimonioService --> ITestimonioRepository : Inyecta
+    TestimonioService --> IUsuarioService : Inyecta
+
+    %% ==========================================
+    %% 📦 CAPA DE MODELOS (ENTIDADES)
+    %% ==========================================
+    class Usuario {
+        +int id_usuario
+        +String correo
+        +String rol
+        +List~Testimonio~ lista_testimonios
+    }
+    class Testimonio {
+        +Integer id_testimonio
+        +String titulo
+        +Usuario id_usuario
+        +Categoria id_categoria
+        +List~Tag~ tags
+    }
+    class Categoria {
+        +int id_categoria
+        +String nombre
+    }
+    class Tag {
+        +int id_tag
+        +String nombre
+    }
+
+    %% Relaciones de Base de Datos
+    IUsuarioRepository --> Usuario : Gestiona
+    ITestimonioRepository --> Testimonio : Gestiona
+    
+    Usuario "1" --> "0..*" Testimonio : Autor
+    Categoria "1" --> "0..*" Testimonio : Clasifica
+    Testimonio "0..*" --> "0..*" Tag : Contiene
+
+    %% ==========================================
+    %% ✉️ DATA TRANSFER OBJECTS (DTOs)
+    %% ==========================================
+    class AuthRequestDTO {
+        +String correo
+        +String password
+    }
+    class RegistroRequestDTO {
+        +String nombre
+        +String correo
+        +String rol
+    }
+    class AuthResponseDTO {
+        +String token
+    }
+
+    UsuarioController ..> AuthRequestDTO : Recibe
+    UsuarioController ..> RegistroRequestDTO : Recibe
+    UsuarioController ..> AuthResponseDTO : Retorna
+
+    %% ==========================================
+    %% 🛡️ SEGURIDAD Y EXTERNOS
+    %% ==========================================
+    class SecurityConfig { }
+    class JwtAuthenticationFilter { }
+    class JwtUtil { }
+    class UserDetailsServiceImpl { }
+    class CloudinaryAPI {
+        +uploadImage(String) String
+    }
+
+    SecurityConfig --> JwtAuthenticationFilter : Configura
+    JwtAuthenticationFilter --> JwtUtil : Usa
+    JwtAuthenticationFilter --> UserDetailsServiceImpl : Usa
+    UserDetailsServiceImpl --> IUsuarioRepository : Consulta usuario
+    TestimonioService --> CloudinaryAPI : Sube imagen
+```
+
+## 🗄️ Diagrama Entidad-Relación (DER)
+
+```mermaid
+erDiagram
+    USUARIO {
+        int id_usuario PK
+        varchar nombre
+        varchar correo UK "unique"
+        varchar password
+        varchar rol
+        varchar estado
+        date fecha_creacion
+    }
+
+    CATEGORIA {
+        int id_categoria PK
+        varchar nombre
+        varchar descripcion
+    }
+
+    TESTIMONIO {
+        int id_testimonio PK
+        varchar titulo
+        text contenido
+        varchar estado
+        varchar imagen_url
+        varchar video_url
+        timestamp fecha_creacion
+        int id_categoria FK
+        int id_usuario FK
+    }
+
+    TAG {
+        int id_tag PK
+        varchar nombre
+    }
+
+    %% Tabla intermedia generada por el @JoinTable(name = "testimonio_tag")
+    testimonio_tag {
+        int id_testimonio PK, FK
+        int id_tag PK, FK
+    }
+
+    %% ==========================================
+    %% RELACIONES (Cardinalidad)
+    %% ==========================================
+    
+    %% Un Usuario puede tener cero o muchos Testimonios
+    USUARIO ||--o{ TESTIMONIO : "escribe"
+
+    %% Una Categoría puede tener cero o muchos Testimonios
+    CATEGORIA ||--o{ TESTIMONIO : "clasifica"
+
+    %% Relación Muchos a Muchos resolviéndose en la tabla intermedia
+    TESTIMONIO ||--o{ testimonio_tag : "tiene"
+    TAG ||--o{ testimonio_tag : "pertenece"
 ```
