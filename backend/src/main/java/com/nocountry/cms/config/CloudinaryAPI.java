@@ -12,10 +12,11 @@ import java.util.Map;
 public class CloudinaryAPI {
 
 
-    public void uploadImage(String filePath) {
+    public String uploadImage(String filePath) {
 
         Dotenv dotenv = Dotenv.load();
         Cloudinary cloudinary = new Cloudinary(dotenv.get("CLOUDINARY_URL"));
+
 
         Map params1 = ObjectUtils.asMap(
                 "use_filename", true,
@@ -24,8 +25,9 @@ public class CloudinaryAPI {
         );
 
         try {
-            System.out.println(
-                    cloudinary.uploader().upload(filePath, params1) );
+            Map uploadResult = cloudinary.uploader().upload(filePath, params1);
+
+            return uploadResult.get("secure_url").toString();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

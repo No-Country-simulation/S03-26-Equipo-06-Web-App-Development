@@ -25,10 +25,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
+        
+        String path = request.getServletPath();
+        // EXCLUIR RUTAS PÚBLICAS
+        if (path.startsWith("/api/publicaciones") ||
+            path.startsWith("/api/testimonials") ||
+            path.startsWith("/api/auth")) {
+
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String correo;
-
+        // SI NO HAY TOKEN → sigue sin autenticar
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
@@ -36,7 +47,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         jwt = authHeader.substring(7).trim().replaceAll("\\s+", "");
         correo = jwtUtil.extraerUsername(jwt);
-
+        //valida tocken
         if (correo != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(correo);
 

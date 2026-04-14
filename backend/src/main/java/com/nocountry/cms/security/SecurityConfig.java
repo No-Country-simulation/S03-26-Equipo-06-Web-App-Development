@@ -15,6 +15,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -27,17 +30,29 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(AbstractHttpConfigurer::disable)
-            .cors(cors -> cors.configure(http)) 
+            // CSRF (API REST) para desarrollo
+            .csrf(csrf -> csrf.disable())
+            // CORS para frontend
+            .cors(cors -> cors.configurationSource(request -> {
+                var corsConfig = new CorsConfiguration();
+                corsConfig.setAllowedOrigins(List.of("*"));
+                corsConfig.setAllowedMethods(List.of("*"));
+                corsConfig.setAllowedHeaders(List.of("*"));
+                return corsConfig;
+            }))
+            // Configuración de endpoints
             .authorizeHttpRequests(auth -> auth
-                .dispatcherTypeMatchers(jakarta.servlet.DispatcherType.ERROR).permitAll()
+                //publicos    
+                .requestMatchers("/api/publicaciones/**").permitAll()
+                .requestMatchers("/api/testimonials/**").permitAll()
                 .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/testimonios/**").permitAll()
+                //Todo lo demas requiere autentificación
                 .anyRequest().authenticated()
-            )
-            .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            )  
+            //Sin Sesiones JWT
+           .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            // Filtro JWT
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-
         return http.build();
     }
 

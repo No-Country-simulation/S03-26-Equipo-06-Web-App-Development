@@ -25,14 +25,28 @@ public class Testimonio {
     private String imagen_url;
     private String video_url;
     private LocalDateTime fecha_creacion;
+
+    // ========== NUEVOS CAMPOS PARA YOUTUBE ==========
+    @Column(length = 500)
+    private String youtube_titulo;        // Título del video
+    private String youtube_video_id;       // ID del video
+    private String youtube_embed_url;      // URL para embed
+    private String youtube_thumbnail;      // URL de la miniatura
+    private String youtube_canal;          // Nombre del canal
+    private Long youtube_duracion;         // Duración en segundos
+    private Long youtube_vistas;           // Número de vistas
+    // =============================================
+
     @ManyToOne
     @JoinColumn (name = "id_categoria")
     @JsonIgnore
     private Categoria id_categoria;
+
     @ManyToOne
     @JoinColumn (name = "id_usuario")
     @JsonIgnore
     private Usuario id_usuario;
+
     @ManyToMany
     @JoinTable(
             name = "testimonio_tag",
