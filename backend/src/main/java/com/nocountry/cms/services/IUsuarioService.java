@@ -6,6 +6,8 @@ import com.nocountry.cms.dto.RegistroRequestDTO;
 import com.nocountry.cms.models.Usuario;
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.List;
+
 public interface IUsuarioService {
 
     AuthResponseDTO login(AuthRequestDTO request);
@@ -13,4 +15,6 @@ public interface IUsuarioService {
     AuthResponseDTO registrar(RegistroRequestDTO request);
 
     Usuario loadUserByCorreo(HttpServletRequest request);
+
+    List<Usuario> listarUsuarios();
 }

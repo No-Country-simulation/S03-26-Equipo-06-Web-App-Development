@@ -60,5 +60,4 @@ public class TestimonioController {
 
         return ResponseBuilder.success("OK", testimonioService.getTestimonioById(id));
     }
-
 }
