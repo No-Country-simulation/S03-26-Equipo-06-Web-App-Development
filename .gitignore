@@ -1,6 +1,8 @@
 # ENV (CRÍTICO)
 .env
 *.env
+.idea/
+*.iml
 
 # OS
 .DS_Store
