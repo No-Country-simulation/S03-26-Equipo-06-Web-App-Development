@@ -8,6 +8,7 @@ import { getEstadoColor } from '@/utils/estilos'
 import { PlayCircle } from 'lucide-react'
 import BotoneraDashboard from '../botonera-dashboard/botonera'
 import { useRouter } from 'next/navigation'
+import { EditForm } from '@/types/editar-testimonio'
 
 type Props = {
   testimonios: Testimonio[]
@@ -20,6 +21,11 @@ type Props = {
   getYoutubeEmbed: (url?: string | null) => string | null
   setOpenModal: (value: boolean) => void
   setSelectedId: (id: number) => void
+  editId: number | null
+  setEditId: (id: number | null) => void
+  editForm: EditForm
+  setEditForm: React.Dispatch<React.SetStateAction<EditForm>>
+  setOpenEditModal: React.Dispatch<React.SetStateAction<boolean>>
 }
 export function TestimonialCardDashboard({
   setOpenModal,
@@ -29,12 +35,14 @@ export function TestimonialCardDashboard({
   setVideoActivo,
   getYoutubeThumbnail,
   getYoutubeEmbed,
+  setEditId,
+  setEditForm,
+  setOpenEditModal,
 }: Props) {
   const router = useRouter()
 
   return (
     <>
-    
       <div className='mt-2 mb-35 max-h-125 overflow-x-auto overflow-y-auto'>
         {/* TABLA */}
         <table className='m-auto hidden table-auto border-collapse rounded-xl bg-white/30 shadow-md backdrop-blur-md md:ml-23 md:table md:w-[87%] md:max-w-none lg:ml-23 lg:w-[89%]'>
@@ -110,12 +118,18 @@ export function TestimonialCardDashboard({
                       {/* ESTADO */}
 
                       {/* ICONO*/}
-                      <span className='absolute top-[-25] right-1 flex h-10 w-10 items-center justify-center rounded-full'>
-                         {estadoUI.icon}
-                      </span>
+                      <span className='absolute top-[-25] right-1 flex h-10 w-10 items-center justify-center rounded-full'>{estadoUI.icon}</span>
 
                       {/*BOTONES*/}
-                      <BotoneraDashboard testimonio={testimonio} setOpenModal={setOpenModal} setSelectedId={setSelectedId} />
+                      <BotoneraDashboard
+                        testimonio={testimonio}
+                        setOpenModal={setOpenModal}
+                        setSelectedId={setSelectedId}
+                        setEditId={setEditId}
+                        setEditForm={setEditForm}
+                        setOpenEditModal={setOpenEditModal}
+                        
+                      />
                     </div>
                   </td>
                 </tr>
@@ -136,7 +150,6 @@ export function TestimonialCardDashboard({
                 {/* ESTADO */}
                 <span className={`absolute top-4 right-4 flex gap-1 rounded-md border px-2 py-1 text-xs font-medium ${estadoUI.className}`}>
                   {estadoUI.icon}
-                  
                 </span>
 
                 {/* VIDEO */}
@@ -195,11 +208,31 @@ export function TestimonialCardDashboard({
                     <Eye className='h-4 w-4' /> Ver
                   </button>
 
-                  <button className='flex items-center gap-1 rounded-md border border-green-400 bg-green-100 px-3 py-1 text-sm text-green-700 transition hover:bg-green-200'>
+                  <button
+                    onClick={() => {
+                      setEditId(testimonio.id_testimonio)
+                      setEditForm({
+                        titulo: testimonio.titulo || '',
+                        contenido: testimonio.contenido || '',
+                        categoria: String(testimonio.id_categoria || ''),
+                        imagen_url: testimonio.imagen_url || '',
+                        video_url: testimonio.video_url || '',
+                        estado: testimonio.estado || 'pendiente',
+                      })
+                      setOpenEditModal(true)
+                    }}
+                    className='flex items-center gap-1 rounded-md border border-green-400 bg-green-100 px-3 py-1 text-sm text-green-700 transition hover:bg-green-200'
+                  >
                     <Edit className='h-4 w-4' /> Editar
                   </button>
 
-                  <button className='flex items-center gap-1 rounded-md border border-red-400 bg-red-100 px-3 py-1 text-sm text-red-700 transition hover:bg-red-200'>
+                  <button
+                    onClick={() => {
+                      setSelectedId(testimonio.id_testimonio!)
+                      setOpenModal(true)
+                    }}
+                    className='flex items-center gap-1 rounded-md border border-red-400 bg-red-100 px-3 py-1 text-sm text-red-700 transition hover:bg-red-200'
+                  >
                     <Trash2 className='h-4 w-4' /> Eliminar
                   </button>
                 </div>
