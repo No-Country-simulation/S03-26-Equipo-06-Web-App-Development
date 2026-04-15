@@ -1,6 +1,7 @@
+'use client'
 
 import { PropsSearch } from '@/types/search'
-import { Testimonio } from '@/types/testimonio'
+import { Testimonio } from "@/types/nuevo-testimonio"
 import { Search as SearchIcon } from 'lucide-react'
 
 type SearchDashboardProps = PropsSearch & {
@@ -8,30 +9,32 @@ type SearchDashboardProps = PropsSearch & {
 }
 
 export default function SearchDashboard({ search, setSearch, categoria, setCategoria, estado, setEstado, data }: SearchDashboardProps) {
-  //categorías
-  const categorias = Array.from(new Set(data.map(t => t.categoria))).sort()
+  // categorias (filtrando null y pasando a string)
+  const categorias = Array.from(new Set(data.map(t => t.id_categoria).filter((c): c is number => c !== null)))
+    .map(String) //convertimos a string para el select
+    .sort()
 
   return (
-    <div className='w-full mt-3 px-6 mx-auto md:mx-auto flex flex-col items-center justify-center gap-4 pt-10 md:w-[80%] md:flex-row md:items-center md:gap-4'>
-      {/*búsqueda*/}
+    <div className='mx-auto mt-3 flex w-full flex-col items-center justify-center gap-4 px-6 pt-10 md:w-[80%] md:flex-row md:gap-4'>
+      {/* búsqueda */}
       <div className='relative w-full md:flex-1'>
         <input
           type='text'
           value={search}
           onChange={e => setSearch(e.target.value)}
           placeholder='Buscar...'
-          className='w-full cursor-pointer rounded-md border border-gray-300 bg-white px-10 py-2 text-sm text-gray-700 placeholder-gray-400 shadow-sm transition focus:border-indigo-300 focus:ring-1 focus:ring-indigo-300 focus:outline-none'
+          className='w-full rounded-md border border-gray-300 bg-white px-10 py-2 text-sm text-gray-700 shadow-sm outline-none focus:border-indigo-300 focus:ring-1 focus:ring-indigo-300'
         />
         <SearchIcon className='absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400' />
       </div>
 
-      {/* contenedor de selects*/}
-      <div className='flex w-full flex-row items-center justify-center gap-2 sm:flex-row md:w-auto md:flex-row'>
-        {/*select de categorias */}
+      {/* selects */}
+      <div className='flex w-full gap-2 md:w-auto'>
+        {/* categorías */}
         <select
           value={categoria}
           onChange={e => setCategoria(e.target.value)}
-          className='w-1/2 cursor-pointer rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 shadow-sm transition focus:border-indigo-300 focus:ring-1 focus:ring-indigo-300 focus:outline-none lg:w-56'
+          className='w-1/2 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 shadow-sm outline-none focus:border-indigo-300 focus:ring-1 focus:ring-indigo-300 lg:w-56'
         >
           <option value=''>Todas las categorías</option>
           {categorias.map(cate => (
@@ -41,11 +44,11 @@ export default function SearchDashboard({ search, setSearch, categoria, setCateg
           ))}
         </select>
 
-        {/*select de estado*/}
+        {/* estado */}
         <select
-          value={estado}
+          value={estado ?? ''} 
           onChange={e => setEstado(e.target.value)}
-          className='w-1/2 cursor-pointer rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 shadow-sm transition focus:border-indigo-300 focus:ring-1 focus:ring-indigo-300 focus:outline-none lg:w-40'
+          className='w-1/2 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 shadow-sm outline-none focus:border-indigo-300 focus:ring-1 focus:ring-indigo-300 lg:w-40'
         >
           <option value=''>Todos</option>
           <option value='publicado'>Publicado</option>

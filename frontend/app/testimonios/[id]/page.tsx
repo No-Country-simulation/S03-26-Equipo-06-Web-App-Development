@@ -2,22 +2,22 @@
 
 import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
-import CardTestimonio from '@/app/components/testimonios/publicacion-info-Dashboard'
+import InfoCardDashboard from '@/app/components/testimonios/publicacion-info-Dashboard'
 import CardTestimonioSkeleton from '@/app/components/ui/skeletors/skeletor-detalles'
+import { Testimonio } from '@/types/nuevo-testimonio'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
-type Testimonio = {
-  id: string
-  autor: string
-  titulo: string
-  contenido: string
-  categoria: string
-  tags: string[]
-  estado: string
+
+
+type TestimonioAPI = {
+  id_testimonio: number
+  titulo: string | null
+  contenido: string | null
+  estado: string | null
   imagen_url: string | null
   video_url: string | null
-  fecha_creacion: string
+  fecha_creacion: string | null
 }
 
 export default function TestimonioDetallePage() {
@@ -27,30 +27,52 @@ export default function TestimonioDetallePage() {
   const [data, setData] = useState<Testimonio | null>(null)
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    const fetchTestimonio = async () => {
-      try {
-        const res = await fetch(`${API_URL}/api/testimonios`, {
-          cache: 'no-store',
-        })
+    useEffect(() => {
+  const fetchTestimonio = async () => {
+    try {
+      const res = await fetch(`${API_URL}/api/testimonios`, {
+        cache: 'no-store',
+      })
 
-        if (!res.ok) {
-          throw new Error('Error al obtener testimonios')
-        }
-        const result: Testimonio[] = await res.json()
-        //testimonio por id
-        const encontrado = result.find(t => String(t.id) === String(id))
-        setData(encontrado || null)
-      } catch (error) {
-        console.error('Error fetch:', error)
-      } finally {
-        setLoading(false)
+      if (!res.ok) {
+        const text = await res.text()
+        console.error('STATUS:', res.status)
+        console.error('RESPONSE:', text)
+        throw new Error(`Error ${res.status}`)
       }
+
+      const json = await res.json()
+
+      //fechas correctamente
+      const result: Testimonio[] = (json.data ?? []).map(
+        (item: TestimonioAPI) => ({
+          ...item,
+          fecha_creacion: item.fecha_creacion
+            ? new Date(item.fecha_creacion)
+            : null,
+        })
+      )
+      
+
+      //id_testimonio
+      const encontrado = result.find(
+        (t) => String(t.id_testimonio) === String(id)
+      )
+
+      setData(encontrado || null)
+      
+    } catch (error) {
+      console.error('Error fetch:', error)
+    } finally {
+      setLoading(false)
     }
+  }
 
-    if (id) fetchTestimonio()
-  }, [id])
+  if (id) fetchTestimonio()
+}, [id])
+    
 
+   
   if (loading) return <CardTestimonioSkeleton />
 
   if (!data) {
@@ -64,7 +86,7 @@ export default function TestimonioDetallePage() {
   return (
     <div className='min-h-screen bg-linear-to-tr from-[#f8fafc] via-[#eef2f6] to-[#f8fafc] px-6 pt-10 pb-20'>
       <div className='mx-auto max-w-5xl'>
-        <CardTestimonio data={data} />
+        <InfoCardDashboard data={data} />
       </div>
     </div>
   )

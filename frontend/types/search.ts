@@ -3,6 +3,6 @@ export interface PropsSearch {
   setSearch: (value: string) => void
   categoria: string
   setCategoria: (value: string) => void
-  estado: string
+  estado: string | null
   setEstado: (value: string) => void
 }

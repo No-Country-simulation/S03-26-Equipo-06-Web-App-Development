@@ -1,10 +1,10 @@
 import { Plus, FileText, Clock, CheckCircle, XCircle } from 'lucide-react'
-import { Publicacion } from '@/types/testimonio'
+import { Testimonio } from '@/types/nuevo-testimonio'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 type Props = {
   router: AppRouterInstance
-  data: Publicacion[]
-  ultimas: Publicacion[]
+  data: Testimonio[]
+  ultimas: Testimonio[]
   total: number
   publicadas: number
   pendientes: number
@@ -54,13 +54,13 @@ export default function RenderHome({ router, total, publicadas, pendientes, ulti
           <ul className='max-h-105 space-y-3 overflow-y-auto pr-1'>
             {ultimas.map(pub => (
               <li
-                key={pub.id}
+                key={pub.id_testimonio}
                 className='group flex items-center justify-between rounded-xl border border-gray-200 bg-white p-3 transition-all duration-200 hover:scale-[1.01] hover:border-gray-300 hover:shadow-md'
               >
                 {/* info */}
                 <div className='flex flex-col'>
                   <p className='text-sm font-medium text-gray-800 transition group-hover:text-black'>{pub.titulo}</p>
-                  <p className='text-xs text-gray-400'>{pub.autor}</p>
+                  <p className='text-xs text-gray-400'>{pub.id_usuario}</p>
                 </div>
 
                 {/* estado */}
