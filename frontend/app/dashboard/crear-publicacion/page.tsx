@@ -59,11 +59,11 @@ export default function CreacionTestimonios() {
         body: JSON.stringify(payload),
       })
       const text = await res.text()
-      let data
+      
       try {
-        data = JSON.parse(text)
+        JSON.parse(text)
       } catch {
-        console.log('No es JSON válido',data)
+        console.log('No es JSON válido')
       }
 
       if (!res.ok) {
