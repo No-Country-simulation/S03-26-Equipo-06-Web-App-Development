@@ -46,6 +46,10 @@ public class TestimonioService implements ITestimonioService {
 
     // ========== NUEVO MÉTODO: Procesar YouTube ==========
     private void procesarVideoYouTube(Testimonio testimonio) {
+        if(testimonio.getVideo_url() == null || testimonio.getVideo_url().isEmpty()) {
+            testimonio.setYoutubeVideo(null);
+            return;
+        }
         String videoUrl = testimonio.getVideo_url();
 
         if (videoUrl != null && !videoUrl.isEmpty()) {
@@ -100,6 +104,8 @@ public class TestimonioService implements ITestimonioService {
         Testimonio edit = testimonioRepo.findById(testimonio.getId_testimonio()).orElse(null);
 
         if(edit != null) {
+            boolean videoChanged = !testimonio.getVideo_url().equals(edit.getVideo_url());
+
             edit.setId_usuario(testimonio.getId_usuario());
             edit.setTitulo(testimonio.getTitulo());
             edit.setContenido(testimonio.getContenido());
@@ -108,9 +114,9 @@ public class TestimonioService implements ITestimonioService {
             edit.setEstado(testimonio.getEstado());
             edit.setImagen_url(testimonio.getImagen_url());
             edit.setVideo_url(testimonio.getVideo_url());
-
+            
             // ========== NUEVO: Actualizar también YouTube ==========
-            if (testimonio.getVideo_url() != null && !testimonio.getVideo_url().equals(edit.getVideo_url())) {
+            if (videoChanged) {
                 procesarVideoYouTube(edit);
             }
             // ====================================================
