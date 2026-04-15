@@ -16,10 +16,10 @@ public class Categoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_categoria;
+    private Long id_categoria;
     private String nombre;
     private String descripcion;
-    @OneToMany(mappedBy = "id_categoria")
+    @OneToMany(mappedBy = "categoria")
     private List<Testimonio> lista_testimonios;
 
 }

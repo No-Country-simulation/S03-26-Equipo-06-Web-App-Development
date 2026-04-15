@@ -20,7 +20,7 @@ public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_usuario;
+    private Long id_usuario;
     private String nombre;
     @NotBlank
     @Email

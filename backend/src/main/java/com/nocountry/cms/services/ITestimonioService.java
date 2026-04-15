@@ -1,5 +1,6 @@
 package com.nocountry.cms.services;
 
+import com.nocountry.cms.dto.TestimonioDTO;
 import com.nocountry.cms.models.Testimonio;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -7,14 +8,14 @@ import java.util.List;
 
 public interface ITestimonioService {
 
-     void createTestimonio(Testimonio testimonio, HttpServletRequest request);
+     Testimonio createTestimonio(TestimonioDTO dto, HttpServletRequest request);
 
      List<Testimonio> getTestimonios();
 
-     Testimonio getTestimonioById(Integer id);
+     Testimonio getTestimonioById(Long id);
 
-     String deleteTestimonioById(Integer id);
+     String deleteTestimonioById(Long id);
 
-     Testimonio updateTestimonio(Testimonio testimonio);
+     Testimonio updateTestimonio(TestimonioDTO dto, Long id);
 
 }
