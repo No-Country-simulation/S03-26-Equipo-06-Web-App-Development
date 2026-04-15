@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
-import CardTestimonio from '@/app/components/testimonios/publicacion-info-Dashboard'
+import InfoCardDashboard from '@/app/components/testimonios/publicacion-info-Dashboard'
 import CardTestimonioSkeleton from '@/app/components/ui/skeletors/skeletor-detalles'
 import { Testimonio } from '@/types/nuevo-testimonio'
 
@@ -86,7 +86,7 @@ export default function TestimonioDetallePage() {
   return (
     <div className='min-h-screen bg-linear-to-tr from-[#f8fafc] via-[#eef2f6] to-[#f8fafc] px-6 pt-10 pb-20'>
       <div className='mx-auto max-w-5xl'>
-        <CardTestimonio data={data} />
+        <InfoCardDashboard data={data} />
       </div>
     </div>
   )
