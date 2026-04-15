@@ -10,43 +10,47 @@ type Props = {
   loading: boolean
 }
 
+const categorias = [
+  { id: 1, nombre: 'Producto' },
+  { id: 2, nombre: 'Evento' },
+  { id: 3, nombre: 'Cliente' },
+  { id: 4, nombre: 'Industria' },
+]
+
 export default function FormularioCreacionTestimonios({ datos, setDatos, AgregarTestimonio, loading }: Props) {
+  const [contador, setContador] = useState(0)
+  const maxCaracteres = 300
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
 
-    setDatos({ ...datos, [name]: value })
+    setDatos({
+      ...datos,
+      [name]:
+        name === 'categoria'
+          ? value === ''
+            ? ''
+            : Number(value) //categoria es number
+          : value,
+    })
+
+
     if (name === 'contenido') {
       setContador(value.length)
     }
   }
-  const [contador, setContador] = useState(0)
-  const maxCaracteres = 300
 
   return (
     <form onSubmit={AgregarTestimonio} className='mt-10 mb-21 w-full p-6 text-black lg:ml-35 lg:max-w-5xl'>
-      {/* fila 1 */}
-      <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
-        <div>
-          <label className='text-sm font-medium'>Autor</label>
-          <input
-            type='text'
-            name='autor'
-            value={datos.autor}
-            onChange={e => setDatos({ ...datos, autor: e.target.value })}
-            className='w-full rounded border border-slate-600 px-3 py-2 text-gray-400 transition outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500'
-          />
-        </div>
-
-        <div>
-          <label className='text-sm font-medium'>Título</label>
-          <input
-            type='text'
-            name='titulo'
-            value={datos.titulo}
-            onChange={handleChange}
-            className='w-full rounded border border-slate-600 px-3 py-2 text-gray-400 transition outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500'
-          />
-        </div>
+      <div>
+        <label className='text-sm font-medium'>Título</label>
+        <input
+          type='text'
+          name='titulo'
+          value={datos.titulo}
+          onChange={handleChange}
+          className='w-full rounded border border-slate-600 px-3 py-2 text-gray-400 transition outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500'
+        />
       </div>
 
       {/* contenido */}
@@ -63,17 +67,23 @@ export default function FormularioCreacionTestimonios({ datos, setDatos, Agregar
         <span className='absolute right-2 bottom-2 text-xs text-gray-500'>{maxCaracteres - contador} caracteres restantes</span>
       </div>
 
-      {/* fila2 */}
+      {/* fila 2 */}
       <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
         <div>
           <label className='text-sm font-medium'>Categoría</label>
-          <input
-            type='text'
+          <select
             name='categoria'
             value={datos.categoria}
             onChange={handleChange}
-            className='w-full rounded border border-slate-600 px-3 py-2 text-gray-400 transition outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500'
-          />
+            className='w-full rounded border border-slate-600 px-3 py-2 text-black transition outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500'
+          >
+            <option value=''>Seleccionar categoría</option>
+            {categorias.map(cat => (
+              <option key={cat.id} value={cat.id}>
+                {cat.nombre}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div>
@@ -83,6 +93,7 @@ export default function FormularioCreacionTestimonios({ datos, setDatos, Agregar
             name='tags'
             value={datos.tags}
             onChange={handleChange}
+            placeholder='ej: react, nextjs, frontend'
             className='w-full rounded border border-slate-600 px-3 py-2 text-gray-400 transition outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500'
           />
         </div>
@@ -90,7 +101,7 @@ export default function FormularioCreacionTestimonios({ datos, setDatos, Agregar
 
       {/* fila 3 */}
       <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
-        {/*Video*/}
+        {/* Video */}
         <div className='mt-5 rounded-lg border border-blue-400 bg-blue-50 p-4 text-blue-800 shadow-sm'>
           <label className='mb-1 flex items-center gap-2 text-sm font-semibold'>
             <Video size={16} />
@@ -118,7 +129,8 @@ export default function FormularioCreacionTestimonios({ datos, setDatos, Agregar
             <input type='file' className='hidden' />
           </label>
         </div>
-        {/*imagen*/}
+
+        {/* Imagen */}
         <div className='rounded-lg border border-green-400 bg-green-50 p-4 text-green-800 shadow-sm md:mt-5'>
           <label className='mb-1 flex items-center gap-2 text-sm font-semibold'>
             <LinkIcon size={16} />
@@ -166,11 +178,13 @@ export default function FormularioCreacionTestimonios({ datos, setDatos, Agregar
         </div>
       </div>
 
-      {/*botón*/}
+      {/* botón */}
       <button
         type='submit'
         disabled={loading}
-        className={`mt-5 w-full cursor-pointer rounded-lg py-2 font-semibold text-white transition ${loading ? 'cursor-not-allowed bg-blue-400' : 'bg-blue-600 hover:bg-blue-700'}`}
+        className={`mt-5 w-full cursor-pointer rounded-lg py-2 font-semibold text-white transition ${
+          loading ? 'cursor-not-allowed bg-blue-400' : 'bg-blue-600 hover:bg-blue-700'
+        }`}
       >
         {loading ? 'Publicando...' : 'Publicar'}
       </button>
