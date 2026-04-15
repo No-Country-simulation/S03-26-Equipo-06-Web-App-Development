@@ -6,6 +6,8 @@ export function ExpandableText({ content }: { content: string }) {
   const [expanded, setExpanded] = useState(false)
   const [maxHeight, setMaxHeight] = useState<number>(0)
   const textRef = useRef<HTMLParagraphElement>(null)
+  
+
 
   useEffect(() => {
     if (textRef.current) {
@@ -15,11 +17,8 @@ export function ExpandableText({ content }: { content: string }) {
 
   return (
     <div className='relative w-full'>
-      <div
-        className={`overflow-hidden transition-all duration-500 ease-in-out`}
-        style={{ maxHeight: expanded ? maxHeight : 60 }}
-      >
-        <p ref={textRef} className={`text-sm ${!expanded ? 'text-gray-500' : 'text-gray-900'}`}>
+      <div className={`overflow-hidden transition-all duration-500 ease-in-out`} style={{ maxHeight: expanded ? maxHeight : 60 }}>
+        <p ref={textRef} className='text-sm text-gray-800 md:text-white'>
           {content}
         </p>
       </div>
