@@ -10,7 +10,8 @@ import { useRouter } from 'next/navigation'
 import { Undo2} from 'lucide-react'
 import ModalConfirmacion from '@/app/components/ui/modal-eliminacion/modal-eliminacion'
 import { Indicaciones } from '@/app/components/ui/indicaciones/indicaciones'
-
+import { EditForm } from '@/types/editar-testimonio'
+import ModalEditarTestimonio from '@/app/components/ui/modal-editar/modal-editar'
 
 
 type Props = {
@@ -22,6 +23,11 @@ type Props = {
   getYoutubeEmbed: (url?: string | null) => string | null
   setOpenModal: (value: boolean) => void
   setSelectedId: (id: number) => void
+  editId: number | null
+  setEditId: (id: number | null) => void
+  editForm: EditForm
+  setEditForm: React.Dispatch<React.SetStateAction<EditForm>>
+  setOpenEditModal:React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const TestimonialCardDashboard = dynamic<Props>(
@@ -41,7 +47,16 @@ export default function TestimoniosDashboard() {
   const router = useRouter()
   const [openModal, setOpenModal] = useState(false)
   const [selectedId, setSelectedId] = useState<number | null>(null)
-
+  const [editId, setEditId] = useState<number | null>(null)
+  const [editForm, setEditForm] = useState<EditForm>({
+    titulo: '',
+    contenido: '',
+    categoria: '',
+    imagen_url: '',
+    video_url: '',
+    estado: "",
+  })
+  const [openEditModal, setOpenEditModal] = useState(false)
 
   useEffect(() => {
     const fetchTestimonios = async () => {
@@ -119,6 +134,49 @@ export default function TestimoniosDashboard() {
     }
   }
 
+//editar
+
+const handleUpdate = async () => {
+  if (!editId) {
+    toast.error('No hay ID seleccionado')
+    return
+  }
+
+  try {
+    const token = localStorage.getItem('token')
+
+    const res = await fetch(`${API_URL}/api/testimonios/editar`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        id_testimonio: editId,
+        titulo: editForm.titulo,
+        contenido: editForm.contenido,
+        id_categoria: Number(editForm.categoria),
+        imagen_url: editForm.imagen_url,
+        video_url: editForm.video_url,
+        estado: editForm.estado,
+      }),
+    })
+
+    if (!res.ok) throw new Error()
+
+    const json = await res.json()
+
+    setData(prev => prev.map(t => (t.id_testimonio === editId ? { ...t, ...json.data } : t)))
+
+    setOpenEditModal(false)
+    setEditId(null)
+
+    toast.success('Editado correctamente')
+  } catch (error) {
+    console.log('ERROR COMPLETO:', error)
+    toast.error('Error al editar')
+  }
+}
   return (
     <>
       <button
@@ -153,10 +211,17 @@ export default function TestimoniosDashboard() {
             getYoutubeEmbed={getYoutubeEmbed}
             setOpenModal={setOpenModal}
             setSelectedId={setSelectedId}
+            editId={editId}
+            setEditId={setEditId}
+            editForm={editForm}
+            setEditForm={setEditForm}
+            setOpenEditModal={setOpenEditModal}
           />
         )}
       </div>
       <ModalConfirmacion isOpen={openModal} onClose={() => setOpenModal(false)} onConfirm={handleDelete} loading={loading} />
+      <ModalEditarTestimonio isOpen={openEditModal} onClose={() => setOpenEditModal(false)} editForm={editForm} setEditForm={setEditForm} onSave={handleUpdate} loading={loading}
+      />
     </>
   )
 }
