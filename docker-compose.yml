@@ -4,9 +4,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-          NEXT_PUBLIC_API_URL: http://localhost:8080
-    env_file:
-      - ./frontend/.env
+          NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
     ports:
       - "3000:80"
     depends_on:
@@ -19,7 +17,7 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     env_file:
-      - ./backend/.env
+      - .env
     ports:
       - "8080:8080"
     networks:

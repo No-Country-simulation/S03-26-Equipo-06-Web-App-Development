@@ -2,12 +2,11 @@ package com.nocountry.cms.services;
 
 import com.nocountry.cms.config.CloudinaryAPI;
 import com.nocountry.cms.models.Testimonio;
+import com.nocountry.cms.services.YouTubeAPIService;
 import com.nocountry.cms.repositories.ITestimonioRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.cloudinary.*;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,14 +15,19 @@ public class TestimonioService implements ITestimonioService {
 
     @Autowired
     ITestimonioRepository testimonioRepo;
+
     @Autowired
     CloudinaryAPI cloudinary;
+
     @Autowired
     IUsuarioService usuarioService;
 
+    // 20260414-1131 - API youtube
+    @Autowired
+    private YouTubeAPIService youTubeAPIService;
+
     @Override
     public void createTestimonio(Testimonio nuevoTestimonio, HttpServletRequest request) {
-
         nuevoTestimonio.setId_usuario(usuarioService.loadUserByCorreo(request));
 
         if (nuevoTestimonio.getImagen_url() != null) {
@@ -35,7 +39,6 @@ public class TestimonioService implements ITestimonioService {
         // ====================================================
 
         nuevoTestimonio.setFecha_creacion(LocalDateTime.now());
-
         testimonioRepo.save(nuevoTestimonio);
     }
 
@@ -44,17 +47,14 @@ public class TestimonioService implements ITestimonioService {
         String videoUrl = testimonio.getVideo_url();
 
         if (videoUrl != null && !videoUrl.isEmpty()) {
-            // Extraer ID del video
-            String videoId = youTubeService.extractVideoId(videoUrl);
+            // Extraer ID del video usando youTubeAPIService
+            String videoId = youTubeAPIService.extractVideoId(videoUrl);
 
             if (videoId != null) {
-                // Guardar información de YouTube
+                // Guardar información de YouTube usando youTubeAPIService
                 testimonio.setYoutube_video_id(videoId);
-                testimonio.setYoutube_embed_url(youTubeService.getEmbedUrl(videoId));
-                testimonio.setYoutube_thumbnail(youTubeService.getThumbnailUrl(videoId));
-
-                // Opcional: Puedes agregar más información si la obtienes de una API
-                // Por ahora guardamos la URL original como título temporal
+                testimonio.setYoutube_embed_url(youTubeAPIService.getEmbedUrl(videoUrl));
+                testimonio.setYoutube_thumbnail(youTubeAPIService.getThumbnailUrl(videoUrl));
                 testimonio.setYoutube_titulo("Video de YouTube");
                 testimonio.setYoutube_canal("YouTube");
             }
@@ -64,13 +64,11 @@ public class TestimonioService implements ITestimonioService {
 
     @Override
     public List<Testimonio> getTestimonios() {
-
         return testimonioRepo.findAll();
     }
 
     @Override
     public Testimonio getTestimonioById(Integer id) {
-
         return testimonioRepo.findById(id).orElse(null);
     }
 
@@ -100,12 +98,9 @@ public class TestimonioService implements ITestimonioService {
             }
             // ====================================================
 
-            return testimonioRepo.save(edit);   }   else  {
+            return testimonioRepo.save(edit);
+        } else {
             return null;
-
         }
-
     }
-
-
 }

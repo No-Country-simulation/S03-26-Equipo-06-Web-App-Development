@@ -1,0 +1,17 @@
+# ENV (CRÍTICO)
+.env
+*.env
+
+# OS
+.DS_Store
+
+# Docker overrides
+docker-compose.override.yml
+
+# Logs generales
+*.log
+
+# JAVA
+/backend/target/
+*.class
+*.log
