@@ -27,14 +27,10 @@ public class Testimonio {
     private LocalDateTime fecha_creacion;
 
     // ========== NUEVOS CAMPOS PARA YOUTUBE ==========
-    @Column(length = 500)
-    private String youtube_titulo;        // Título del video
-    private String youtube_video_id;       // ID del video
-    private String youtube_embed_url;      // URL para embed
-    private String youtube_thumbnail;      // URL de la miniatura
-    private String youtube_canal;          // Nombre del canal
-    private Long youtube_duracion;         // Duración en segundos
-    private Long youtube_vistas;           // Número de vistas
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn (name = "id_youtube_video")
+    @JsonIgnore
+    private YoutubeVideo youtubeVideo;
     // =============================================
 
     @ManyToOne

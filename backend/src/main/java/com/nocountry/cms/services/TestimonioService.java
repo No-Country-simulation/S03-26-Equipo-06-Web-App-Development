@@ -3,7 +3,9 @@ package com.nocountry.cms.services;
 import com.nocountry.cms.config.CloudinaryAPI;
 import com.nocountry.cms.models.Testimonio;
 import com.nocountry.cms.services.YouTubeAPIService;
+import com.nocountry.cms.models.YoutubeVideo;
 import com.nocountry.cms.repositories.ITestimonioRepository;
+import com.nocountry.cms.dto.response.YouTubeVideoInfoDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,18 +49,33 @@ public class TestimonioService implements ITestimonioService {
         String videoUrl = testimonio.getVideo_url();
 
         if (videoUrl != null && !videoUrl.isEmpty()) {
-            // Extraer ID del video usando youTubeAPIService
             String videoId = youTubeAPIService.extractVideoId(videoUrl);
 
             if (videoId != null) {
-                // Guardar información de YouTube usando youTubeAPIService
-                testimonio.setYoutube_video_id(videoId);
-                testimonio.setYoutube_embed_url(youTubeAPIService.getEmbedUrl(videoUrl));
-                testimonio.setYoutube_thumbnail(youTubeAPIService.getThumbnailUrl(videoUrl));
-                testimonio.setYoutube_titulo("Video de YouTube");
-                testimonio.setYoutube_canal("YouTube");
+                YouTubeVideoInfoDTO videoInfo = youTubeAPIService.getVideoInfo(videoUrl);
+                YoutubeVideo video = ToYoutubeVideo(videoInfo);
+                testimonio.setYoutubeVideo(video);
             }
         }
+    }
+    private YoutubeVideo ToYoutubeVideo(YouTubeVideoInfoDTO videoInfo) {
+        YoutubeVideo video = new YoutubeVideo();
+
+        video.setTitle(videoInfo.getTitle());
+        video.setDescription(videoInfo.getDescription());
+        video.setChannelTitle(videoInfo.getChannelTitle());
+        video.setChannelId(videoInfo.getChannelId());
+        video.setThumbnailMaxRes(videoInfo.getThumbnailMaxRes());
+        video.setThumbnailHigh(videoInfo.getThumbnailHigh());
+        video.setThumbnailMedium(videoInfo.getThumbnailMedium());
+        video.setThumbnailDefault(videoInfo.getThumbnailDefault());
+        video.setEmbedUrl(videoInfo.getEmbedUrl());
+        video.setDuration(videoInfo.getDuration());
+        video.setViewCount(videoInfo.getViewCount());
+        video.setPublishedAt(videoInfo.getPublishedAt());
+        video.setIsValid(videoInfo.getIsValid());
+
+        return video;
     }
     // ====================================================
 

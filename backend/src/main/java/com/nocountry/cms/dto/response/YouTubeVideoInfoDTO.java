@@ -28,7 +28,7 @@ public class YouTubeVideoInfoDTO {
     private Long duration;
     private Long viewCount;
     private Instant publishedAt;
-    private boolean isValid;
+    private Boolean isValid;
     private String errorMessage;
     private Integer errorCode;
 
