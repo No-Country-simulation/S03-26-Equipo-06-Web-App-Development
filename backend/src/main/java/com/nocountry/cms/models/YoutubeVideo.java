@@ -23,7 +23,7 @@ public class YoutubeVideo {
     private Integer id;
     @Column(length = 500)
     private String title;
-    @Column(length = 1000)
+    @Column(length = 10000)
     private String description;
     private String channelTitle;
     private String channelId;
