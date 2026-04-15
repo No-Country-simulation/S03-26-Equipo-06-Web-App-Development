@@ -4,13 +4,16 @@ import { toast } from 'react-toastify'
 import FormularioCreacionTestimonios from '../../components/form/formulario'
 import { useRouter } from 'next/navigation'
 import { Undo2 } from 'lucide-react'
+import { CreateTestimonio } from '@/types/nuevo-testimonio'
+import { DatosForm } from '@/types/form'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 export default function CreacionTestimonios() {
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
-  const [datos, setDatos] = useState({
+  const [loading, setLoading] = useState(false)
+  const router = useRouter()
+
+  const [datos, setDatos] = useState<DatosForm>({
     autor: '',
     titulo: '',
     contenido: '',
@@ -23,8 +26,8 @@ export default function CreacionTestimonios() {
 
   const AgregarTestimonio = async (e: FormEvent) => {
     e.preventDefault()
-
-    if (!datos.titulo || !datos.contenido || !datos.estado || !datos.autor) {
+    const token = localStorage.getItem('token');
+    if (!datos.titulo || !datos.contenido || !datos.estado) {
       toast.error('Todos los campos son obligatorios', {
         toastId: 'form-error',
       })
@@ -34,38 +37,64 @@ export default function CreacionTestimonios() {
     setLoading(true)
 
     try {
-      const payload = {
-        ...datos,
+      
+      const payload: CreateTestimonio = {
+        titulo: datos.titulo,
+        contenido: datos.contenido,
+        estado: datos.estado,
+        imagen_url: datos.imagen_url || undefined,
+        video_url: datos.video_url || undefined,
+        id_categoria: datos.categoria ? Number(datos.categoria) : undefined,
+        id_usuario: 1,
         tags: datos.tags ? datos.tags.split(',').map(tag => tag.trim()) : [],
+        fecha_creacion: new Date().toISOString(),
       }
 
       const res = await fetch(`${API_URL}/api/testimonios`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(payload),
       })
+      const text = await res.text()
+      let data
+      try {
+        data = JSON.parse(text)
+      } catch {
+        console.log('No es JSON válido',data)
+      }
 
       if (!res.ok) {
-        throw new Error("Error al enviar los datos")
+        
+        throw new Error('Error al enviar los datos')
       }
+      toast.success('Testimonio creado con éxito!')
 
-      const data = await res.json()
-      console.log('Testimonio creado:', data)
-      toast.success('Testimonio creado con Exito!')
-      setDatos({ autor: '', titulo: '', contenido: '', categoria: '', tags: '', estado: '', imagen_url: '', video_url: '' })
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        toast.error(`Error al crear testimonio`, {
+      setDatos({
+        autor: '',
+        titulo: '',
+        contenido: '',
+        categoria: '',
+        tags: '',
+        estado: '',
+        imagen_url: '',
+        video_url: '',
+      })
+    } catch (error: unknown) {
+      console.error('Error catch:', error)
+
+      if (error instanceof Error) {
+        toast.error('Error al crear testimonio', {
           toastId: 'backend-error',
         })
-        console.log(err.message);
+        console.log('Mensaje:', error.message)
       } else {
-        toast.error('Error inesperado');
+        toast.error('Error inesperado')
       }
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
   }
 
@@ -77,6 +106,7 @@ export default function CreacionTestimonios() {
       >
         <Undo2 />
       </button>
+
       <FormularioCreacionTestimonios datos={datos} setDatos={setDatos} AgregarTestimonio={AgregarTestimonio} loading={loading} />
     </>
   )
