@@ -20,13 +20,6 @@ services:
       dockerfile: Dockerfile
     env_file:
       - ./backend/.env
-    environment:
-      - DB_URL=jdbc:postgresql://db:5432/postgres
-      - DB_USER=postgres
-      - DB_PASS=postgres
-      - JWT_SECRET=your_super_secret_jwt_key_for_development
-      - JWT_EXPIRATION=3600000
-      - CLOUDINARY_URL=cloudinary://fake_key:fake_secret@fake_cloud
     ports:
       - "8080:8080"
     depends_on:
