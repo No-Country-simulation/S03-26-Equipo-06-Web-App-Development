@@ -6,6 +6,7 @@ import com.nocountry.cms.dto.RegistroRequestDTO;
 import com.nocountry.cms.dto.UsuarioDTO;
 import com.nocountry.cms.dto.response.ApiResponse;
 import com.nocountry.cms.dto.response.ResponseBuilder;
+import com.nocountry.cms.models.Usuario;
 import com.nocountry.cms.services.IUsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,6 @@ public class UsuarioController {
     @GetMapping("/users")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<ApiResponse<List<UsuarioDTO>>> listarUsuarios() {
-        return ResponseBuilder.success("OK", usuarioService.listarUsuarios());
+        return ResponseBuilder.success("OK", usuarioService.listarUsuariosDTO());
     }
 }

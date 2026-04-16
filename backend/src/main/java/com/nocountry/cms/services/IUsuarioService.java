@@ -17,7 +17,9 @@ public interface IUsuarioService {
 
     Usuario loadUserByCorreo(HttpServletRequest request);
 
-    List<UsuarioDTO> listarUsuarios();
+    List<Usuario> listarUsuarios();
+
+    List<UsuarioDTO> listarUsuariosDTO();
 
     Usuario getUserById(Long id);
 

@@ -80,19 +80,20 @@ public class UsuarioService implements IUsuarioService{
     }
 
     @Override
-    public List<UsuarioDTO> listarUsuarios() {
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        List<UsuarioDTO> usuarios = new ArrayList<>();
+    public List<Usuario> listarUsuarios() {
 
-        for (Usuario usuario : usuarioRepository.findAll()) {
-            usuarioDTO.setId(usuario.getId_usuario());
-            usuarioDTO.setNombre(usuario.getNombre());
-            usuarioDTO.setRol(usuario.getRol());
+        return usuarioRepository.findAll();
+    }
 
-            usuarios.add(usuarioDTO);
+    public List<UsuarioDTO> listarUsuariosDTO() {
+        List<UsuarioDTO> usuariosDTO = new ArrayList<>();
+
+        for (Usuario usuario : listarUsuarios()) {
+
+            usuariosDTO.add(getUserDTOById(usuario));
         }
 
-        return usuarios;
+        return usuariosDTO;
     }
 
     @Override
