@@ -61,38 +61,39 @@ El proyecto sigue una arquitectura desacoplada basada en microservicios:
 ✅ Para el despliegue, se asume su ejecución sobre un SO. Windows, con instalación WSL (*Ubuntu 24.04.3 LTS*), la ejecución de comandos se realizara desde *WSL terminal* y los comandos de git desde *gitbash terminal*, considerar que WSL y Windows son sistemas separados entre si.
 ✅ Para la arquitectura de la aplicación (Next.js + Spring Boot + Docker), se trabajo con pnp dado que el npm generaba inconsistencias entre entornos y duplicación de paquetes, afectando el rendimiento y el tamaño de almacenamiento del Docker, además de ocultar errores de dependencias y presentar limitaciones para manejar estructuras tipo monorepo, dificultando la escalabilidad; de este motivo se eligió pnpm para garantizar la eficiencia y control en el desarrollo del proyecto. Finalmente indicar que pnpm (Performant Node Package Manager) optimiza la gestión de dependencias mediante un almacenamiento compartido, reduciendo el uso de disco, acelerando instalaciones y mejorando la consistencia entre entornos.  
 📁 Para que el front y el backend funcione correctamente, hay que definir las variables de ambiente en el archvio .env, antes de ejecutar revisar la estrutura de los archivos en el punto 6.   
-###📌 Paso 1: Descargar el repositorio desde github
+### ⬇️ Paso 1: Descargar el repositorio desde github
 ```bash
 	git clone https://github.com/No-Country-simulation/S03-26-Equipo-06-Web-App-Development.git
 	cd S03-26-Equipo-06-Web-App-Development
 ```
-###📌 Paso 2: Ejecución de la aplicación
-### 🔹 Opción 1: Ejecución Manual - Desarrollo local  
-#### En el folder **./Frontend**  
-##### Instalación de dependencias
+### 🚀 Paso 2: Ejecución de la aplicación
+#### 🚀🖥️ Opción 1: Ejecución Manual - Desarrollo local  
+Despliegue desde una maquina local
+##### Ejecutar en el folder **./frontend**  
+###### Instalación de dependencias
 ```bash
 cd frontend
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 source ~/.bashrc
+
+apt install -y nodejs
 nvm install 22
 nvm use 22
 npm install -g pnpm
 ```
-##### Verificar intalación de pnpm
+###### Verificar intalación de pnpm
 ```bash
- 	node -v
-	npm -v
-	pnpm -v
+node -v
+npm -v
+pnpm -v
 ```
-##### Ejecución de aplicación
+###### Ejecución de aplicación
 ```bash 
 pnpm dev
 ```
-sudo apt install -y nodejs
-npm install -g pnpm
 
-#### En el folder **./basckend**
-##### Instalación de dependencias
+##### Ejecutar en el folder **./backend**
+###### Instalación de dependencias
 ```bash
 cd backend
 ./mvnw clean install
@@ -100,39 +101,41 @@ sudo apt install maven
 chmod +x mvnw
 ```
 
-##### Verificar intalación de maven
+###### Verificar intalación de maven
 ```bach
 mvn -v
 ```
-##### Ejecución de aplicación
+###### Ejecución de aplicación
 ```bach
 export $(grep -v '^#' .env | grep -v '^$' | xargs)
 ./mvnw spring-boot:run
 ```
-⚠️ O puede ejecutar directamente unarchivo directametne para mejorar la ejecución ./backend/runBackEnd.sh
-### **Abrir navegdor en:**
+#### **Abrir navegdor en:**
 Web → http://localhost:3000
 API → http://localhost:8080
 
-### 🐳 Opción 2: Docker (opción Recomendada)
-Para levantar el entorno de una amanera más rapida, consistente y sencilla, se puede usar docker  
-En la carpeta de tu equipo local, creada para almacener esta aplicacióndonde, abre el terminal y ejecutar.  
+#### 🚀🐳 Opción 2: Docker (opción Recomendada)
+Despliegue desde un entorno dockerizado (se requiere haber instalado previamente en su Sistema operativo [Docker](docker https://docs.docker.com/desktop/setup/install/windows-install/)
  
-#### 📌 clonar repositorio, ubicarse en carpeta y construcción de maquina virtual
+##### ⚠️ Despues del paso 1, ingreso al directorio del proyecto donde se encuentre el docker-compose y proceda con la condtrucción de la imagen.
 ```bash
 docker-compose up --build
 ```
-#### Detener contenedores
+##### Abrir navegdor en:
+- Web → http://localhost:5173  
+- API → http://localhost:8080  
+
+##### [OPCIONAL] comandos de ser necesarios 
 ```bash
+echo "Detener contenedores contenedores"
+docker-compose stop
+
+echo "Eliminar contenedores"
 docker-compose down
-```
-#### Verificación en ejecución
-```bash
+
+echo "Verificar ejecución de contenedor"
 docker exec -it api-1 printenv
 ```
-#### Abrir navegdor en:
-- Web → [http://localhost:5173](http://localhost:5173)
-- API → [http://localhost:8080](http://localhost:5173)
 
 ## 🔐 6.-  Variables de entorno
 ⚠️ 📄 Este proyecto requiere archivos .env para su correcto funcionamiento.  
