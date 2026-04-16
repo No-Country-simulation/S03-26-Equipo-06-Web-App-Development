@@ -32,26 +32,26 @@ El proyecto sigue una arquitectura desacoplada basada en microservicios:
 ┗ Gestores de Paquetes		→ *pnpm v10.33.0 | npm v10.8.2*  
   
 🔹 Backend (Arquitectura Robusta)  
-┣ Framework: Java 21 | Spring Boot 3.x  
-┣ Seguridad: Spring Security | JWT (JSON Web Tokens)  
-┗ Persistencia: PostgreSQL (vía Supabase)  
+┣ Framework		→ *Java 21 | Spring Boot 3.x*  
+┣ Seguridad		→ *Spring Security | JWT (JSON Web Tokens)*  
+┗ Persistencia	→ *PostgreSQL (vía Supabase)*  
 
-🔹 Frontend (Interfaz Moderna)  
-┣ Framework: React 19 | Next.js 15 | TypeScript  
-┗ Estilos: Tailwind CSS 4  
+🔹 **Frontend (Interfaz Moderna)**  
+┣ Framework		→ *React 19 | Next.js 15 | TypeScript*  
+┗ Estilos		→ *Tailwind CSS 4*  
 
-🔹 DevOps & Infrastructure  
-┣ Contenedores: Docker v29.3.1 | Docker Compose  
-┣ CI/CD: GitHub Actions (Automatización de despliegue)  
-┣ Cloud: Google Cloud Platform (Cloud Run & Artifact Registry)  
-┗ Seguridad & Calidad: Gitleaks (Secret scanning) | Checkstyle | ESLint  
+🔹 **DevOps & Infrastructure**  
+┣ Contenedores				→ *Docker v29.3.1 | Docker Compose*  
+┣ CI/CD						→ *GitHub Actions (Automatización de despliegue)*    
+┣ Cloud						→ *Google Cloud Platform (Cloud Run & Artifact Registry)*  
+┗ Seguridad & Calidad:		→ *Gitleaks (Secret scanning) | Checkstyle | ESLint*  
 
-🔹 Herramientas de Gestión y Tooling  
-┣ IDEs: IntelliJ IDEA (Desarrollo Backend) | VS Code (Frontend)  
-┣ DB Management: pgAdmin / Supabase Dashboard  
-┣ Colaboración: Trello (Kanban/Scrum) | Google Drive (Docs & Actas)  
-┣ Análisis de Datos: Microsoft Excel  
-┗ Marco de Trabajo: Emulación de entorno real en No Country.  
+🔹 **Herramientas de Gestión y Tooling**  
+┣ IDEs					→ *IntelliJ IDEA (Desarrollo Backend) | VS Code (Frontend)*  
+┣ DB Management:		→ *pgAdmin / Supabase Dashboard*  
+┣ Colaboración:			→ *Trello (Kanban/Scrum) | Google Drive (Docs & Actas)*  
+┣ Análisis de Datos:	→ *Microsoft Excel*  
+┗ Marco de Trabajo:		→ *Emulación de entorno real en No Country*  
 
 ---
 
