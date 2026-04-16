@@ -3,6 +3,7 @@ package com.nocountry.cms.services;
 import com.nocountry.cms.dto.AuthRequestDTO;
 import com.nocountry.cms.dto.AuthResponseDTO;
 import com.nocountry.cms.dto.RegistroRequestDTO;
+import com.nocountry.cms.dto.UsuarioDTO;
 import com.nocountry.cms.models.Usuario;
 import com.nocountry.cms.repositories.IUsuarioRepository;
 import com.nocountry.cms.security.JwtUtil;
@@ -16,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -79,6 +81,37 @@ public class UsuarioService implements IUsuarioService{
 
     @Override
     public List<Usuario> listarUsuarios() {
+
         return usuarioRepository.findAll();
     }
+
+    public List<UsuarioDTO> listarUsuariosDTO() {
+        List<UsuarioDTO> usuariosDTO = new ArrayList<>();
+
+        for (Usuario usuario : listarUsuarios()) {
+
+            usuariosDTO.add(getUserDTOById(usuario));
+        }
+
+        return usuariosDTO;
+    }
+
+    @Override
+    public Usuario getUserById(Long id) {
+        return usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    }
+
+    @Override
+    public UsuarioDTO getUserDTOById(Usuario usuario) {
+        UsuarioDTO usuarioDTO = new UsuarioDTO();
+
+        usuarioDTO.setId(usuario.getId_usuario());
+        usuarioDTO.setNombre(usuario.getNombre());
+        usuarioDTO.setRol(usuario.getRol());
+
+        return usuarioDTO;
+    }
+
+
 }

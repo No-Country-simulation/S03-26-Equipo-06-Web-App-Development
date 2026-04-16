@@ -1,6 +1,7 @@
 package com.nocountry.cms.services;
 
 import com.nocountry.cms.dto.TestimonioDTO;
+import com.nocountry.cms.dto.TestimonioDTOResponse;
 import com.nocountry.cms.models.Testimonio;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -10,9 +11,9 @@ public interface ITestimonioService {
 
      Testimonio createTestimonio(TestimonioDTO dto, HttpServletRequest request);
 
-     List<Testimonio> getTestimonios();
+     List<TestimonioDTOResponse> getTestimonios();
 
-     Testimonio getTestimonioById(Long id);
+     TestimonioDTOResponse getTestimonioById(Long id);
 
      String deleteTestimonioById(Long id);
 
