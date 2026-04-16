@@ -26,6 +26,34 @@ El proyecto sigue una arquitectura desacoplada basada en microservicios:
  ┗ 📄 README.md  
   
 ## 🛠️ 4.- Stack Tecnológico 
+🔹 Runtimes & Package Managers:  
+┣ Java: OpenJDK 21.0.10 (LTS) | Node.js: v20.20.2 (LTS)  
+┗ Gestores de Paquetes: pnpm v10.33.0 | npm v10.8.2
+  
+🔹 Backend (Arquitectura Robusta)
+┣ Framework: Java 21 | Spring Boot 3.x
+┣ Seguridad: Spring Security | JWT (JSON Web Tokens)
+┗ Persistencia: PostgreSQL (vía Supabase)
+
+🔹 Frontend (Interfaz Moderna)
+┣ Framework: React 19 | Next.js 15 | TypeScript
+┗ Estilos: Tailwind CSS 4
+
+🔹 DevOps & Infrastructure
+┣ Contenedores: Docker v29.3.1 | Docker Compose
+┣ CI/CD: GitHub Actions (Automatización de despliegue)
+┣ Cloud: Google Cloud Platform (Cloud Run & Artifact Registry)
+┗ Seguridad & Calidad: Gitleaks (Secret scanning) | Checkstyle | ESLint
+
+🔹 Herramientas de Gestión y Tooling
+┣ IDEs: IntelliJ IDEA (Desarrollo Backend) | VS Code (Frontend)
+┣ DB Management: pgAdmin / Supabase Dashboard
+┣ Colaboración: Trello (Kanban/Scrum) | Google Drive (Docs & Actas)
+┣ Análisis de Datos: Microsoft Excel
+┗ Marco de Trabajo: Emulación de entorno real en No Country.
+
+---
+
 🔹 Backend:  Java 21 | Spring Boot | Spring Security | JWT (JSON Web Tokens)     
 🔹 Frontend: Node.js 22 | Next.js 16 | React 19 | TypeScript |Tailwind CSS 4     
 🔹 Base de Datos: Supabase | PostgreSQL      
@@ -34,7 +62,9 @@ El proyecto sigue una arquitectura desacoplada basada en microservicios:
 - CI/CD: GitHub Actions  
 - Cloud: Google Cloud Platform (Cloud Run & Artifact Registry)  
 - QA & Security: Gitleaks | Checkstyle | ESLint
-  
+
+--- 
+
 🔹 Backend: Java 21 | Spring Boot 3.x | Maven | Spring Security | JWT  
 🔹 Frontend: React 19 | Node.js 22 | Next.js 15 | TypeScript | Tailwind CSS 4  
 🔹 Database: Supabase | PostgreSQL (Relational)  
