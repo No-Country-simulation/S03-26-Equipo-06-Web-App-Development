@@ -188,10 +188,138 @@ S03-26-Equipo 06 - No Country Simulation
   
 ## 📄 Licencia
 Este proyecto es de uso educativo dentro del programa No Country.
+---
+---
+## 📸 Screenshots:
+- Registro
+![Registro](https://drive.google.com/uc?export=view&id=1Ngzsn1H3gWGGBXf_icCu2qWAY5BFoiKx)
 
-## 📸 Agregar screenshots del sistema
-* $#$$%%&&
-  
-## 📊 Diagrama de arquitectura
-* $#$$%%&& Endpoints documentados (Swagger/Postman)
-* $#$$%%&&
+- Login
+![Login](https://drive.google.com/uc?export=view&id=19I3Yd1FUzTdt2575MKXt3fwY7CnqhVoC)
+
+- Dashboard
+![Dashboard](https://drive.google.com/uc?export=view&id=119GBsP49j3L2QHCJ3bNbsxP_a4vPV9oF)
+
+- Creación de testimonio
+![Crear_testimonio](https://drive.google.com/uc?export=view&id=1uD2zIWWC9jojT3OhusD7A6tchsDTahnF)
+
+- Publicaciones
+![Publicaciones](https://drive.google.com/uc?export=view&id=1d4Qh_MTvAkWaOZEQ8-mb9C1FS3U2ZKPv)
+
+## 📊 Endpoints documentados
+
+### 🔐 Autenticación
+| Método | Endpoint | Acceso | Descripción |
+|--------|----------|--------|-------------|
+| POST | `/api/auth/registro` | 🌐 Público | Registra un nuevo usuario y devuelve JWT |
+| POST | `/api/auth/login` | 🌐 Público | Autentica usuario y devuelve JWT |
+
+### 📋 Testimonios
+| Método | Endpoint | Acceso | Descripción |
+|--------|----------|--------|-------------|
+| GET | `/api/testimonios` | 🌐 Público | Lista todos los testimonios |
+| GET | `/api/testimonios/{id}` | 🌐 Público | Obtiene un testimonio por ID |
+| POST | `/api/testimonios` | 🔒 ADMIN, EDITOR, USUARIOREGISTRADO | Crea un nuevo testimonio |
+| PUT | `/api/testimonios/editar` | 🔒 ADMIN, EDITOR | Edita un testimonio existente |
+| DELETE | `/api/testimonios/eliminar/{id}` | 🔒 ADMIN | Elimina un testimonio |
+
+### 🔑 Roles disponibles
+| Rol | Permisos |
+|-----|----------|
+| `admin` | CRUD completo |
+| `editor` | Crear y editar |
+| `usuarioregistrado` | Solo crear |
+| `usuariovisitante` | Solo lectura |
+
+### 📨 Ejemplo de uso
+**1. Login:**
+```json
+POST /api/auth/login
+{ "correo": "user@example.com", "password": "password123" }
+
+```
+
+## Flujos de Trabajo DevOps para Frontend, Backend y Seguridad
+
+Los pipelines automatizan el ciclo de vida del software para mejorar la colaboración y la eficiencia. Los pasos clave incluyen:
+
+Push/PR: Se inicia el pipeline con un Push o PR.
+Compilación y Escaneo: El código se compila y se escanea en busca de vulnerabilidades.
+Linting: Se verifica la calidad del código mediante herramientas de linting.
+Despliegue en Dev: El código se despliega en desarrollo y se realizan pruebas rápidas.
+Despliegue en Producción: Si todo va bien en Dev, se despliega en producción y se validan las pruebas finales.
+Seguridad: Se integran análisis estático y escaneos de seguridad a lo largo del proceso.
+
+Este enfoque automatiza el desarrollo, las pruebas, el despliegue y la seguridad, lo que permite una entrega continua y mejora la colaboración entre equipos.
+
+### Frontend
+
+```mermaid
+flowchart LR
+    A[Push/PR Event] --> B[Build]
+    A[Push/PR Event] --> C[Scan]
+    B --> D[Run Lint]
+    C --> D[Run Lint]
+
+    D --> E[Deploy Dev]
+    E --> F[Smoke Test Dev]
+
+    D --> G[Deploy Prod]
+    G --> H[Smoke Test Prod]
+
+    subgraph CI [CICD]
+      B
+      C
+      D
+      E
+      F
+      G
+      H
+    end
+```
+
+### Backend
+
+```mermaid
+flowchart LR
+    A[Push/PR Event] --> B[Build]
+    A[Push/PR Event] --> C[Scan]
+    B --> D[Run Lint]
+    C --> D[Run Lint]
+
+    D --> E[Deploy Dev]
+    E --> F[Smoke Test Dev]
+
+    D --> G[Deploy Prod]
+    G --> H[Smoke Test Prod]
+
+    subgraph CI [CICD]
+      B
+      C
+      D
+      E
+      F
+      G
+      H
+    end
+```
+
+### Seguridad
+
+```mermaid
+flowchart LR
+    A[Push/PR Event] --> B[Validate Branch]
+    
+    B --> C[Run Scan]
+    B --> D[Run SAST]
+
+    C --> E[Scan Completed]
+    D --> E
+
+    subgraph CI [CICD]
+      B
+      C
+      D
+      E
+    end
+```
