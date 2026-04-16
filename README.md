@@ -27,8 +27,9 @@ El proyecto sigue una arquitectura desacoplada basada en microservicios:
   
 ## 🛠️ 4.- Stack Tecnológico 
 🔹 Runtimes & Package Managers:  
-┣ Java: OpenJDK 21.0.10 (LTS) | Node.js: v20.20.2 (LTS)  
-┗ Gestores de Paquetes: pnpm v10.33.0 | npm v10.8.2  
+┣ Java		→ *OpenJDK 21.0.10 (LTS)*  
+┣ Node		→ *.js: v20.20.2 (LTS)*  
+┗ Gestores de Paquetes		→ *pnpm v10.33.0 | npm v10.8.2*  
   
 🔹 Backend (Arquitectura Robusta)  
 ┣ Framework: Java 21 | Spring Boot 3.x  
