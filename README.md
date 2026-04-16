@@ -56,14 +56,15 @@ El proyecto sigue una arquitectura desacoplada basada en microservicios:
 ## 🚀 5.- Creación del Ambiente de ejecución del  proyecto
 **Consideración especial:**  
 
-✅ Para el despliegue, se asume su ejecución sobre un SO. Windows, con instalación WSL (*Ubuntu 24.04.3 LTS*), la ejecución de comandos se realizara desde *WSL terminal* y los comandos de git desde *gitbash terminal*, se recomienda colocar la aplicación en la unidad de instalación del WSL en una carpeta como *home/.* para un mejor desempeño.  
-✅ Para la arquitectura de la aplicación (Next.js + Spring Boot + Docker), al identificar que npm generaba inconsistencias entre entornos y duplicación de paquetes lo que afectaba el rendimiento y el tamaño de lamacenamiento del Docker, además de ocultar errores de dependencias y presentar limitaciones para manejar estructuras tipo monorepo, dificultando la escalabilidad; se eligió pnpm para garantizar mayor eficiencia y control en el desarrollo del proyecto. Finalmente, pnpm (Performant Node Package Manager) optimiza la gestión de dependencias mediante un almacenamiento compartido, reduciendo el uso de disco, acelerando instalaciones y mejorando la consistencia entre entornos.  
-📁 Para que el front y el backend funcione correctamente, hay que definir las variables de ambiente en el .env de cada carpeta, antes de ejecutar revisar la estrutura de los archivos en el punto 6.   
-📌 Descargar el repositorio desde github
+✅ Para el despliegue, se asume su ejecución sobre un SO. Windows, con instalación WSL (*Ubuntu 24.04.3 LTS*), la ejecución de comandos se realizara desde *WSL terminal* y los comandos de git desde *gitbash terminal*, considerar que WSL y Windows son sistemas separados entre si.
+✅ Para la arquitectura de la aplicación (Next.js + Spring Boot + Docker), se trabajo con pnp dado que el npm generaba inconsistencias entre entornos y duplicación de paquetes, afectando el rendimiento y el tamaño de almacenamiento del Docker, además de ocultar errores de dependencias y presentar limitaciones para manejar estructuras tipo monorepo, dificultando la escalabilidad; de este motivo se eligió pnpm para garantizar la eficiencia y control en el desarrollo del proyecto. Finalmente indicar que pnpm (Performant Node Package Manager) optimiza la gestión de dependencias mediante un almacenamiento compartido, reduciendo el uso de disco, acelerando instalaciones y mejorando la consistencia entre entornos.  
+📁 Para que el front y el backend funcione correctamente, hay que definir las variables de ambiente en el archvio .env, antes de ejecutar revisar la estrutura de los archivos en el punto 6.   
+###📌 Paso 1: Descargar el repositorio desde github
 ```bash
 	git clone https://github.com/No-Country-simulation/S03-26-Equipo-06-Web-App-Development.git
 	cd S03-26-Equipo-06-Web-App-Development
-```  
+```
+###📌 Paso 2: Ejecución de la aplicación
 ### 🔹 Opción 1: Ejecución Manual - Desarrollo local  
 #### En el folder **./Frontend**  
 ##### Instalación de dependencias
@@ -101,18 +102,15 @@ chmod +x mvnw
 ```bach
 mvn -v
 ```
-
 ##### Ejecución de aplicación
 ```bach
 export $(grep -v '^#' .env | grep -v '^$' | xargs)
 ./mvnw spring-boot:run
 ```
 ⚠️ O puede ejecutar directamente unarchivo directametne para mejorar la ejecución ./backend/runBackEnd.sh
-
-### Abrir navegdor en:
+### **Abrir navegdor en:**
 Web → http://localhost:3000
 API → http://localhost:8080
-
 
 ### 🐳 Opción 2: Docker (opción Recomendada)
 Para levantar el entorno de una amanera más rapida, consistente y sencilla, se puede usar docker  
