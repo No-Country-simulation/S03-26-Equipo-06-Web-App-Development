@@ -26,6 +26,20 @@ El proyecto sigue una arquitectura desacoplada basada en microservicios:
  ┣ 📂 frontend     → Aplicación web (Vite / Node.js)  
  ┣ 📄 docker-compose.yml  
  ┗ 📄 README.md  
+
+### 📂 Estructura del Proyecto
+
+```text
+├── 📂 backend         # API REST con Java 21 & Spring Boot
+│   ├── 📂 config      # Configuraciones (Security, CORS, APIs)
+│   ├── 📂 controllers # Endpoints del CMS
+│   └── 📂 security    # Implementación JWT
+├── 📂 frontend        # Interfaz con Next.js 15 & Tailwind CSS
+│   ├── 📂 app         # App Router & Routes
+│   └── 📂 components  # Atomic Design (UI, Form, Shared)
+├── 🐳 docker-compose.yml
+└── 🗃️ backup.sql      # Semilla de base de datos
+ ```
   
 ## 🛠️ 4.- Stack Tecnológico 
 🔹 **Runtimes & Package Managers:**  
