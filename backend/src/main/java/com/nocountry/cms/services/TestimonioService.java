@@ -2,6 +2,7 @@ package com.nocountry.cms.services;
 
 import com.nocountry.cms.config.CloudinaryAPI;
 import com.nocountry.cms.dto.TestimonioDTO;
+import com.nocountry.cms.dto.TestimonioDTOResponse;
 import com.nocountry.cms.models.Testimonio;
 import com.nocountry.cms.repositories.ITestimonioRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.cloudinary.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -48,16 +50,41 @@ public class TestimonioService implements ITestimonioService {
     }
 
     @Override
-    public List<Testimonio> getTestimonios() {
+    public List<TestimonioDTOResponse> getTestimonios() {
+        List<Testimonio> testimonios = testimonioRepo.findAll();
+        List<TestimonioDTOResponse> listaTestimonios = new ArrayList<>();
 
-        return testimonioRepo.findAll();
+        for (Testimonio testimonio : testimonios) {
+            listaTestimonios.add(testimonioToDTO(testimonio));
+        }
+
+        return listaTestimonios;
     }
 
     @Override
-    public Testimonio getTestimonioById(Long id) {
+    public TestimonioDTOResponse getTestimonioById(Long id) {
 
-        return testimonioRepo.findById(id)
+        Testimonio testimonio = testimonioRepo.findById(id)
                 .orElseThrow(()-> new RuntimeException("No se encontro el testimonio"));
+
+        return testimonioToDTO(testimonio);
+    }
+
+    public TestimonioDTOResponse testimonioToDTO(Testimonio testimonio) {
+        TestimonioDTOResponse testimonioDTOResponse = new TestimonioDTOResponse();
+
+        testimonioDTOResponse.setId_testimonio(testimonio.getId_testimonio());
+        testimonioDTOResponse.setTitulo(testimonio.getTitulo());
+        testimonioDTOResponse.setContenido(testimonio.getContenido());
+        testimonioDTOResponse.setEstado(testimonio.getEstado());
+        testimonioDTOResponse.setImagen_url(testimonio.getImagen_url());
+        testimonioDTOResponse.setVideo_url(testimonio.getVideo_url());
+        testimonioDTOResponse.setFecha_creacion(testimonio.getFecha_creacion());
+        testimonioDTOResponse.setUsuario(usuarioService.getUserDTOById(testimonio.getId_usuario()));
+        testimonioDTOResponse.setTags(tagService.listarTags(testimonio.getTags()));
+        testimonioDTOResponse.setCategoria(categoriaService.getCategoriaDTOById(testimonio.getCategoria()));
+
+        return testimonioDTOResponse;
     }
 
     @Override
