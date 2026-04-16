@@ -23,29 +23,10 @@ El proyecto sigue una arquitectura desacoplada basada en microservicios:
  ┗ 📄 README.md  
   
 ## 🛠️ 4.- Stack Tecnológico 
-🔹 Backend
- + Java 21  
- + Spring Boot  
- + Spring Security  
- + JWT (JSON Web Tokens)  
-
-🔹 Frontend
- - Node.js 22
- - Next.js 16
- - React 19
- - TypeScript
- - Tailwind CSS 4
-
-🔹 DevOps
- - Docker
- - Docker Compose
- - GitHub Actions
- - Google Cloud Platform (GCP)
- - Google Cloud Run
- - Google Container Registry (GCR)
- - Gitleaks
- - Checkstyle
- - ESLint
+🔹 Backend:  Java 21 | Spring Boot | Spring Security | JWT (JSON Web Tokens)  
+🔹 Frontend: Node.js 22 | Next.js 16 | React 19 | TypeScript |Tailwind CSS 4|
+🔹 Base de Datos: Supabase | PostgreSQL  
+🔹 DevOps & Infrastructure: Containers [Docker | Docker Compose] | CI/CD [GitHub Actions] | Cloud: GCP [Cloud Run | Artifact Registry] | QA & Security [Gitleaks | Checkstyle | ESLint]
 
 ## 🚀 5.- Ejecución del proyecto
 Antes de ejecutar el proyecto, asegúrate de tener instalado Node.js 22, - Java 21 para opción manual y Docker para seguir con la opción recomendada
