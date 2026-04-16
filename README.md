@@ -27,9 +27,13 @@ El proyecto sigue una arquitectura desacoplada basada en microservicios:
   
 ## 🛠️ 4.- Stack Tecnológico 
 🔹 Backend:  Java 21 | Spring Boot | Spring Security | JWT (JSON Web Tokens)  
-🔹 Frontend: Node.js 22 | v18.19.1 | Vite  | JavaScript  
+🔹 Frontend: Node.js 22 | Next.js 16 | React 19 | TypeScript |Tailwind CSS 4|
 🔹 Base de Datos: Supabase | PostgreSQL  
-🔹 DevOps: Docker  
+🔹 DevOps & Infrastructure: 
+	- Containers: Docker | Docker Compose
+	- CI/CD: GitHub Actions
+	- Cloud: Google Cloud Platform (Cloud Run & Artifact Registry)
+	- QA & Security: Gitleaks | Checkstyle | ESLint 
 
 ## 🚀 5.- Creación del Ambiente de ejecución del  proyecto
 **Consideración especial:**  
