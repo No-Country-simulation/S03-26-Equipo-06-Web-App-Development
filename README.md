@@ -35,9 +35,9 @@ El proyecto sigue una arquitectura desacoplada basada en microservicios:
 	- Cloud: Google Cloud Platform (Cloud Run & Artifact Registry)
 	- QA & Security: Gitleaks | Checkstyle | ESLint 
 
-🔹 Backend: Java 21 | Spring Boot 3.x | Maven | Spring Security | JWT
-🔹 Frontend: React 19 | Node.js 22 | Next.js 15 | TypeScript | Tailwind CSS 4
-🔹 Database: Supabase | PostgreSQL (Relational)
+🔹 Backend: Java 21 | Spring Boot 3.x | Maven | Spring Security | JWT  
+🔹 Frontend: React 19 | Node.js 22 | Next.js 15 | TypeScript | Tailwind CSS 4  
+🔹 Database: Supabase | PostgreSQL (Relational)  
 🔹 DevOps & Infrastructure:   
 	- Containers: Docker & Docker Compose  
 	- CI/CD: GitHub Actions  
