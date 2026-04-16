@@ -54,3 +54,34 @@ jobs:
         uses: semgrep/semgrep-action@v1
         with:
           config: p/ci
+
+  docker:
+    name: Validate
+    runs-on: ubuntu-latest
+    needs: validate-branch
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Install Docker Compose
+        run: |
+          sudo curl -L "https://github.com/docker/compose/releases/download/v2.14.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+          docker-compose --version  # Verify installation
+
+      - name: Create empty .env files for frontend and backend
+        run: |
+          touch backend/.env
+          touch frontend/.env
+
+      - name: Set up Docker Compose
+        run: |
+          docker-compose -v
+
+      - name: Build Services with Docker Compose
+        run: |
+          docker-compose -f docker-compose.yml build
