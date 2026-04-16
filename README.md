@@ -52,28 +52,6 @@ El proyecto sigue una arquitectura desacoplada basada en microservicios:
 ┣ Colaboración:			→ *Trello (Kanban/Scrum) | Google Drive (Docs & Actas)*  
 ┣ Análisis de Datos:	→ *Microsoft Excel*  
 ┗ Marco de Trabajo:		→ *Emulación de entorno real en No Country*  
-
----
-
-🔹 Backend:  Java 21 | Spring Boot | Spring Security | JWT (JSON Web Tokens)     
-🔹 Frontend: Node.js 22 | Next.js 16 | React 19 | TypeScript |Tailwind CSS 4     
-🔹 Base de Datos: Supabase | PostgreSQL      
-🔹 DevOps & Infrastructure:
-- Containers: Docker | Docker Compose  
-- CI/CD: GitHub Actions  
-- Cloud: Google Cloud Platform (Cloud Run & Artifact Registry)  
-- QA & Security: Gitleaks | Checkstyle | ESLint
-
---- 
-
-🔹 Backend: Java 21 | Spring Boot 3.x | Maven | Spring Security | JWT  
-🔹 Frontend: React 19 | Node.js 22 | Next.js 15 | TypeScript | Tailwind CSS 4  
-🔹 Database: Supabase | PostgreSQL (Relational)  
-🔹 DevOps & Infrastructure:   
-- Containers: Docker & Docker Compose  
-- CI/CD: GitHub Actions
-- Cloud: Google Cloud Platform (Cloud Run & Artifact Registry)
-- Quality & Security: Gitleaks | Checkstyle | ESLint
   
 ## 🚀 5.- Creación del Ambiente de ejecución del  proyecto
 **Consideración especial:**  
