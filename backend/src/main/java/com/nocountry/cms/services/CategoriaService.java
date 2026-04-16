@@ -5,6 +5,8 @@ import com.nocountry.cms.repositories.ICategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CategoriaService implements ICategoriaService {
 
@@ -16,4 +18,11 @@ public class CategoriaService implements ICategoriaService {
         return categoriaRepository.findById(id)
                 .orElseThrow(()-> new RuntimeException("No se encontro la categoria"));
     }
+
+    @Override
+    public List<Categoria> listarCategorias() {
+        return categoriaRepository.findAll();
+    }
+
+
 }
