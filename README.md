@@ -2,7 +2,9 @@
 Plataforma CMS para gestionar y publicar testimonios con soporte multimedia, desarrollada en un entorno colaborativo ágil.
 
 ## 🌐 1.- Demo
-### 🔗 Desde el URL: [https://proxCMStestimonial.html](https://proxCMStestimonial.html)
+### 🔗 Desde el URL: [Demo](https://frontend-129781163028.us-central1.run.app/ingresar)
+![Dashboard](https://drive.google.com/uc?export=view&id=119GBsP49j3L2QHCJ3bNbsxP_a4vPV9oF)
+
 ### 📸 Screenshots:
 Las imágenes del sistema cuando esté corriendo)
 - Imagen1
