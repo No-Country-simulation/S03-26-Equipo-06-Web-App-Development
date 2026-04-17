@@ -40,4 +40,6 @@ public class Testimonio {
             inverseJoinColumns = @JoinColumn(name = "id_tag")
     )
     private List<Tag> tags;
+    @OneToMany(mappedBy = "testimonio", cascade = CascadeType.ALL)
+    private List<Comentario> comentarios;
 }

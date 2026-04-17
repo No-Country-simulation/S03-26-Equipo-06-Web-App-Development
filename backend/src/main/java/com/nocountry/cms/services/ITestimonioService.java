@@ -1,5 +1,6 @@
 package com.nocountry.cms.services;
 
+import com.nocountry.cms.dto.ComentarioRequestDTO;
 import com.nocountry.cms.dto.TestimonioDTO;
 import com.nocountry.cms.dto.TestimonioDTOResponse;
 import com.nocountry.cms.models.Testimonio;
@@ -17,8 +18,12 @@ public interface ITestimonioService {
 
      TestimonioDTOResponse getTestimonioDTOById(Long id);
 
+     public TestimonioDTOResponse testimonioToDTO(Testimonio testimonio);
+
      String deleteTestimonioById(Long id);
 
      Testimonio updateTestimonio(TestimonioDTO dto, Long id);
+
+     void comentarTestimonio(ComentarioRequestDTO requestDTO);
 
 }

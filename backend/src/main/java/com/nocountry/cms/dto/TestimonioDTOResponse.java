@@ -22,5 +22,6 @@ public class TestimonioDTOResponse {
     private CategoriaDTO categoria;
     private UsuarioDTO usuario;
     private List<TagDTO> tags;
+    private List<ComentarioDTO> comentarios;
 
 }

@@ -1,5 +1,6 @@
 package com.nocountry.cms.controllers;
 
+import com.nocountry.cms.dto.ComentarioRequestDTO;
 import com.nocountry.cms.dto.TestimonioDTO;
 import com.nocountry.cms.dto.TestimonioDTOResponse;
 import com.nocountry.cms.dto.response.ApiResponse;
@@ -59,5 +60,12 @@ public class TestimonioController {
         testimonioService.updateTestimonio(dto, id);
 
         return ResponseBuilder.success("OK", testimonioService.getTestimonioDTOById(id));
+    }
+
+    @PostMapping("/comentar")
+    public ResponseEntity<ApiResponse<String>> crearComentario(@RequestBody ComentarioRequestDTO requestDTO) {
+        testimonioService.comentarTestimonio(requestDTO);
+
+        return ResponseBuilder.created("OK", "Testimonio creado correctamente.");
     }
 }
