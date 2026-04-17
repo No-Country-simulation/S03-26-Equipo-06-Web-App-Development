@@ -2,13 +2,9 @@
 Plataforma CMS para gestionar y publicar testimonios con soporte multimedia, desarrollada en un entorno colaborativo ágil.
 
 ## 🌐 1.- Demo
-### 🔗 Desde el URL: [Demo](https://frontend-129781163028.us-central1.run.app/ingresar)
-![Dashboard](https://drive.google.com/uc?export=view&id=119GBsP49j3L2QHCJ3bNbsxP_a4vPV9oF)
-
-### 📸 Screenshots:
-Las imágenes del sistema cuando esté corriendo)
-- Imagen1
-- Imagen2
+### 🔗 Produccion - Desde el URL: [Demo](https://frontend-129781163028.us-central1.run.app/ingresar)
+### 🔗 Desarrollo - Desde el URL: [Demo](https://frontend-dev-129781163028.us-central1.run.app/ingresar)
+![Dashboard](https://drive.google.com/uc?export=view&id=1gT4GTKVV0LTOnj6jUlrSFynTqjt7ztJG)
 
 ## 📌 2.- Sobre el Proyecto
 Este proyecto es una aplicación web desarrollada en el contexto de una simulación profesional de No Country, cuyo objetivo es construir un CMS (Content Management System) que permita:
@@ -209,13 +205,13 @@ Este proyecto es de uso educativo dentro del programa No Country.
 ![Login](https://drive.google.com/uc?export=view&id=19I3Yd1FUzTdt2575MKXt3fwY7CnqhVoC)
 
 - Dashboard
-![Dashboard](https://drive.google.com/uc?export=view&id=119GBsP49j3L2QHCJ3bNbsxP_a4vPV9oF)
+![Dashboard](https://drive.google.com/uc?export=view&id=1gT4GTKVV0LTOnj6jUlrSFynTqjt7ztJG)
 
 - Creación de testimonio
-![Crear_testimonio](https://drive.google.com/uc?export=view&id=1uD2zIWWC9jojT3OhusD7A6tchsDTahnF)
+![Crear_testimonio](https://drive.google.com/uc?export=view&id=1cY5Csseve9pLx9Yj1UE3lIdPSe46uhc1)
 
 - Publicaciones
-![Publicaciones](https://drive.google.com/uc?export=view&id=1d4Qh_MTvAkWaOZEQ8-mb9C1FS3U2ZKPv)
+![Publicaciones](https://drive.google.com/uc?export=view&id=1BQpqmPygHwAvUe_J7dnoKoHWNTHeaKby)
 
 ## 📊 Endpoints documentados
 
