@@ -5,7 +5,7 @@ export function UsersPageSkeleton() {
       <div className='mb-10 flex items-center justify-between md:ml-15'>
         <div className='h-8 w-64 rounded bg-slate-300' />
 
-        <div className='h-10 w-10 rounded-md bg-slate-300' />
+       
       </div>
 
       {/*buscardo*/}

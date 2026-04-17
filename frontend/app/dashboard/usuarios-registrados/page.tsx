@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 import { UsersPageSkeleton } from '@/app/components/ui/skeletors/skeletor-usuarios'
 
 interface Usuario {
-  id_usuario: number
+  id: number
   nombre: string
   rol: string
 }
@@ -37,6 +37,7 @@ export default function Roles() {
 
         const json = await res.json()
         const data: Usuario[] = json.data ?? []
+    
 
         setUsuarios(data)
       } catch (error) {
@@ -58,17 +59,16 @@ export default function Roles() {
   const usuariosFiltrados = usuarios.filter(user => user.nombre.toLowerCase().includes(search.toLowerCase()))
 
   return (
-    <div className='min-h-screen bg-linear-to-br from-slate-50 to-slate-100 p-10'>
+    <div className='mb-9 min-h-screen bg-linear-to-br from-slate-50 to-slate-100 p-5'>
       {/*header*/}
-      <div className='mb-10 flex items-center justify-between md:ml-15'>
+      <button
+        onClick={() => router.back()}
+        className='absolute top-24 right-14 cursor-pointer rounded-md p-2 text-slate-500 transition hover:bg-slate-200'
+      >
+        <Undo2 />
+      </button>
+      <div className='flex items-center justify-between p-10 md:ml-15'>
         <h1 className='text-3xl font-semibold text-slate-700'>Usuarios Registrados</h1>
-
-        <button
-          onClick={() => router.back()}
-          className='absolute top-26 right-6 cursor-pointer rounded-md p-2 text-slate-500 transition hover:bg-slate-200'
-        >
-          <Undo2 />
-        </button>
       </div>
 
       {/*input*/}
@@ -84,33 +84,39 @@ export default function Roles() {
 
       {/*grid*/}
       <div className='mx-auto grid max-w-6xl grid-cols-1 gap-8 sm:grid-cols-2 md:px-10 lg:grid-cols-3'>
-        {usuariosFiltrados.map(user => {
-          const isAdmin = user.rol.toLowerCase().includes('admin')
-          const isEditor = user.rol.toLowerCase().includes('editor')
+        {usuarios.length === 0 ? (
+          <p className='col-span-full text-center text-slate-500'>No hay usuarios cargados</p>
+        ) : usuariosFiltrados.length === 0 ? (
+          <p className='col-span-full text-center text-slate-500'>No hay coincidencias con &quot;{search}&quot;</p>
+        ) : (
+          usuariosFiltrados.map(user => {
+            const isAdmin = user.rol.toLowerCase().includes('admin')
+            const isEditor = user.rol.toLowerCase().includes('editor')
 
-          return (
-            <div
-              key={user.id_usuario ?? user.nombre}
-              className='rounded-2xl border border-slate-200 bg-linear-to-br from-white via-slate-50 to-slate-100 p-6 shadow-sm transition hover:from-white hover:to-slate-200 hover:shadow-md'
-            >
-              <div className='mt-1 mb-6 space-y-3'>
-                <div className='flex items-center justify-between'>
-                  <p className='text-sm font-medium text-slate-700'>{user.nombre}</p>
+            return (
+              <div
+                key={user.id}
+                className='rounded-2xl border border-slate-200 bg-linear-to-br from-white via-slate-50 to-slate-100 p-6 shadow-sm transition hover:from-white hover:to-slate-200 hover:shadow-md'
+              >
+                <div className='mt-1 mb-6 space-y-3'>
+                  <div className='flex items-center justify-between'>
+                    <p className='text-sm font-medium text-slate-700'>{user.nombre}</p>
 
-                  <span className='rounded-full border border-slate-300 bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600'>{user.rol}</span>
+                    <span className='rounded-full border border-slate-300 bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600'>{user.rol}</span>
+                  </div>
                 </div>
+
+                {isAdmin ? (
+                  <div className='text-sm font-medium text-red-400'>Admin</div>
+                ) : (
+                  <div className='flex items-center justify-between'>
+                    <span className='text-sm text-slate-500'>{isEditor ? 'Editor activo' : 'Usuario registrado'}</span>
+                  </div>
+                )}
               </div>
-
-              {isAdmin ? (
-                <div className='text-sm font-medium text-red-400'>Admin</div>
-              ) : (
-                <div className='flex items-center justify-between'>
-                  <span className='text-sm text-slate-500'>{isEditor ? 'Editor activo' : 'Usuario registrado'}</span>
-                </div>
-              )}
-            </div>
-          )
-        })}
+            )
+          })
+        )}
       </div>
     </div>
   )
