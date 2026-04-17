@@ -21,14 +21,6 @@ Este proyecto es una aplicación web desarrollada en el contexto de una simulaci
 
 ## 🧱 3.- Arquitectura del Proyecto
 El proyecto sigue una arquitectura desacoplada basada en microservicios:  
-📦 root  
- ┣ 📂 backend      → API REST (Spring Boot)  
- ┣ 📂 frontend     → Aplicación web (Vite / Node.js)  
- ┣ 📄 docker-compose.yml  
- ┗ 📄 README.md  
-
-### 📂 Estructura del Proyecto
-
 ```text
 ├── 📂 backend         # API REST con Java 21 & Spring Boot
 │   ├── 📂 config      # Configuraciones (Security, CORS, APIs)
