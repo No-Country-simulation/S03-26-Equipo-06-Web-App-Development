@@ -36,9 +36,8 @@ export default function Roles() {
         }
 
         const json = await res.json()
-        console.log(json)
         const data: Usuario[] = json.data ?? []
-        console.log(data)
+    
 
         setUsuarios(data)
       } catch (error) {
