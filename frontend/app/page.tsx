@@ -24,19 +24,25 @@ export default function Testimonios() {
         const res = await fetch(`${API_URL}/api/testimonios`, { cache: 'no-store' })
         const json = await res.json()
         const raw = Array.isArray(json?.data) ? json.data : []
-        const result: Testimonio[] = raw.map((item: Testimonio) => ({
-          ...item,
-          fecha_creacion: item.fecha_creacion ? new Date(item.fecha_creacion) : null,
-          tags: item.tags ?? [],
-        }))
+        const result: Testimonio[] = raw
+          .map((item: Testimonio) => ({
+            ...item,
+            fecha_creacion: item.fecha_creacion ? new Date(item.fecha_creacion) : null,
+            tags: item.tags ?? [],
+          }))
+          .sort((a: Testimonio, b: Testimonio) => {
+            const dateA = a.fecha_creacion ? new Date(a.fecha_creacion).getTime() : 0
+            const dateB = b.fecha_creacion ? new Date(b.fecha_creacion).getTime() : 0
+
+            return dateB - dateA
+          })
         
         setData(result)
+        setLoading(false)
       } catch (error) {
         console.error('Error al traer testimonios:', error)
         toast.error('No se pudieron cargar las publicaciones.')
-      } finally {
-        setLoading(false)
-      }
+      } 
     }
 
     fetchTestimonios()

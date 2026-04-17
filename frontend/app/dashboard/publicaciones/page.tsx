@@ -64,10 +64,17 @@ export default function TestimoniosDashboard() {
         const res = await fetch(`${API_URL}/api/testimonios`)
         const json = await res.json()
         
-        const result: Testimonio[] = (json.data ?? []).map((item: Testimonio) => ({
-          ...item,
-          fecha_creacion: item.fecha_creacion ? new Date(item.fecha_creacion) : null,
-        }))
+        const result: Testimonio[] = (json.data ?? [])
+          .map((item: Testimonio) => ({
+            ...item,
+            fecha_creacion: item.fecha_creacion ? new Date(item.fecha_creacion) : null,
+          }))
+          .sort((a: Testimonio, b: Testimonio) => {
+            const dateA = a.fecha_creacion ? new Date(a.fecha_creacion).getTime() : 0
+            const dateB = b.fecha_creacion ? new Date(b.fecha_creacion).getTime() : 0
+
+            return dateB - dateA
+          })
         
         setData(result)
       } catch (error) {
