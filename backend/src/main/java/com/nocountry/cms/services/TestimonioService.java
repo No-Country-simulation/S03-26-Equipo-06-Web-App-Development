@@ -1,6 +1,10 @@
 package com.nocountry.cms.services;
 
 import com.nocountry.cms.config.CloudinaryAPI;
+import com.nocountry.cms.dto.ComentarioRequestDTO;
+import com.nocountry.cms.dto.TestimonioDTO;
+import com.nocountry.cms.dto.TestimonioDTOResponse;
+import com.nocountry.cms.models.Comentario;
 import com.nocountry.cms.models.Testimonio;
 import com.nocountry.cms.repositories.ITestimonioRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.cloudinary.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,58 +25,114 @@ public class TestimonioService implements ITestimonioService {
     CloudinaryAPI cloudinary;
     @Autowired
     IUsuarioService usuarioService;
+    @Autowired
+    ICategoriaService categoriaService;
+    @Autowired
+    ITagService tagService;
+    @Autowired
+    IComentarioService comentarioService;
 
     @Override
-    public void createTestimonio(Testimonio nuevoTestimonio, HttpServletRequest request) {
+    public Testimonio createTestimonio(TestimonioDTO dto, HttpServletRequest request) {
+
+        Testimonio nuevoTestimonio = new Testimonio();
 
         nuevoTestimonio.setId_usuario(usuarioService.loadUserByCorreo(request));
-
-        if (nuevoTestimonio.getImagen_url() != null) {
-            nuevoTestimonio.setImagen_url(cloudinary.uploadImage(nuevoTestimonio.getImagen_url()));
+        nuevoTestimonio.setTitulo(dto.getTitulo());
+        nuevoTestimonio.setContenido(dto.getContenido());
+        nuevoTestimonio.setEstado(dto.getEstado());
+        if (dto.getImagen_url() != null) {
+            nuevoTestimonio.setImagen_url(cloudinary.uploadImage(dto.getImagen_url()));
         }
+        nuevoTestimonio.setVideo_url(dto.getVideo_url());
+        nuevoTestimonio.setCategoria(categoriaService.getCategoriaById(dto.getCategoria_id()));
+        nuevoTestimonio.setTags(tagService.getTagList(dto.getTags()));
 
         nuevoTestimonio.setFecha_creacion(LocalDateTime.now());
 
-        testimonioRepo.save(nuevoTestimonio);
+        return testimonioRepo.save(nuevoTestimonio);
     }
 
     @Override
-    public List<Testimonio> getTestimonios() {
+    public List<TestimonioDTOResponse> getTestimonios() {
+        List<Testimonio> testimonios = testimonioRepo.findAll();
+        List<TestimonioDTOResponse> listaTestimonios = new ArrayList<>();
 
-        return testimonioRepo.findAll();
+        for (Testimonio testimonio : testimonios) {
+            listaTestimonios.add(testimonioToDTO(testimonio));
+        }
+
+        return listaTestimonios;
     }
 
     @Override
-    public Testimonio getTestimonioById(Integer id) {
+    public TestimonioDTOResponse getTestimonioDTOById(Long id) {
 
-        return testimonioRepo.findById(id).orElse(null);
+        Testimonio testimonio = testimonioRepo.findById(id)
+                .orElseThrow(()-> new RuntimeException("No se encontro el testimonio"));
+
+        return testimonioToDTO(testimonio);
     }
 
     @Override
-    public String deleteTestimonioById(Integer id) {
+    public Testimonio getTestimonioById(Long id) {
+        return testimonioRepo.findById(id)
+                .orElseThrow(()-> new RuntimeException("No se encontro el testimonio"));
+    }
+
+    @Override
+    public TestimonioDTOResponse testimonioToDTO(Testimonio testimonio) {
+        TestimonioDTOResponse testimonioDTOResponse = new TestimonioDTOResponse();
+
+        testimonioDTOResponse.setId_testimonio(testimonio.getId_testimonio());
+        testimonioDTOResponse.setTitulo(testimonio.getTitulo());
+        testimonioDTOResponse.setContenido(testimonio.getContenido());
+        testimonioDTOResponse.setEstado(testimonio.getEstado());
+        testimonioDTOResponse.setImagen_url(testimonio.getImagen_url());
+        testimonioDTOResponse.setVideo_url(testimonio.getVideo_url());
+        testimonioDTOResponse.setFecha_creacion(testimonio.getFecha_creacion());
+        testimonioDTOResponse.setUsuario(usuarioService.getUserDTOById(testimonio.getId_usuario()));
+        testimonioDTOResponse.setTags(tagService.listarTags(testimonio.getTags()));
+        testimonioDTOResponse.setCategoria(categoriaService.getCategoriaDTOById(testimonio.getCategoria()));
+        testimonioDTOResponse.setComentarios(comentarioService.listarComentariosDTO(testimonio.getComentarios()));
+
+
+        return testimonioDTOResponse;
+    }
+
+    @Override
+    public String deleteTestimonioById(Long id) {
         testimonioRepo.deleteById(id);
         return "Testimonio eliminado correctamente";
     }
 
     @Override
-    public Testimonio updateTestimonio(Testimonio testimonio) {
-        Testimonio edit = testimonioRepo.findById(testimonio.getId_testimonio()).orElse(null);
+    public Testimonio updateTestimonio(TestimonioDTO dto, Long id) {
+        Testimonio edit = testimonioRepo.findById(id)
+                .orElseThrow(()-> new RuntimeException("No se encontro el testimonio"));
 
-        if(edit != null) {
-            edit.setId_usuario(testimonio.getId_usuario());
-            edit.setTitulo(testimonio.getTitulo());
-            edit.setContenido(testimonio.getContenido());
-            edit.setId_categoria(testimonio.getId_categoria());
-            edit.setTags(testimonio.getTags());
-            edit.setEstado(testimonio.getEstado());
-            edit.setImagen_url(testimonio.getImagen_url());
-            edit.setVideo_url(testimonio.getVideo_url());
 
-            return testimonioRepo.save(edit);   }   else  {
-            return null;
+            edit.setTitulo(dto.getTitulo());
+            edit.setContenido(dto.getContenido());
+            edit.setEstado(dto.getEstado());
+            if (dto.getImagen_url() != null) {
+                edit.setImagen_url(cloudinary.uploadImage(dto.getImagen_url()));
+            }
+            edit.setVideo_url(dto.getVideo_url());
+            edit.setCategoria(categoriaService.getCategoriaById(dto.getCategoria_id()));
+            edit.setTags(tagService.getTagList(dto.getTags()));
 
-        }
+            return testimonioRepo.save(edit);
 
+    }
+
+    @Override
+    public void comentarTestimonio(ComentarioRequestDTO requestDTO) {
+        Comentario comentario = new Comentario();
+        comentario.setTestimonio(getTestimonioById(requestDTO.getTestimonio_id()));
+        comentario.setContenido(requestDTO.getContenido());
+
+        comentarioService.crearComentario(comentario);
     }
 
 

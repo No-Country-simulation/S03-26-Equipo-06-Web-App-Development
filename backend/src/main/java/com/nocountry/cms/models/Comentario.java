@@ -6,20 +6,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Entity
 @Getter @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class Categoria {
+@AllArgsConstructor
+public class Comentario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_categoria;
-    private String nombre;
-    private String descripcion;
-    @OneToMany(mappedBy = "categoria")
-    private List<Testimonio> lista_testimonios;
+    private Long id_comentario;
+    private String contenido;
+    @ManyToOne
+    @JoinColumn (name = "id_testimonio")
+    private Testimonio testimonio;
 
 }

@@ -18,7 +18,7 @@ public class Testimonio {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private Integer id_testimonio;
+    private Long id_testimonio;
     private String titulo;
     private String contenido;
     private String estado;
@@ -28,7 +28,7 @@ public class Testimonio {
     @ManyToOne
     @JoinColumn (name = "id_categoria")
     @JsonIgnore
-    private Categoria id_categoria;
+    private Categoria categoria;
     @ManyToOne
     @JoinColumn (name = "id_usuario")
     @JsonIgnore
@@ -40,4 +40,6 @@ public class Testimonio {
             inverseJoinColumns = @JoinColumn(name = "id_tag")
     )
     private List<Tag> tags;
+    @OneToMany(mappedBy = "testimonio", cascade = CascadeType.ALL)
+    private List<Comentario> comentarios;
 }
