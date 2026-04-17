@@ -138,7 +138,7 @@ jobs:
 
   build-and-deploy-prod:
     # if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
-    # needs: [lint]
+    # needs: [lint] 
     runs-on: ubuntu-latest
     defaults:
       run:
