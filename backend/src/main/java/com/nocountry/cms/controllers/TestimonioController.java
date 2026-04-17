@@ -62,6 +62,7 @@ public class TestimonioController {
         return ResponseBuilder.success("OK", testimonioService.getTestimonioDTOById(id));
     }
 
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_EDITOR', 'ROLE_USUARIOREGISTRADO')")
     @PostMapping("/comentar")
     public ResponseEntity<ApiResponse<String>> crearComentario(@RequestBody ComentarioRequestDTO requestDTO) {
         testimonioService.comentarTestimonio(requestDTO);
