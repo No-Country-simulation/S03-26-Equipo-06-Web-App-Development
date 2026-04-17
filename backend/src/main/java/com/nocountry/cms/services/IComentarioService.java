@@ -11,10 +11,10 @@ public interface IComentarioService {
 
     List<ComentarioDTO> listarComentariosDTO(List<Comentario> comentarios);
 
-    public Comentario crearComentario(Comentario comentario);
+    Comentario crearComentario(Comentario comentario);
 
-    public Comentario traerComentarioByid(Long id);
+    Comentario traerComentarioByid(Long id);
 
-    public ComentarioDTO comentarioToDTO(Comentario comentario);
+    ComentarioDTO comentarioToDTO(Comentario comentario);
 
 }
