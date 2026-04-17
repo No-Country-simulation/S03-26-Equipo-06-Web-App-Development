@@ -1,5 +1,6 @@
 package com.nocountry.cms.controllers;
 
+import com.nocountry.cms.dto.ComentarioRequestDTO;
 import com.nocountry.cms.dto.TestimonioDTO;
 import com.nocountry.cms.dto.TestimonioDTOResponse;
 import com.nocountry.cms.dto.response.ApiResponse;
@@ -41,7 +42,7 @@ public class TestimonioController {
     @GetMapping("/testimonios/{id}")
     public ResponseEntity<ApiResponse<TestimonioDTOResponse>> getUnTestimonio(@PathVariable Long id){
 
-        return ResponseBuilder.success("OK", testimonioService.getTestimonioById(id));
+        return ResponseBuilder.success("OK", testimonioService.getTestimonioDTOById(id));
     }
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
@@ -58,6 +59,14 @@ public class TestimonioController {
                                                           @PathVariable Long id){
         testimonioService.updateTestimonio(dto, id);
 
-        return ResponseBuilder.success("OK", testimonioService.getTestimonioById(id));
+        return ResponseBuilder.success("OK", testimonioService.getTestimonioDTOById(id));
+    }
+
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_EDITOR', 'ROLE_USUARIOREGISTRADO')")
+    @PostMapping("/comentar")
+    public ResponseEntity<ApiResponse<String>> crearComentario(@RequestBody ComentarioRequestDTO requestDTO) {
+        testimonioService.comentarTestimonio(requestDTO);
+
+        return ResponseBuilder.created("OK", "Testimonio creado correctamente.");
     }
 }

@@ -6,7 +6,6 @@ import com.nocountry.cms.dto.RegistroRequestDTO;
 import com.nocountry.cms.dto.UsuarioDTO;
 import com.nocountry.cms.dto.response.ApiResponse;
 import com.nocountry.cms.dto.response.ResponseBuilder;
-import com.nocountry.cms.models.Usuario;
 import com.nocountry.cms.services.IUsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

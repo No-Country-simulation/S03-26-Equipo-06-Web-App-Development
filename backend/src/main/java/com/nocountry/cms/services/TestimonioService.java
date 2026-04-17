@@ -1,8 +1,10 @@
 package com.nocountry.cms.services;
 
 import com.nocountry.cms.config.CloudinaryAPI;
+import com.nocountry.cms.dto.ComentarioRequestDTO;
 import com.nocountry.cms.dto.TestimonioDTO;
 import com.nocountry.cms.dto.TestimonioDTOResponse;
+import com.nocountry.cms.models.Comentario;
 import com.nocountry.cms.models.Testimonio;
 import com.nocountry.cms.repositories.ITestimonioRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,6 +29,8 @@ public class TestimonioService implements ITestimonioService {
     ICategoriaService categoriaService;
     @Autowired
     ITagService tagService;
+    @Autowired
+    IComentarioService comentarioService;
 
     @Override
     public Testimonio createTestimonio(TestimonioDTO dto, HttpServletRequest request) {
@@ -62,7 +66,7 @@ public class TestimonioService implements ITestimonioService {
     }
 
     @Override
-    public TestimonioDTOResponse getTestimonioById(Long id) {
+    public TestimonioDTOResponse getTestimonioDTOById(Long id) {
 
         Testimonio testimonio = testimonioRepo.findById(id)
                 .orElseThrow(()-> new RuntimeException("No se encontro el testimonio"));
@@ -70,6 +74,13 @@ public class TestimonioService implements ITestimonioService {
         return testimonioToDTO(testimonio);
     }
 
+    @Override
+    public Testimonio getTestimonioById(Long id) {
+        return testimonioRepo.findById(id)
+                .orElseThrow(()-> new RuntimeException("No se encontro el testimonio"));
+    }
+
+    @Override
     public TestimonioDTOResponse testimonioToDTO(Testimonio testimonio) {
         TestimonioDTOResponse testimonioDTOResponse = new TestimonioDTOResponse();
 
@@ -83,6 +94,8 @@ public class TestimonioService implements ITestimonioService {
         testimonioDTOResponse.setUsuario(usuarioService.getUserDTOById(testimonio.getId_usuario()));
         testimonioDTOResponse.setTags(tagService.listarTags(testimonio.getTags()));
         testimonioDTOResponse.setCategoria(categoriaService.getCategoriaDTOById(testimonio.getCategoria()));
+        testimonioDTOResponse.setComentarios(comentarioService.listarComentariosDTO(testimonio.getComentarios()));
+
 
         return testimonioDTOResponse;
     }
@@ -111,6 +124,15 @@ public class TestimonioService implements ITestimonioService {
 
             return testimonioRepo.save(edit);
 
+    }
+
+    @Override
+    public void comentarTestimonio(ComentarioRequestDTO requestDTO) {
+        Comentario comentario = new Comentario();
+        comentario.setTestimonio(getTestimonioById(requestDTO.getTestimonio_id()));
+        comentario.setContenido(requestDTO.getContenido());
+
+        comentarioService.crearComentario(comentario);
     }
 
 
