@@ -94,8 +94,8 @@ jobs:
         run: ./mvnw checkstyle:check
 
   build-and-deploy-dev:
-    if: ${{ (github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch') && github.ref != 'refs/heads/main' }}
-    needs: [lint]
+    # if: ${{ (github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch') && github.ref != 'refs/heads/main' }}
+    # needs: [lint]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -137,8 +137,8 @@ jobs:
             --allow-unauthenticated
 
   build-and-deploy-prod:
-    # if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
-    # needs: [lint]
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
+    needs: [lint]
     runs-on: ubuntu-latest
     defaults:
       run:
