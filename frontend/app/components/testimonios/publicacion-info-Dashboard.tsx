@@ -57,27 +57,17 @@ export default function InfoCardDashboard({ data }: { data: Testimonio }) {
             <div className='flex w-full flex-col justify-between md:w-1/2'>
               {/* TEXTO */}
               <p className='text-sm leading-relaxed text-gray-800 sm:text-base'>{data.contenido}</p>
-
-              {/* FILA FINAL */}
               <div className='mt-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between'>
-                {/* IZQUIERDA */}
                 <div>
                   <p className='text-sm font-semibold text-gray-700'>
-                    Categoría: <span className='font-normal'>{data.id_categoria}</span>
+                    Categoría: <span className='font-normal'>{data.categoria?.nombre}</span>
                   </p>
-
-                  {data.tags && data.tags.length > 0 && (
-                    <div className='mt-2 flex flex-wrap gap-2'>
-                      {data.tags.map((tag, i) => (
-                        <span key={i} className='rounded-full border-blue-400 bg-blue-200 px-3 py-1 text-xs text-gray-800'>
-                          #{tag}
-                        </span>
-                      ))}
-                    </div>
-                  )}
+                  {data.tags?.map((tag, index) => (
+                    <span key={`${tag.id_tag ?? tag.nombre}-${index}`} className='rounded bg-gray-200 px-2 py-1 text-xs text-gray-700'>
+                      #{tag.nombre}
+                    </span>
+                  ))}
                 </div>
-
-                {/* DERECHA */}
                 <p className='text-xs text-gray-500 sm:whitespace-nowrap'>Publicado: {new Date(data.fecha_creacion || '').toLocaleDateString()}</p>
               </div>
             </div>

@@ -10,7 +10,7 @@ import { toast } from 'react-toastify'
 export default function RegistroForm() {
   const router = useRouter();
   const { login } = useAuth();
-  const [form, setForm] = useState({ nombre: '', correo: '', password: '', rol: 'UsuarioRegistrado' })
+  const [form, setForm] = useState({ nombre: '', correo: '', password: '', rol: 'role_usuariovisitante' })
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();

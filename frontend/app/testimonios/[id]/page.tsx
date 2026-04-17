@@ -8,8 +8,6 @@ import { Testimonio } from '@/types/nuevo-testimonio'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
-
-
 type TestimonioAPI = {
   id_testimonio: number
   titulo: string | null
@@ -36,7 +34,6 @@ export default function TestimonioDetallePage() {
 
       if (!res.ok) {
         const text = await res.text()
-        console.error('STATUS:', res.status)
         console.error('RESPONSE:', text)
         throw new Error(`Error ${res.status}`)
       }

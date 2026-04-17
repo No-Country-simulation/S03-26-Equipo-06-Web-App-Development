@@ -41,7 +41,7 @@ export function PublicacionCardPublica({ data, onSelect }: Props) {
     <>
       {/*movil*/}
       <div className='flex flex-col gap-5 px-2 py-4 sm:hidden'>
-        {data.map(item => (
+        {data.reverse().map(item => (
           <div key={item.id_testimonio} className='overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm'>
             <div className='relative h-44 w-full'>
               <Image src={item.imagen_url || '/testimoniales.webp'} alt={item.titulo || 'imagen'} fill className='object-cover' />

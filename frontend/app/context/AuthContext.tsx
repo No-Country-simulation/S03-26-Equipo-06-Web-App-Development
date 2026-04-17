@@ -29,7 +29,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           const payload = JSON.parse(atob(token.split('.')[1]))
           setIsLogged(true)
           setRol(payload.rol)
-          setNombre(payload.nombre || payload.sub) // fallback
+          setNombre(payload.nombre || payload.sub) 
         } catch (error: unknown) {
           if (error instanceof Error) {
             console.error('Token inválido', error.message)
@@ -53,8 +53,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsLogged(true)
     setNombre(payload.sub)
     //Redirige rol
-    if (payload.rol === 'ROLE_ADMIN') router.push('/dashboard/')
-    else if (payload.rol === 'ROLE_EDITOR') router.push('/dashboard/')
+    if (payload.rol === 'ROLE_ADMIN | admin') router.push('/dashboard/')
+    else if (payload.rol === 'ROLE_EDITOR | editor') router.push('/dashboard/')
     else router.push('/')
   }
 
