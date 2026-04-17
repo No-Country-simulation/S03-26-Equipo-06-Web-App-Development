@@ -62,12 +62,18 @@ public class TestimonioService implements ITestimonioService {
     }
 
     @Override
-    public TestimonioDTOResponse getTestimonioById(Long id) {
+    public TestimonioDTOResponse getTestimonioDTOById(Long id) {
 
         Testimonio testimonio = testimonioRepo.findById(id)
                 .orElseThrow(()-> new RuntimeException("No se encontro el testimonio"));
 
         return testimonioToDTO(testimonio);
+    }
+
+    @Override
+    public Testimonio getTestimonioById(Long id) {
+        return testimonioRepo.findById(id)
+                .orElseThrow(()-> new RuntimeException("No se encontro el testimonio"));
     }
 
     public TestimonioDTOResponse testimonioToDTO(Testimonio testimonio) {

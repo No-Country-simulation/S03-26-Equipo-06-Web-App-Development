@@ -41,7 +41,7 @@ public class TestimonioController {
     @GetMapping("/testimonios/{id}")
     public ResponseEntity<ApiResponse<TestimonioDTOResponse>> getUnTestimonio(@PathVariable Long id){
 
-        return ResponseBuilder.success("OK", testimonioService.getTestimonioById(id));
+        return ResponseBuilder.success("OK", testimonioService.getTestimonioDTOById(id));
     }
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
@@ -58,6 +58,6 @@ public class TestimonioController {
                                                           @PathVariable Long id){
         testimonioService.updateTestimonio(dto, id);
 
-        return ResponseBuilder.success("OK", testimonioService.getTestimonioById(id));
+        return ResponseBuilder.success("OK", testimonioService.getTestimonioDTOById(id));
     }
 }

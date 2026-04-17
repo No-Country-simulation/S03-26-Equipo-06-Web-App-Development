@@ -13,7 +13,9 @@ public interface ITestimonioService {
 
      List<TestimonioDTOResponse> getTestimonios();
 
-     TestimonioDTOResponse getTestimonioById(Long id);
+     Testimonio getTestimonioById(Long id);
+
+     TestimonioDTOResponse getTestimonioDTOById(Long id);
 
      String deleteTestimonioById(Long id);
 
