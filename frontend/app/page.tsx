@@ -21,20 +21,16 @@ export default function Testimonios() {
   useEffect(() => {
     const fetchTestimonios = async () => {
       try {
-        const res = await fetch(`${API_URL}/api/testimonios`)
-        if (!res.ok) {
-          throw new Error(`Error ${res.status}`)
-        }
+        const res = await fetch(`${API_URL}/api/testimonios`, { cache: 'no-store' })
         const json = await res.json()
-        // Date a string
-        const result: Testimonio[] = (json.data as Testimonio[]).map(item => ({
+        const raw = Array.isArray(json?.data) ? json.data : []
+        const result: Testimonio[] = raw.map((item: Testimonio) => ({
           ...item,
           fecha_creacion: item.fecha_creacion ? new Date(item.fecha_creacion) : null,
+          tags: item.tags ?? [],
         }))
-
-        const publicados = result.filter(item => item.estado?.toLowerCase() === 'publicado')
-
-        setData(publicados)
+        
+        setData(result)
       } catch (error) {
         console.error('Error al traer testimonios:', error)
         toast.error('No se pudieron cargar las publicaciones.')

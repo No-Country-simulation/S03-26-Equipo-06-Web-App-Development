@@ -9,6 +9,7 @@ import { PlayCircle } from 'lucide-react'
 import BotoneraDashboard from '../botonera-dashboard/botonera'
 import { useRouter } from 'next/navigation'
 import { EditForm } from '@/types/editar-testimonio'
+import { getCategoriaStyle } from '@/utils/estilos'
 
 type Props = {
   testimonios: Testimonio[]
@@ -43,7 +44,7 @@ export function TestimonialCardDashboard({
 
   return (
     <>
-      <div className='mt-2 mb-35 max-h-125 overflow-x-auto overflow-y-auto'>
+      <div className='mt-2 max-h-125 min-h-screen overflow-x-auto overflow-y-auto pb-15'>
         {/* TABLA */}
         <table className='m-auto hidden table-auto border-collapse rounded-xl bg-white/30 shadow-md backdrop-blur-md md:ml-23 md:table md:w-[87%] md:max-w-none lg:ml-23 lg:w-[89%]'>
           <thead>
@@ -56,85 +57,108 @@ export function TestimonialCardDashboard({
           </thead>
 
           <tbody>
-            {testimonios.map(testimonio => {
-              const estadoUI = getEstadoColor(testimonio.estado || '')
-              return (
-                <tr key={testimonio.id_testimonio} className='border-b border-gray-200 transition hover:bg-gray-50'>
-                  {/* AUTOR / VIDEO / CONTENIDO */}
+            {testimonios.length === 0 ? (
+              <tr>
+                <td colSpan={4} className='py-16 text-center'>
+                  <div className='flex flex-col items-center justify-center text-gray-500'>
+                    {/* icono opcional */}
+                    <svg className='mb-3 h-10 w-10 text-gray-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth={2}
+                        d='M9 13h6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5l2 2h5a2 2 0 012 2v16a2 2 0 01-2 2z'
+                      />
+                    </svg>
 
-                  <td className='px-4 py-4 align-middle'>
-                    <div className='flex items-center justify-end gap-3'>
-                      {/* VIDEO / IMAGEN */}
-                      <div
-                        onClick={() => testimonio.video_url && setVideoActivo(testimonio.video_url)}
-                        className='relative h-17 w-25 shrink-0 cursor-pointer overflow-hidden rounded border border-gray-300'
-                      >
-                        <Image
-                          src={
-                            testimonio.video_url
-                              ? getYoutubeThumbnail(testimonio.video_url)
-                              : testimonio.imagen_url && testimonio.imagen_url.trim() !== ''
-                                ? testimonio.imagen_url
-                                : '/testimoniales.webp'
-                          }
-                          alt={testimonio.titulo || ''}
-                          className='h-17 w-25 bg-gray-700 object-cover'
-                          height={44}
-                          width={44}
-                        />
+                    <p className='text-lg font-semibold'>No hay publicaciones</p>
+                    <p className='text-sm text-gray-400'>Aún no se han cargado testimonios</p>
+                  </div>
+                </td>
+              </tr>
+            ) : (
+              testimonios.reverse().map(testimonio => {
+                const estadoUI = getEstadoColor(testimonio.estado || '')
 
-                        {/* PLAY */}
-                        {testimonio.video_url && (
-                          <div className='absolute inset-0 flex items-center justify-center bg-black/30'>
-                            <PlayCircle className='h-6 w-6 text-white' />
+                return (
+                  <tr key={testimonio.id_testimonio} className='border-b border-gray-200 transition hover:bg-gray-50'>
+                    {/* PUBLICACION */}
+                    <td className='px-4 py-4 align-middle'>
+                      <div className='flex gap-3'>
+                        <div
+                          onClick={() => testimonio.video_url && setVideoActivo(testimonio.video_url)}
+                          className='relative h-17 w-25 shrink-0 cursor-pointer overflow-hidden rounded border border-gray-300'
+                        >
+                          <Image
+                            src={
+                              testimonio.video_url
+                                ? getYoutubeThumbnail(testimonio.video_url)
+                                : testimonio.imagen_url?.trim()
+                                  ? testimonio.imagen_url
+                                  : '/testimoniales.webp'
+                            }
+                            alt={testimonio.titulo || ''}
+                            className='h-17 w-25 object-cover'
+                            height={44}
+                            width={44}
+                          />
+
+                          {testimonio.video_url && (
+                            <div className='absolute inset-0 flex items-center justify-center bg-black/30'>
+                              <PlayCircle className='h-6 w-6 text-white' />
+                            </div>
+                          )}
+                        </div>
+
+                        <div className='flex flex-col'>
+                          <span className='font-medium text-gray-900'>{testimonio.titulo ?? 'Sin título'}</span>
+
+                          <div className='mt-1 max-w-42.5'>
+                            <ExpandableTextDashboard content={testimonio.contenido || ''} />
                           </div>
-                        )}
-                      </div>
-
-                      {/* TEXTO */}
-                      <div className='flex flex-col'>
-                        <span className='font-medium text-gray-900'>{testimonio.titulo ?? 'Sin título'}</span>
-
-                        <div className='mt-1 max-w-42.5'>
-                          <ExpandableTextDashboard content={testimonio.contenido || ''} />
                         </div>
                       </div>
-                    </div>
-                  </td>
-                  {/* CATEGORIA */}
-                  <td className='py-4 text-center text-sm text-gray-700'>
-                    <div>
-                      <span className='font-medium'>Categoría: </span>
-                      {testimonio.id_categoria ?? 'Sin categoría'}
-                    </div>
-                  </td>
-                  {/* FECHA */}
-                  <td className='px-4 py-4 text-sm text-gray-500'>
-                    {testimonio.fecha_creacion ? new Date(testimonio.fecha_creacion).toLocaleDateString() : '-'}
-                  </td>
-                  {/*ACCIONES */}
-                  <td className='px-4 py-4 align-middle'>
-                    <div className='relative flex flex-col items-center gap-2'>
-                      {/* ESTADO */}
+                    </td>
 
-                      {/* ICONO*/}
-                      <span className='absolute top-[-25] right-1 flex h-10 w-10 items-center justify-center rounded-full'>{estadoUI.icon}</span>
+                    {/* CATEGORIA */}
+                    <td className='py-4 text-center text-sm text-gray-700'>
+                      <div>
+                        <p className='font-medium'>Categoría:</p>
 
-                      {/*BOTONES*/}
-                      <BotoneraDashboard
-                        testimonio={testimonio}
-                        setOpenModal={setOpenModal}
-                        setSelectedId={setSelectedId}
-                        setEditId={setEditId}
-                        setEditForm={setEditForm}
-                        setOpenEditModal={setOpenEditModal}
-                        
-                      />
-                    </div>
-                  </td>
-                </tr>
-              )
-            })}
+                        <span
+                          className={`mt-1 inline-block rounded border px-2 py-1 text-xs font-medium ${getCategoriaStyle(
+                            testimonio.categoria?.nombre
+                          )}`}
+                        >
+                          {testimonio.categoria?.nombre ?? 'Sin categoría'}
+                        </span>
+                      </div>
+                    </td>
+
+                    {/* FECHA */}
+                    <td className='px-4 py-4 text-sm text-gray-500'>
+                      {testimonio.fecha_creacion ? new Date(testimonio.fecha_creacion).toLocaleDateString() : '-'}
+                    </td>
+
+                    {/* ACCIONES */}
+                    <td className='px-4 py-4 align-middle'>
+                      <div className='relative flex flex-col items-center gap-2'>
+                        <span className='absolute top-[-25] right-1 flex h-10 w-10 items-center justify-center rounded-full'>{estadoUI.icon}</span>
+
+                        <BotoneraDashboard
+                          testimonio={testimonio}
+                          setOpenModal={setOpenModal}
+                          setSelectedId={setSelectedId}
+                          setEditId={setEditId}
+                          setEditForm={setEditForm}
+                          setOpenEditModal={setOpenEditModal}
+                        />
+                      </div>
+                    </td>
+                  </tr>
+                )
+              })
+            )}
           </tbody>
         </table>
 
@@ -185,7 +209,7 @@ export function TestimonialCardDashboard({
                 <div className='mt-2 text-sm text-gray-700'>
                   <div>
                     <span className='font-medium'>Categoría: </span>
-                    {testimonio.id_categoria ?? 'Sin categoría'}
+                    {testimonio.categoria?.nombre ?? 'Sin categoría'}
                   </div>
 
                   {/* CONTENIDO */}
@@ -193,10 +217,18 @@ export function TestimonialCardDashboard({
                     <ExpandableTextDashboard content={testimonio.contenido || ''} />
                   </div>
                 </div>
+                <div>
+                  <span className='font-medium'>Categoría: </span>
 
+                  <span
+                    className={`ml-1 inline-block rounded border px-2 py-1 text-xs font-medium ${getCategoriaStyle(testimonio.categoria?.nombre)}`}
+                  >
+                    {testimonio.categoria?.nombre ?? 'Sin categoría'}
+                  </span>
+                </div>
                 {/* FECHA */}
                 <span className='absolute right-4 bottom-4 text-xs text-gray-400'>
-                  {testimonio.fecha_creacion ? new Date(testimonio.fecha_creacion).toLocaleDateString() : '-'}
+                 Publicado {testimonio.fecha_creacion ? new Date(testimonio.fecha_creacion).toLocaleDateString() : '-'}
                 </span>
 
                 {/* BOTONES */}
@@ -214,7 +246,7 @@ export function TestimonialCardDashboard({
                       setEditForm({
                         titulo: testimonio.titulo || '',
                         contenido: testimonio.contenido || '',
-                        categoria: String(testimonio.id_categoria || ''),
+                        categoria: testimonio.categoria?.id ?? 0,
                         imagen_url: testimonio.imagen_url || '',
                         video_url: testimonio.video_url || '',
                         estado: testimonio.estado || 'pendiente',

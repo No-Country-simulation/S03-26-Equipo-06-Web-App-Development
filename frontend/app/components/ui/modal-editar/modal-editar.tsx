@@ -44,13 +44,21 @@ export default function ModalEditarTestimonio({ isOpen, onClose, editForm, setEd
             className='h-28 w-full resize-none rounded-md border border-gray-300 p-2 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200'
           />
 
-          <input
-            type='text'
-            placeholder='Categoría'
+          <select
             value={editForm.categoria}
-            onChange={e => setEditForm(prev => ({ ...prev, categoria: e.target.value }))}
+            onChange={e =>
+              setEditForm(prev => ({...prev,
+                categoria: Number(e.target.value),
+              }))
+            }
             className='w-full rounded-md border border-gray-300 p-2 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200'
-          />
+          >
+            <option value=''>Seleccionar categoría</option>
+            <option value={1}>Producto</option>
+            <option value={2}>Evento</option>
+            <option value={3}>Cliente</option>
+            <option value={4}>Industria</option>
+          </select>
 
           <input
             type='text'

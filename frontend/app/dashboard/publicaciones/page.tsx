@@ -7,12 +7,11 @@ import { getYoutubeThumbnail, getYoutubeEmbed } from '@/utils/youtube'
 import SearchDasboard from '@/app/components/search-dashboard/search'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
-import { Undo2} from 'lucide-react'
+import { Undo2 } from 'lucide-react'
 import ModalConfirmacion from '@/app/components/ui/modal-eliminacion/modal-eliminacion'
 import { Indicaciones } from '@/app/components/ui/indicaciones/indicaciones'
 import { EditForm } from '@/types/editar-testimonio'
 import ModalEditarTestimonio from '@/app/components/ui/modal-editar/modal-editar'
-
 
 type Props = {
   testimonios: Testimonio[]
@@ -27,7 +26,7 @@ type Props = {
   setEditId: (id: number | null) => void
   editForm: EditForm
   setEditForm: React.Dispatch<React.SetStateAction<EditForm>>
-  setOpenEditModal:React.Dispatch<React.SetStateAction<boolean>>
+  setOpenEditModal: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const TestimonialCardDashboard = dynamic<Props>(
@@ -51,10 +50,11 @@ export default function TestimoniosDashboard() {
   const [editForm, setEditForm] = useState<EditForm>({
     titulo: '',
     contenido: '',
-    categoria: '',
+    categoria: 1,
     imagen_url: '',
     video_url: '',
-    estado: "",
+    estado: '',
+    tags: [],
   })
   const [openEditModal, setOpenEditModal] = useState(false)
 
@@ -63,12 +63,12 @@ export default function TestimoniosDashboard() {
       try {
         const res = await fetch(`${API_URL}/api/testimonios`)
         const json = await res.json()
-
+        
         const result: Testimonio[] = (json.data ?? []).map((item: Testimonio) => ({
           ...item,
           fecha_creacion: item.fecha_creacion ? new Date(item.fecha_creacion) : null,
         }))
-
+        
         setData(result)
       } catch (error) {
         console.error('Error al traer testimonios:', error)
@@ -88,14 +88,16 @@ export default function TestimoniosDashboard() {
     const titulo = t.titulo?.toLowerCase().replace(/\s+/g, '') || ''
     const contenido = t.contenido?.toLowerCase().replace(/\s+/g, '') || ''
 
-    const estadoTestimonio = t.estado?.toLowerCase() || ''
-    const categoriaTestimonio = t.id_categoria?.toString() || ''
+    const estadoTestimonio = (t.estado || '').toUpperCase()
+    const estadoFiltro = (estado || '').toUpperCase()
+
+    const categoriaTestimonio = t.categoria?.id?.toString() || ''
 
     const matchSearch = titulo.includes(buscaTexto) || contenido.includes(buscaTexto)
 
     const matchCategoria = categoria ? categoria === categoriaTestimonio : true
 
-    const matchEstado = estado ? estado.toLowerCase() === estadoTestimonio : true
+    const matchEstado = estado ? estadoTestimonio === estadoFiltro : true
 
     return matchSearch && matchCategoria && matchEstado
   })
@@ -123,7 +125,6 @@ export default function TestimoniosDashboard() {
 
       // evita el reender cuando elimino
       setData(prev => prev.filter(t => t.id_testimonio !== selectedId))
-
       setOpenModal(false)
       setSelectedId(null)
     } catch (error) {
@@ -133,50 +134,47 @@ export default function TestimoniosDashboard() {
       setLoading(false)
     }
   }
+  //editar
+  const handleUpdate = async () => {
+    if (!editId) return
 
-//editar
+    try {
+      const token = localStorage.getItem('token')
 
-const handleUpdate = async () => {
-  if (!editId) {
-    toast.error('No hay ID seleccionado')
-    return
+      const res = await fetch(`${API_URL}/api/testimonios/editar/${editId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          titulo: editForm.titulo || '',
+          contenido: editForm.contenido || '',
+          categoria_id: editForm.categoria ? Number(editForm.categoria) : 1,
+          imagen_url: editForm.imagen_url || null,
+          video_url: editForm.video_url || null,
+          estado: editForm.estado || 'pendiente',
+          tags: Array.isArray(editForm.tags) ? editForm.tags : [],
+        }),
+      })
+
+      if (!res.ok) {
+        const text = await res.text()
+        throw new Error(text)
+      }
+
+      const json = await res.json()
+      setData(prev => prev.map(t => (t.id_testimonio === editId ? { ...t, ...json.data } : t)))
+
+      setOpenEditModal(false)
+      setEditId(null)
+
+      toast.success('Editado correctamente')
+    } catch (error) {
+      console.log(error)
+      toast.error('Error al editar')
+    }
   }
-
-  try {
-    const token = localStorage.getItem('token')
-
-    const res = await fetch(`${API_URL}/api/testimonios/editar`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        id_testimonio: editId,
-        titulo: editForm.titulo,
-        contenido: editForm.contenido,
-        id_categoria: Number(editForm.categoria),
-        imagen_url: editForm.imagen_url,
-        video_url: editForm.video_url,
-        estado: editForm.estado,
-      }),
-    })
-
-    if (!res.ok) throw new Error()
-
-    const json = await res.json()
-
-    setData(prev => prev.map(t => (t.id_testimonio === editId ? { ...t, ...json.data } : t)))
-
-    setOpenEditModal(false)
-    setEditId(null)
-
-    toast.success('Editado correctamente')
-  } catch (error) {
-    console.log('ERROR COMPLETO:', error)
-    toast.error('Error al editar')
-  }
-}
   return (
     <>
       <button
@@ -197,7 +195,6 @@ const handleUpdate = async () => {
           setEstado={setEstado}
         />
         {/*Indicaciones de icons*/}
-
         <Indicaciones />
 
         {loading ? (
@@ -220,7 +217,13 @@ const handleUpdate = async () => {
         )}
       </div>
       <ModalConfirmacion isOpen={openModal} onClose={() => setOpenModal(false)} onConfirm={handleDelete} loading={loading} />
-      <ModalEditarTestimonio isOpen={openEditModal} onClose={() => setOpenEditModal(false)} editForm={editForm} setEditForm={setEditForm} onSave={handleUpdate} loading={loading}
+      <ModalEditarTestimonio
+        isOpen={openEditModal}
+        onClose={() => setOpenEditModal(false)}
+        editForm={editForm}
+        setEditForm={setEditForm}
+        onSave={handleUpdate}
+        loading={loading}
       />
     </>
   )

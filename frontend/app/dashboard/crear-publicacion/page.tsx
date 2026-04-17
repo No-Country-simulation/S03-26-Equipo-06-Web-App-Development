@@ -17,8 +17,8 @@ export default function CreacionTestimonios() {
     autor: '',
     titulo: '',
     contenido: '',
-    categoria: '',
-    tags: '',
+    categoria: 1,
+    tags: [],
     estado: '',
     imagen_url: '',
     video_url: '',
@@ -26,7 +26,7 @@ export default function CreacionTestimonios() {
 
   const AgregarTestimonio = async (e: FormEvent) => {
     e.preventDefault()
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token')
     if (!datos.titulo || !datos.contenido || !datos.estado) {
       toast.error('Todos los campos son obligatorios', {
         toastId: 'form-error',
@@ -37,17 +37,15 @@ export default function CreacionTestimonios() {
     setLoading(true)
 
     try {
-      
       const payload: CreateTestimonio = {
         titulo: datos.titulo,
         contenido: datos.contenido,
         estado: datos.estado,
         imagen_url: datos.imagen_url || undefined,
         video_url: datos.video_url || undefined,
-        id_categoria: datos.categoria ? Number(datos.categoria) : undefined,
+        categoria_id: Number(datos.categoria),
         id_usuario: 1,
-        tags: datos.tags ? datos.tags.split(',').map(tag => tag.trim()) : [],
-        fecha_creacion: new Date().toISOString(),
+        tags: Array.isArray(datos.tags) ? datos.tags : [],
       }
 
       const res = await fetch(`${API_URL}/api/testimonios`, {
@@ -59,7 +57,7 @@ export default function CreacionTestimonios() {
         body: JSON.stringify(payload),
       })
       const text = await res.text()
-      
+
       try {
         JSON.parse(text)
       } catch {
@@ -67,7 +65,6 @@ export default function CreacionTestimonios() {
       }
 
       if (!res.ok) {
-        
         throw new Error('Error al enviar los datos')
       }
       toast.success('Testimonio creado con éxito!')
@@ -76,20 +73,19 @@ export default function CreacionTestimonios() {
         autor: '',
         titulo: '',
         contenido: '',
-        categoria: '',
-        tags: '',
+        categoria: 1,
+        tags: [],
         estado: '',
         imagen_url: '',
         video_url: '',
       })
     } catch (error: unknown) {
-      console.error('Error catch:', error)
-
+      console.error(error)
       if (error instanceof Error) {
         toast.error('Error al crear testimonio', {
           toastId: 'backend-error',
         })
-        console.log('Mensaje:', error.message)
+        console.log(error.message)
       } else {
         toast.error('Error inesperado')
       }

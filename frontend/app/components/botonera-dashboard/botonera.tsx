@@ -32,7 +32,7 @@ export default function BotoneraDashboard({ setEditId, setOpenEditModal, setEdit
           setEditForm({
             titulo: testimonio.titulo || '',
             contenido: testimonio.contenido || '',
-            categoria: String(testimonio.id_categoria || ''),
+            categoria: testimonio.categoria?.id ?? 0,
             imagen_url: testimonio.imagen_url || '',
             video_url: testimonio.video_url || '',
             estado: testimonio.estado || 'pendiente',

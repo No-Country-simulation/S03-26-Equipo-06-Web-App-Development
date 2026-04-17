@@ -6,10 +6,18 @@ export interface Testimonio {
   fecha_creacion: Date | null
   imagen_url: string | null
   titulo: string | null
+  comentarios: {
+    id: number
+    contenido: string
+  }[]
   video_url: string | null
-  id_categoria: number | null
+  categoria: {
+    id: number
+    nombre: string
+    descripcion?: string
+  } | null
   id_usuario: number | null
-  tags?: string[]
+  tags?: Tag[]
 }
 
 // Para crear
@@ -20,7 +28,13 @@ export interface CreateTestimonio {
   imagen_url?: string
   titulo: string
   video_url?: string
-  id_categoria?: number
+  categoria_id?: number
   id_usuario: number
-  tags?: string[]
+  tags?: number[]
 }
+
+export interface Tag {
+  id_tag: number
+  nombre: string
+}
+

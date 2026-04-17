@@ -1,7 +1,7 @@
 'use client'
 import { Dispatch, SetStateAction, FormEvent, useState } from 'react'
 import { DatosForm } from '@/types/form'
-import { ImagePlus, Link as LinkIcon, Video, Upload } from 'lucide-react'
+import {  Link as LinkIcon, Video } from 'lucide-react'
 
 type Props = {
   datos: DatosForm
@@ -17,6 +17,16 @@ const categorias = [
   { id: 4, nombre: 'Industria' },
 ]
 
+const tagOptions = [
+  { id: 1, label: 'Fullstack' },
+  { id: 2, label: 'Empleo' },
+  { id: 3, label: 'Curso' },
+  { id: 4, label: 'Carrera' },
+  { id: 5, label: 'Universidad' },
+  { id: 6, label: 'Instituto' },
+  { id: 7, label: 'Terciario' },
+]
+
 export default function FormularioCreacionTestimonios({ datos, setDatos, AgregarTestimonio, loading }: Props) {
   const [contador, setContador] = useState(0)
   const maxCaracteres = 300
@@ -24,15 +34,7 @@ export default function FormularioCreacionTestimonios({ datos, setDatos, Agregar
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
 
-    setDatos({
-      ...datos,
-      [name]:
-        name === 'categoria'
-          ? value === ''
-            ? ''
-            : Number(value) //categoria es number
-          : value,
-    })
+    setDatos({...datos,[name]: name === 'categoria'? value === '' ? '': Number(value) : value,})
 
 
     if (name === 'contenido') {
@@ -87,15 +89,37 @@ export default function FormularioCreacionTestimonios({ datos, setDatos, Agregar
         </div>
 
         <div>
-          <label className='text-sm font-medium'>Tags</label>
-          <input
-            type='text'
-            name='tags'
-            value={datos.tags}
-            onChange={handleChange}
-            placeholder='ej: react, nextjs, frontend'
-            className='w-full rounded border border-slate-600 px-3 py-2 text-gray-400 transition outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500'
-          />
+          <label className='text-sm font-medium '>Tags</label>
+          <div className='grid grid-cols-3 lg:grid-cols-4 gap-2'>
+            {(tagOptions ?? []).map(tag => {
+              const safeTags = Array.isArray(datos.tags) ? datos.tags : []
+
+              return (
+                <label key={tag.id} className='flex items-center gap-2 text-sm'>
+                  <input
+                    type='checkbox'
+                    checked={safeTags.includes(tag.id)}
+                    onChange={() => {
+                      setDatos(prev => {
+                        const current = Array.isArray(prev.tags) ? prev.tags : []
+
+                        const exists = current.includes(tag.id)
+
+                        const updated = exists ? current.filter(t => t !== tag.id) : [...current, tag.id]
+
+                        
+                        return {
+                          ...prev,
+                          tags: [...new Set(updated)],
+                        }
+                      })
+                    }}
+                  />
+                  {tag.label}
+                </label>
+              )
+            })}
+          </div>
         </div>
       </div>
 
@@ -114,20 +138,10 @@ export default function FormularioCreacionTestimonios({ datos, setDatos, Agregar
             value={datos.video_url}
             onChange={handleChange}
             placeholder='https://youtube.com/...'
-            className='w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-gray-700 transition outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500'
+            className='mt-7 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-gray-700 transition outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500'
           />
 
-          <div className='my-2 flex items-center gap-2 text-xs text-gray-500'>
-            <span className='h-px w-full bg-gray-300' />
-            o
-            <span className='h-px w-full bg-gray-300' />
-          </div>
-
-          <label className='flex cursor-pointer items-center justify-center gap-2 rounded-md border border-dashed border-gray-400 bg-white px-3 py-2 text-sm text-gray-600 transition hover:bg-gray-100'>
-            <Upload size={16} />
-            Subir video desde tu dispositivo
-            <input type='file' className='hidden' />
-          </label>
+          <div className='mt-7 flex items-center gap-2 text-xs text-gray-500'></div>
         </div>
 
         {/* Imagen */}
@@ -143,20 +157,8 @@ export default function FormularioCreacionTestimonios({ datos, setDatos, Agregar
             value={datos.imagen_url}
             onChange={handleChange}
             placeholder='https://ejemplo.com/imagen.jpg'
-            className='w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-gray-700 transition outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500'
+            className='mt-7 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-gray-700 transition outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500'
           />
-
-          <div className='my-2 flex items-center gap-2 text-xs text-gray-500'>
-            <span className='h-px w-full bg-gray-300' />
-            o
-            <span className='h-px w-full bg-gray-300' />
-          </div>
-
-          <label className='flex cursor-pointer items-center justify-center gap-2 rounded-md border border-dashed border-gray-400 bg-white px-3 py-2 text-sm text-gray-600 transition hover:bg-gray-100'>
-            <ImagePlus size={16} />
-            Subir imagen desde tu dispositivo
-            <input type='file' className='hidden' />
-          </label>
         </div>
       </div>
 
