@@ -6,11 +6,6 @@ Plataforma CMS para gestionar y publicar testimonios con soporte multimedia, des
 ### 🔗 Desarrollo - Desde el URL: [Demo](https://frontend-dev-129781163028.us-central1.run.app/ingresar)
 ![Dashboard](https://drive.google.com/uc?export=view&id=1gT4GTKVV0LTOnj6jUlrSFynTqjt7ztJG)
 
-### 📸 Screenshots:
-Las imágenes del sistema cuando esté corriendo)
-- Imagen1
-- Imagen2
-
 ## 📌 2.- Sobre el Proyecto
 Este proyecto es una aplicación web desarrollada en el contexto de una simulación profesional de No Country, cuyo objetivo es construir un CMS (Content Management System) que permita:
 - Crear y gestionar testimonios  
