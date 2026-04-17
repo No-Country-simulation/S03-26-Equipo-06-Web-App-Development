@@ -5,6 +5,11 @@ Plataforma CMS para gestionar y publicar testimonios con soporte multimedia, des
 ### 🔗 Desde el URL: [Demo](https://frontend-129781163028.us-central1.run.app/ingresar)
 ![Dashboard](https://drive.google.com/uc?export=view&id=119GBsP49j3L2QHCJ3bNbsxP_a4vPV9oF)
 
+### 📸 Screenshots:
+Las imágenes del sistema cuando esté corriendo)
+- Imagen1
+- Imagen2
+
 ## 📌 2.- Sobre el Proyecto
 Este proyecto es una aplicación web desarrollada en el contexto de una simulación profesional de No Country, cuyo objetivo es construir un CMS (Content Management System) que permita:
 - Crear y gestionar testimonios  
@@ -18,100 +23,166 @@ Este proyecto es una aplicación web desarrollada en el contexto de una simulaci
 El proyecto sigue una arquitectura desacoplada basada en microservicios:  
 📦 root  
  ┣ 📂 backend      → API REST (Spring Boot)  
- ┣ 📂 frontend     → Aplicación web (Next.js / Node.js)  
+ ┣ 📂 frontend     → Aplicación web (Vite / Node.js)  
  ┣ 📄 docker-compose.yml  
  ┗ 📄 README.md  
+
+### 📂 Estructura del Proyecto
+
+```text
+├── 📂 backend         # API REST con Java 21 & Spring Boot
+│   ├── 📂 config      # Configuraciones (Security, CORS, APIs)
+│   ├── 📂 controllers # Endpoints del CMS
+│   └── 📂 security    # Implementación JWT
+├── 📂 frontend        # Interfaz con Next.js 15 & Tailwind CSS
+│   ├── 📂 app         # App Router & Routes
+│   └── 📂 components  # Atomic Design (UI, Form, Shared)
+├── 🐳 docker-compose.yml
+└── 🗃️ backup.sql      # Semilla de base de datos
+ ```
   
 ## 🛠️ 4.- Stack Tecnológico 
-🔹 Backend
- + Java 21  
- + Spring Boot  
- + Spring Security  
- + JWT (JSON Web Tokens)  
+🔹 **Runtimes & Package Managers:**  
+┣ Java		→ *OpenJDK 21.0.10 (LTS)*  
+┣ Node		→ *.js: v20.20.2 (LTS)*  
+┗ Gestores de Paquetes		→ *pnpm v10.33.0 | npm v10.8.2*  
+  
+🔹 Backend (Arquitectura Robusta)  
+┣ Framework		→ *Java 21 | Spring Boot 3.x*  
+┣ Seguridad		→ *Spring Security | JWT (JSON Web Tokens)*  
+┗ Persistencia	→ *PostgreSQL (vía Supabase)*  
 
-🔹 Frontend
- - Node.js 22
- - Next.js 16
- - React 19
- - TypeScript
- - Tailwind CSS 4
+🔹 **Frontend (Interfaz Moderna)**  
+┣ Framework		→ *React 19 | Next.js 15 | TypeScript*  
+┗ Estilos		→ *Tailwind CSS 4*  
 
-🔹 DevOps
- - Docker
- - Docker Compose
- - GitHub Actions
- - Google Cloud Platform (GCP)
- - Google Cloud Run
- - Google Container Registry (GCR)
- - Gitleaks
- - Checkstyle
- - ESLint
+🔹 **DevOps & Infrastructure**  
+┣ Contenedores				→ *Docker v29.3.1 | Docker Compose*  
+┣ CI/CD						→ *GitHub Actions (Automatización de despliegue)*    
+┣ Cloud						→ *Google Cloud Platform (Cloud Run & Artifact Registry)*  
+┗ Seguridad & Calidad:		→ *Gitleaks (Secret scanning) | Checkstyle | ESLint*  
 
-## 🚀 5.- Ejecución del proyecto
-Antes de ejecutar el proyecto, asegúrate de tener instalado Node.js 22, - Java 21 para opción manual y Docker para seguir con la opción recomendada
+🔹 **Herramientas de Gestión y Tooling**  
+┣ IDEs					→ *IntelliJ IDEA (Desarrollo Backend) | VS Code (Frontend)*  
+┣ DB Management:		→ *pgAdmin / Supabase Dashboard*  
+┣ Colaboración:			→ *Trello (Kanban/Scrum) | Google Drive (Docs & Actas)*  
+┣ Análisis de Datos:	→ *Microsoft Excel*  
+┗ Marco de Trabajo:		→ *Emulación de entorno real en No Country*  
+  
+## 🚀 5.- Creación del Ambiente de ejecución del  proyecto
+**Consideración especial:**  
 
-### 🔹 Opción 1: Ejecución Manual - Desarrollo local
-En la carpeta donde se almacenara la aplicación en tu equipo local, abrir el terminal y ejecutar.
-> **Para la ejecución del Backend**
+✅ Para el despliegue, se asume su ejecución sobre un SO. Windows, con instalación WSL (*Ubuntu 24.04.3 LTS*), la ejecución de comandos se realizara desde *WSL terminal* y los comandos de git desde *gitbash terminal*, considerar que WSL y Windows son sistemas separados entre si.
+✅ Para la arquitectura de la aplicación (Next.js + Spring Boot + Docker), se trabajo con pnp dado que el npm generaba inconsistencias entre entornos y duplicación de paquetes, afectando el rendimiento y el tamaño de almacenamiento del Docker, además de ocultar errores de dependencias y presentar limitaciones para manejar estructuras tipo monorepo, dificultando la escalabilidad; de este motivo se eligió pnpm para garantizar la eficiencia y control en el desarrollo del proyecto. Finalmente indicar que pnpm (Performant Node Package Manager) optimiza la gestión de dependencias mediante un almacenamiento compartido, reduciendo el uso de disco, acelerando instalaciones y mejorando la consistencia entre entornos.  
+📁 Para que el front y el backend funcione correctamente, hay que definir las variables de ambiente en el archvio .env, antes de ejecutar revisar la estrutura de los archivos en el punto 6.   
+### ⬇️ Paso 1: Descargar el repositorio desde github
 ```bash
-cd backend  
- ./mvnw spring-boot:run
+	git clone https://github.com/No-Country-simulation/S03-26-Equipo-06-Web-App-Development.git
+	cd S03-26-Equipo-06-Web-App-Development
 ```
-> **Para la ejecución del Frontend**
+### 🚀 Paso 2: Ejecución de la aplicación
+#### 🚀🖥️ Opción 1: Ejecución Manual - Desarrollo local  
+Despliegue desde una maquina local
+##### Ejecutar en el folder **./frontend**  
+###### Instalación de dependencias
 ```bash
 cd frontend
-pnpm install
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+source ~/.bashrc
+
+apt install -y nodejs
+nvm install 22
+nvm use 22
+npm install -g pnpm
+```
+###### Verificar intalación de pnpm
+```bash
+node -v
+npm -v
+pnpm -v
+```
+###### Ejecución de aplicación
+```bash 
 pnpm dev
 ```
 
-### 🐳 Opción 2: Docker (opción Recomendada)
-##  Docker
-Este proyecto incluye un archivo docker-compose.yml que permite levantar todo el entorno de forma rapida, consistente y sencilla.
-En la carpeta de tu equipo local, creada para almacener esta aplicacióndonde, abre el terminal y ejecutar.
-Comandos útiles:
-### clonar repositorio, ubicarse en carpeta y construcción de maquina virtual
+##### Ejecutar en el folder **./backend**
+###### Instalación de dependencias
 ```bash
-git clone https://github.com/No-Country-simulation/S03-26-Equipo-06-Web-App-Development.git
-cd S03-26-Equipo-06-Web-App-Development
+cd backend
+./mvnw clean install
+sudo apt install maven
+chmod +x mvnw
+```
+
+###### Verificar intalación de maven
+```bach
+mvn -v
+```
+###### Ejecución de aplicación
+```bach
+export $(grep -v '^#' .env | grep -v '^$' | xargs)
+./mvnw spring-boot:run
+```
+#### **Abrir navegdor en:**
+Web → http://localhost:3000
+API → http://localhost:8080
+
+#### 🚀🐳 Opción 2: Docker (opción Recomendada)
+Despliegue desde un entorno dockerizado (se requiere haber instalado previamente en su Sistema operativo [Docker](docker https://docs.docker.com/desktop/setup/install/windows-install/)
+ 
+##### ⚠️ Despues del paso 1, ingreso al directorio del proyecto donde se encuentre el docker-compose y proceda con la condtrucción de la imagen.
+```bash
 docker-compose up --build
 ```
-### Detener contenedores
+##### Abrir navegdor en:
+- Web → http://localhost:5173  
+- API → http://localhost:8080  
+
+##### [OPCIONAL] comandos de ser necesarios 
 ```bash
+echo "Detener contenedores contenedores"
+docker-compose stop
+
+echo "Eliminar contenedores"
 docker-compose down
-```
-### Verificación en ejecución
-```bash
+
+echo "Verificar ejecución de contenedor"
 docker exec -it api-1 printenv
 ```
-### Abrir navegdor en:
-- Web → [http://localhost:3000](http://localhost:5173)
-- API → [http://localhost:8080](http://localhost:5173)
 
 ## 🔐 6.-  Variables de entorno
-⚠️ Este proyecto requiere archivos .env para su correcto funcionamiento.
+⚠️ 📄 Este proyecto requiere archivos .env para su correcto funcionamiento.  
+⚠️ 🔒 Dado que ha implemntado seguridad JWT, para que el backend funcione se debe definir una clave secreta (JWT_SECRET) de almenos 32 caracteres (256 bit), sin esta el backend no iniciará.  
+
+### 📁 Frontend (frontend/.env)
+```bash
+VITE_API_URL=http://localhost:8080
+```
+
 ### 📁 Backend (backend/.env)
 Ejemplo:
 ```bash
+#Database
+#DB_URL=jdbc:postgresql://db.kepvtlceadcuhulmmtcq.supabase.co:5432/postgres
+DB_URL=jdbc:postgresql://aws-1-sa-east-1.pooler.supabase.com:6543/postgres
+DB_USER=postgres.kepvtlceadcuhulmmtcq
+DB_PASS=S0326equipo06
+
+#Cloudinary
+CLOUDINARY_URL=cloudinary://923828372398843:_9NMgSGP9TGOQegBHH2-70L4WNs@dn7rqagrx
+
+# Authentication Configuration (JWT)
+JWT_SECRET=uSNUcpUy9KdMucqRuSNUcpUy9KdMucqR
+JWT_EXPIRATION=86400000
+
 SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/testdb
 SPRING_DATASOURCE_USERNAME=postgres
 SPRING_DATASOURCE_PASSWORD=postgres
 
 JWT_SECRET=1234567890abcdef1234567890abcdef
 JWT_EXPIRATION=3600000
-
-CLOUDINARY_URL=cloudinary://fake_key:fake_secret@fake_cloud
 ```
-### 📁 Frontend (frontend/.env)
-```bash
-NEXT_PUBLIC_API_URL=http://localhost:8080
-```
-
-## 🔒 Seguridad (JWT)
-El sistema utiliza autenticación basada en JWT.
-
-⚠️ IMPORTANTE:
-La clave JWT_SECRET debe tener un mínimo de 256 bits (32 caracteres).
-Claves más cortas generarán errores de seguridad en la aplicación.
 
 ## 🤝 Contribución
 Este es un Proyecto desarrollado en equipo bajo metodología ágil (Scrum) en el entorno de No Country.
@@ -126,15 +197,16 @@ Si deseas contribuir:
 
 ## 👨‍💻 Equipo de desarrollo y roles
 S03-26-Equipo 06 - No Country Simulation
-- A. Cristhian   [FrontEnd]
-- C. Elian       [Devops]
-- C. Luis        [Architech]
-- L. Ricardo     [BackEnd]
-- R. Ignacio     [BackEnd]
+- A. Ricardo    [FrontEnd]
+- C. Elian      [Devops]
+- C. Luis       [Architech]
+- L. Cristhian  [BackEnd]
+- R. Ignacio    [BackEnd]
   
 ## 📄 Licencia
 Este proyecto es de uso educativo dentro del programa No Country.
-
+---
+---
 ## 📸 Screenshots:
 - Registro
 ![Registro](https://drive.google.com/uc?export=view&id=1Ngzsn1H3gWGGBXf_icCu2qWAY5BFoiKx)
