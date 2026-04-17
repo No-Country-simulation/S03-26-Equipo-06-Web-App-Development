@@ -25,6 +25,7 @@ export default function Testimonios() {
         const json = await res.json()
         const raw = Array.isArray(json?.data) ? json.data : []
         const result: Testimonio[] = raw
+          .filter((item: Testimonio) => item.estado?.toUpperCase() === 'PUBLICADO')
           .map((item: Testimonio) => ({
             ...item,
             fecha_creacion: item.fecha_creacion ? new Date(item.fecha_creacion) : null,
